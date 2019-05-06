@@ -1,0 +1,37 @@
+
+## Node Variables 
+var:
+    apiurl:
+        label:  Webservice Url
+        desc:   "Geolie Webservice Url to Use."
+        
+    apiuser:
+        label:  Login
+        desc:   "Webservice API User Login."
+
+    apipwd:
+        label:  Password
+        desc:   "Webservice API User Password."
+
+    apikey:
+        label:  API Key
+        desc:   "Webservice API keys provide full access to your account, so keep them safe."
+
+
+## Node Profile
+profile:
+    connection:
+        title: API Connection
+    card:   
+        title:  Optilog SOAP API V2
+        label:  Connect your Shops with Optilog to Manage your Customers Deliveries
+
+## Node Api Actions
+admin:
+    selftest:   Optilog Connector Configuration
+    connect:    Connect to Optilog API   
+    webhooks:
+        label:  Update of WebHooks
+        desc:   Detect & Update Splash Sync WebHooks Configuration
+        msg:    WebHook Configuration Updated
+        err:    Update of WebHooks Configuration Failled

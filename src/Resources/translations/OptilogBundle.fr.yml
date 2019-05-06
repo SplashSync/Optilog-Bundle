@@ -1,0 +1,28 @@
+#
+### Node Variables 
+#var:
+#    apikey:
+#        label:  Clé API V3
+#        desc:   "Votre clé d'API principale vous offre un accès complet à votre compte."
+#        
+#    list:
+#        label:  Liste
+#        desc:   "La liste SendInBlue que vous voulez synchroniser avec Splash."
+#
+### Node Profile
+#profile:
+#    connection:
+#        title:  Connexion API
+#    card:   
+#        title:  SendInBlue API V3
+#        label:  Connectez votre compte SendInBlue pour synchroniser vos clients avec vos listes d'abonnés
+#
+### Node Api Actions
+#admin:
+#    selftest:   Configuration du Connecteur SendInBlue
+#    connect:    Connexion a l'API SendInBlue V3  
+#    webhooks:
+#        label:  Configuration des WebHooks
+#        desc:   Détecte et Configure les WebHooks pour Splash Sync
+#        msg:    Configuration des WebHooks Réussie
+#        err:    La Configuration des WebHooks a échouée
