@@ -1,0 +1,18 @@
+
+################################################################################
+## Test Configuration for Splash Bundle
+splash:
+    connections:
+
+        optilog:
+            id:                 ThisIsOptilogWsId
+            key:                ThisIsNotASecretKeyForOptilog
+            name:               Serveur 1 (Optilog Prepod)
+            host:               "%splash_host%/ws/soap"
+            server_host:        "%splash_host%"
+            connector:          optilog
+            config:  
+                WsHost:         ThisIsSecretWsHost
+                ApiUser:        ThisIsSecretApiUser
+                ApiPwd:         ThisIsSecretApiPwd
+                ApiKey:         ThisIsSecretApiKey
