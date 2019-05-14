@@ -28,7 +28,7 @@ class Product extends AbstractStandaloneObject
 {
     use IntelParserTrait;
     use SimpleFieldsTrait;
-    use PricesTrait;    
+    use PricesTrait;
     use Product\CRUDTrait;
     use Product\ObjectsListTrait;
     use Product\CoreTrait;

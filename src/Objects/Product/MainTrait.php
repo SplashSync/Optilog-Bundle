@@ -88,7 +88,6 @@ trait MainTrait
             ->description("Code EAN du produit unitaire")
             ->MicroData("http://schema.org/Product", "gtin13")
             ->isWriteOnly();
-
     }
 
     
@@ -108,7 +107,7 @@ trait MainTrait
             //====================================================================//
             case 'Poids':
                 // On N'envoi pas de Valeurs Nulles
-                if(empty($fieldData)) {
+                if (empty($fieldData)) {
                     unset($this->object->$fieldName);
                     continue;
                 }
@@ -119,7 +118,7 @@ trait MainTrait
             case 'Longueur':
             case 'Largeur':
                 // On N'envoi pas de Valeurs Nulles
-                if(empty($fieldData)) {
+                if (empty($fieldData)) {
                     unset($this->object->$fieldName);
                     continue;
                 }
@@ -132,7 +131,7 @@ trait MainTrait
             //====================================================================//
             case 'EAN':
                 // On N'envoi pas de Valeurs Nulles
-                if(empty($fieldData)) {
+                if (empty($fieldData)) {
                     unset($this->object->$fieldName);
                     continue;
                 }

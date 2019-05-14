@@ -93,47 +93,47 @@ class OptilogConnector extends AbstractConnector
 //            return false;
 //        }
         
-////        $id = "TEST-SPLASH-" . uniqid();
+//        $id = "TEST-SPLASH-" . uniqid();
 //        $id = 'dgCmd$ctl03$ctl00';
-////        
+////
 //        dump(API::post("SetCommandes", array(
-////            "data" => '{ "Commandes":[{}] }'            
-////            "data" => '{ "Commandes":[ { "Mode":"ALTER", "ID":"monID", "DestID":"123", "Nom":"Emile SPECIMEN", "Adresse1":"9 Rue du Testeur", "CodePostal":"75004", "Ville":"PARIS", "CodePays":"FR", "Articles": [ { "ID":"DV1006X2", "Quantite":1 }, { "ID":"EK3022X1", "Quantite":3 } ] } ] }'            
-//            
+////            "data" => '{ "Commandes":[{}] }'
+////            "data" => '{ "Commandes":[ { "Mode":"ALTER", "ID":"monID", "DestID":"123", "Nom":"Emile SPECIMEN", "Adresse1":"9 Rue du Testeur", "CodePostal":"75004", "Ville":"PARIS", "CodePays":"FR", "Articles": [ { "ID":"DV1006X2", "Quantite":1 }, { "ID":"EK3022X1", "Quantite":3 } ] } ] }'
+//
 //            "Commandes" => array(array(
-//                "Mode" => "ALTER",
+//                "Mode" => "NEW",
 //                "ID" => $id,
 //                "Operation" => "CHE00119",
-//                "DO" => "	Bernard SPLASH",
+//                "DO" => " Bernard SPLASH",
 //                "DestID" => $id,
 //                "Nom" => "B. Paquier",
 //                "Adresse1" => "28 Av. des Colombes",
 //                "CodePostal" => "33700",
 //                "Ville" => "Merignac",
 //                "CodePays" => "FR",
-////                "Transporteur" => "CHR_B2B_13",
+//                "Transporteur" => "CHR_B2B_13",
 //                "Articles" => array(
 //                    array(
 //                        "ID" => "DV1006X2",
 //                        "Quantite" => "2",
 //                    )
 //                )
-////            )  
+////            )
 //        ))
 //                )));
-//        
+//
 //        dump(API::get("GetStatutCommande", array(
 //            "data" => json_encode( array(
-//                array("ID" => $id)  
+//                array("ID" => "TEST-SPLASH-5CCF6E824A7378")
 //            )
 //            )
 //        )));
-//                
-//        
+////
+////
 //        exit;
 //        dump(API::get("GetStatutCommande", array(
 //            "data" => json_encode( array(
-//                array("ID" => "*")  
+//                array("ID" => "*")
 //            )
 //            )
 //        )));
@@ -191,7 +191,7 @@ class OptilogConnector extends AbstractConnector
             Splash::log()->err("Webservice Host is Invalid");
 
             return false;
-        }        
+        }
         
         //====================================================================//
         // Verify Api Key is Set

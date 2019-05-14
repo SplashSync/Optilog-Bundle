@@ -47,12 +47,12 @@ abstract class AbstractOptilogType extends AbstractType
                 'help_block' => "var.apiurl.desc",
                 'required' => true,
                 'translation_domain' => "OptilogBundle",
-                'choices' => API::ENDPOINTS
+                'choices' => API::ENDPOINTS,
             ))
         ;
 
         return $this;
-    }    
+    }
     
     /**
      * Add Api User Field to FormBuilder
@@ -132,5 +132,4 @@ abstract class AbstractOptilogType extends AbstractType
 
         return $this;
     }
-
 }

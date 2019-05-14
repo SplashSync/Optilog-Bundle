@@ -15,10 +15,10 @@
 
 namespace Splash\Connectors\Optilog\Objects\Product;
 
+use Splash\Components\UnitConverter as UNITS;
 use Splash\Connectors\Optilog\Models\RestHelper as API;
 use Splash\Core\SplashCore      as Splash;
 use stdClass;
-use Splash\Components\UnitConverter as UNITS;
 
 /**
  * Optilog Products CRUD Functions
@@ -49,6 +49,7 @@ trait CRUDTrait
         if ((null == $product) || !isset($product->ID)) {
             return Splash::log()->errTrace("Unable to load Product (".$objectId.").");
         }
+
         return $product;
     }
 
@@ -62,7 +63,7 @@ trait CRUDTrait
         //====================================================================//
         // Stack Trace
         Splash::log()->trace();
-        
+
         //====================================================================//
         // Check Product SKU is given
         if (empty($this->in["sku"])) {
@@ -77,24 +78,24 @@ trait CRUDTrait
         // Check Product Weight is given
         if (empty($this->in["Poids"])) {
             return Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "Poids");
-        }        
+        }
         //====================================================================//
         // Init Object
+        /** @codingStandardsIgnoreStart */
         $product = new stdClass();
         $product->Mode = "NEW";
-        $product->Gamme = "Unknown";
+        $product->Gamme = "Vernis";
         $product->ID = $this->in["sku"];
         $product->Libelle = $this->in["Libelle"];
         $product->Poids = UNITS::convertWeight($this->in["Poids"], UNITS::MASS_GRAM) ;
+        /** @codingStandardsIgnoreEnd */
         //====================================================================//
         // Create Product Infos from Api
         $response = API::post("SetArticles", array( $product ));
-dump($response);        
-dump($product); 
-//exit;
         if (null == $response) {
             return Splash::log()->errTrace("Unable to Create Product (".$this->in["sku"].").");
         }
+
         return $this->load($product->ID);
     }
 
@@ -133,7 +134,7 @@ dump($product);
 
             return $this->oldSKU;
         }
-        
+
         return $this->getObjectIdentifier();
     }
 
@@ -154,15 +155,18 @@ dump($product);
         }
         //====================================================================//
         // Init Object
-        $product = new stdClass();        
+        /** @codingStandardsIgnoreStart */
+        $product = new stdClass();
         $product->Mode = "DELETE";
-        $product->ID = $objectId;        
+        $product->ID = $objectId;
+        /** @codingStandardsIgnoreEnd */
         //====================================================================//
         // Update Product Infos from Api
         $response = API::post("SetArticles", array( $product ));
         if (null == $response) {
             return Splash::log()->errTrace("Unable to Delete Product (".$objectId.").");
         }
+
         return true;
     }
 

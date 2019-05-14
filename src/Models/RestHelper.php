@@ -215,11 +215,13 @@ class RestHelper
         $body = self::decodeBody($response->body);
         //====================================================================//
         // Check Response Message
+        /** @codingStandardsIgnoreStart */        
         if (isset($body->Message)) {
             Splash::log()->err($body->Message);
 
             return null;
         }
+        /** @codingStandardsIgnoreEnd */        
         //====================================================================//
         // Check Response Status
         if (1 != $body->statut) {

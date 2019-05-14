@@ -24,7 +24,7 @@ trait CoreTrait
 {
     /**
      * New SKU if Modified
-     * 
+     *
      * @var null|string
      */
     protected $oldSKU = null;
@@ -44,7 +44,7 @@ trait CoreTrait
             ->isRequired();
         
         //====================================================================//
-        // Name 
+        // Name
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->Identifier("Libelle")
             ->Name("Product Name with Options")
@@ -58,7 +58,7 @@ trait CoreTrait
             ->Identifier("IsActif")
             ->Name("Etat de l’article")
             ->MicroData("http://schema.org/Product", "offered")
-            ->isListed();        
+            ->isListed();
     }
 
     /**
@@ -109,8 +109,7 @@ trait CoreTrait
             // MAIN INFORMATIONS
             //====================================================================//
             case 'sku':
-                
-                if($this->object->ID == $fieldData) {
+                if ($this->object->ID == $fieldData) {
                     continue;
                 }
                 

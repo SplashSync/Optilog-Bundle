@@ -23,11 +23,6 @@ use Splash\Core\SplashCore      as Splash;
 trait StockTrait
 {
     /**
-     * @var string
-     */
-    private $NewStock;
-
-    /**
      * Build Fields using FieldFactory
      */
     protected function buildStockFields()
@@ -75,7 +70,6 @@ trait StockTrait
             ->MicroData("http://schema.org/ItemAvailability", "OutOfStock")
             ->Group($groupName)
             ->isReadOnly();
-
     }
 
     /**

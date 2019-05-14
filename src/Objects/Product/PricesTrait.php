@@ -15,9 +15,6 @@
 
 namespace Splash\Connectors\Optilog\Objects\Product;
 
-use Splash\Core\SplashCore      as Splash;
-use Splash\Local\Local;
-
 /**
  * Products Prices Fields
  */
@@ -29,8 +26,6 @@ trait PricesTrait
      */
     protected function buildPricesFields()
     {
-        global $conf,$langs;
-
         //====================================================================//
         // Product Selling Price
         $this->fieldsFactory()->create(SPL_T_PRICE)
@@ -66,7 +61,7 @@ trait PricesTrait
             case 'PA':
                 $newPrice = self::prices()->taxExcluded($fieldData);
                 // On N'envoi pas de Valeurs Nulles
-                if(empty($newPrice)) {
+                if (empty($newPrice)) {
                     unset($this->object->$fieldName);
                     continue;
                 }

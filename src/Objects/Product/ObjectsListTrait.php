@@ -31,7 +31,7 @@ trait ObjectsListTrait
     {
         //====================================================================//
         // Get Product Lists from Api
-        $rawData = API::getWithData("GetStocks", array(array("ID" => "*")));        
+        $rawData = API::getWithData("GetStocks", array(array("ID" => "*")));
         //====================================================================//
         // Request Failed
         if ((null == $rawData) || !isset($rawData->result)) {
@@ -46,6 +46,7 @@ trait ObjectsListTrait
         //====================================================================//
         // Parse Data in response
         foreach ($rawData->result as $product) {
+            /** @codingStandardsIgnoreStart */            
             $response[] = array(
                 'id' => $product->ID,
                 'sku' => $product->ID,
@@ -54,6 +55,7 @@ trait ObjectsListTrait
                 'Stk_Physique' => $product->Stk_Physique,
                 'IsActif' => $product->IsActif,
             );
+            /** @codingStandardsIgnoreEnd */        
         }
 
         return $response;
