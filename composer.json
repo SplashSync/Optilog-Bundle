@@ -1,6 +1,6 @@
 {
     "name":                 "splash/optilog",
-    "description":          "Splash SendInBlue API Connector (Embedded)",
+    "description":          "Splash Optilog REST API Connector (Embedded)",
 
     "type":                 "symfony-bundle",
     "license":              "MIT",
