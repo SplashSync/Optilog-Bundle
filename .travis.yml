@@ -38,7 +38,7 @@ before_install:
 # Create database, schema and fixtures
 install:   
 #    # Setup MailChimp Connector
-    - sed -i -e 's/ThisIsSecretWsHost/'$WS_HOST'/g' tests/config/splash.yml >/dev/null 2>&1
+    - sed -i -e 's/ThisIsSecretWsHost/'$API_HOST'/g' tests/config/splash.yml >/dev/null 2>&1
     - sed -i -e 's/ThisIsSecretApiUser/'$API_USER'/g' tests/config/splash.yml >/dev/null 2>&1
     - sed -i -e 's/ThisIsSecretApiPwd/'$API_PWD'/g' tests/config/splash.yml >/dev/null 2>&1
     - sed -i -e 's/ThisIsSecretApiKey/'$API_KEY'/g' tests/config/splash.yml >/dev/null 2>&1

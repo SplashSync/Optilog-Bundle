@@ -40,7 +40,7 @@ trait CoreTrait
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->Identifier("DestID")
             ->Name("Reference")
-//            ->isListed()
+            ->isListed()
             ->MicroData("http://schema.org/Order", "orderNumber")
             ->isRequired();
 
