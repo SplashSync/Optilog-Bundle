@@ -18,8 +18,8 @@ namespace Splash\Connectors\Optilog\Objects;
 use Splash\Bundle\Models\AbstractStandaloneObject;
 use Splash\Connectors\Optilog\Services\OptilogConnector;
 use Splash\Models\Objects\IntelParserTrait;
-use Splash\Models\Objects\SimpleFieldsTrait;
 use Splash\Models\Objects\PricesTrait;
+use Splash\Models\Objects\SimpleFieldsTrait;
 
 /**
  * Optilog Implementation of Product
@@ -40,17 +40,17 @@ class Product extends AbstractStandaloneObject
      *  Object Disable Flag. Override this flag to disable Object.
      */
     protected static $DISABLED = false;
-    
+
     /**
      *  Object Name
      */
     protected static $NAME = "Product";
-    
+
     /**
      *  Object Description
      */
     protected static $DESCRIPTION = "Optilog Product";
-    
+
     /**
      *  Object Icon (FontAwesome or Glyph ico tag)
      */
@@ -69,7 +69,7 @@ class Product extends AbstractStandaloneObject
     public function __construct(OptilogConnector $parentConnector)
     {
         $this->connector = $parentConnector;
-        
+
         //====================================================================//
         // Connector SelfTest
         $parentConnector->selfTest();

@@ -20,7 +20,6 @@ namespace Splash\Connectors\Optilog\Objects\Product;
  */
 trait PricesTrait
 {
-    
     /**
      * Build Fields using FieldFactory
      */
@@ -42,7 +41,7 @@ trait PricesTrait
             ->MicroData("http://schema.org/Product", "wholesalePrice")
             ->isWriteOnly();
     }
-    
+
     /**
      * Write Given Fields
      *
@@ -62,7 +61,8 @@ trait PricesTrait
                 $newPrice = self::prices()->taxExcluded($fieldData);
                 // On N'envoi pas de Valeurs Nulles
                 if (empty($newPrice)) {
-                    unset($this->object->$fieldName);
+                    unset($this->object->{$fieldName});
+
                     continue;
                 }
                 $this->setSimple($fieldName, $newPrice);

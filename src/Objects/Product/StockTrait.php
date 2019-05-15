@@ -61,7 +61,7 @@ trait StockTrait
             ->description("Stock Réservé pour commande(s) en cours")
             ->Group($groupName)
             ->isReadOnly();
-        
+
         //====================================================================//
         // Out of Stock Flag
         $this->fieldsFactory()->create(SPL_T_BOOL)

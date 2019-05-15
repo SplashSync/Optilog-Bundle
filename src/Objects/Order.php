@@ -81,7 +81,7 @@ class Order extends AbstractStandaloneObject
     public function __construct(OptilogConnector $parentConnector)
     {
         $this->connector = $parentConnector;
-        
+
         //====================================================================//
         // Connector SelfTest
         $parentConnector->selfTest();

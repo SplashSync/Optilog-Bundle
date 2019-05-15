@@ -15,9 +15,9 @@
 
 namespace   Splash\Connectors\Optilog\Objects\Order;
 
+use Splash\Bundle\Helpers\Objects\CachedListHelper;
 use Splash\Connectors\Optilog\Models\RestHelper as API;
 use Splash\Connectors\Optilog\Models\StatusCodes;
-use Splash\Bundle\Helpers\Objects\CachedListHelper;
 
 /**
  * Optilog Products Objects List Functions
@@ -26,15 +26,13 @@ trait ObjectsListTrait
 {
     /**
      * {@inheritdoc}
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function objectsList($filter = null, $params = null)
     {
         //====================================================================//
         // Check if Product Lists is Available in Cache
         $cachedList = new CachedListHelper($this->getWebserviceId(), "orders.list");
-        if(!$cachedList->hasCache()) {
+        if (!$cachedList->hasCache()) {
             //====================================================================//
             // Get Product Lists from Api
             $rawData = API::post("jGetStatutCommande", array(array("ID" => "*")));
@@ -54,11 +52,11 @@ trait ObjectsListTrait
         // Compute Totals
         $response = array(
             'meta' => array('current' => count($listData), 'total' => $cachedList->getFilteredTotal()),
-        );        
+        );
         //====================================================================//
         // Parse Data in response
         foreach ($listData as $order) {
-            /** @codingStandardsIgnoreStart */            
+            /** @codingStandardsIgnoreStart */
             $response[] = array(
                 'id' => $order->DestID,
                 'IntID' => $order->ID,
@@ -67,7 +65,7 @@ trait ObjectsListTrait
                 'Bordereau' => $order->Bordereau,
                 'Commentaire' => $order->Commentaire,
             );
-            /** @codingStandardsIgnoreEnd */        
+            /** @codingStandardsIgnoreEnd */
         }
 
         return $response;

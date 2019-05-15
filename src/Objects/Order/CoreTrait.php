@@ -22,7 +22,6 @@ use Splash\Core\SplashCore      as Splash;
  */
 trait CoreTrait
 {
-
     /**
      * Build Core Fields using FieldFactory
      */
@@ -35,7 +34,7 @@ trait CoreTrait
             ->Name("Internal ID")
             ->isListed()
             ->isReadOnly();
-        
+
         //====================================================================//
         // Internal Reference
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
@@ -43,8 +42,8 @@ trait CoreTrait
             ->Name("Reference")
 //            ->isListed()
             ->MicroData("http://schema.org/Order", "orderNumber")
-            ->isRequired();        
-        
+            ->isRequired();
+
         //====================================================================//
         // Comment
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
@@ -92,12 +91,10 @@ trait CoreTrait
         //====================================================================//
         // WRITE Field
         switch ($fieldName) {
-            
             case 'DestID':
                 $this->setSimple($fieldName, $fieldData);
 
                 break;
-            
             default:
                 return;
         }

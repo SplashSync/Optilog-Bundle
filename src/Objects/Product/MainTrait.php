@@ -15,15 +15,14 @@
 
 namespace Splash\Connectors\Optilog\Objects\Product;
 
-use Splash\Core\SplashCore      as Splash;
 use Splash\Components\UnitConverter as UNITS;
+use Splash\Core\SplashCore      as Splash;
 
 /**
  * Access to Product Main Fields
  */
 trait MainTrait
 {
-    
     /**
      * Build Address Fields using FieldFactory
      */
@@ -90,7 +89,6 @@ trait MainTrait
             ->isWriteOnly();
     }
 
-    
     /**
      * Write Given Fields
      *
@@ -108,7 +106,8 @@ trait MainTrait
             case 'Poids':
                 // On N'envoi pas de Valeurs Nulles
                 if (empty($fieldData)) {
-                    unset($this->object->$fieldName);
+                    unset($this->object->{$fieldName});
+
                     continue;
                 }
                 $this->setSimpleFloat($fieldName, UNITS::convertWeight($fieldData, UNITS::MASS_GRAM));
@@ -119,26 +118,26 @@ trait MainTrait
             case 'Largeur':
                 // On N'envoi pas de Valeurs Nulles
                 if (empty($fieldData)) {
-                    unset($this->object->$fieldName);
+                    unset($this->object->{$fieldName});
+
                     continue;
                 }
                 $this->setSimpleFloat($fieldName, UNITS::convertLength($fieldData, UNITS::LENGTH_MM));
 
                 break;
-            
             //====================================================================//
             // PRODUCT BARCODES
             //====================================================================//
             case 'EAN':
                 // On N'envoi pas de Valeurs Nulles
                 if (empty($fieldData)) {
-                    unset($this->object->$fieldName);
+                    unset($this->object->{$fieldName});
+
                     continue;
                 }
                 $this->setSimple($fieldName, $fieldData);
 
                 break;
-                
             default:
                 return;
         }

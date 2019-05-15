@@ -22,11 +22,10 @@ class CarrierCodes
 {
     /**
      * List des Codes Transporteurs
-     * 
+     *
      * @var array
      */
     const CODES = array(
-        
         //====================================================================//
         // CALBERSON
         "CFE_AFF" => "CALBERSON AFFRETEMENT",
@@ -37,7 +36,7 @@ class CarrierCodes
         "CFE_EEX" => "CALBERSON EXPRESS EUROPE",
         "CFE_MESSPL" => "CALBERSON MESSAGERIE",
         "CFE_RESPAL" => "CALBERSON RESOPAL",
-        
+
         //====================================================================//
         // CHRONOPOST
         "CHR_B2B_10" => "CHRONOPOST CHRO 10H",
@@ -49,19 +48,19 @@ class CarrierCodes
         "CHR_B2B_EI" => "CHRONOPOST CHRO EXPRESS I",
         "CHR_FRESH" => "CHRONOPOST CHRONO FOOD",
         "CHR_BB_REL" => "CHRONOPOST CHRONO RELAIS",
-        
+
         //====================================================================//
         // COLIS PRIVE
         "COLPRIV" => "COLIS PRIVE COLIS PRIVE",
         "COLPRIVAS" => "COLIS PRIVE COLIS PRIVE - avec signature",
-        
+
         //====================================================================//
         // COLISSIMO
         "COL_9L" => "COLISSIMO ACCESS FRANCE",
         "COL_9V" => "COLISSIMO EXPERT FRANCE",
         "COL_CY" => "COLISSIMO EXPERT INTER",
         "COL_7A" => "COLISSIMO EXPERT OUTRE-MER",
-        
+
         //====================================================================//
         // DHL
         "DHL_DOM" => "DHL DHL DOMESTIC EXPRESS",
@@ -75,34 +74,34 @@ class CarrierCodes
         "DHL_ECX" => "DHL DHL EXPRESS WORLDWIDE UE HORS FRANCE",
         "DHL_ESI" => "DHL DHL IMPORTANT ECONOMY SELECT ",
         "DHL_PKT" => "DHL DHL PACKET",
-        
+
         //====================================================================//
         // DPD
         "DPD_PREDICT" => "DPD DPD - Prédict",
-        
+
         //====================================================================//
         // EURO
         "GEN003" => "EURO EXPRESS EUROEX",
         "GEN003A" => "EURO EXPRESS EUROEX A ",
-        
+
         //====================================================================//
         // FEDEX
         "FDX_HOME" => "FEDEX HOME EXPRESS",
         "FDX_OPTIMU" => "FEDEX OPTIMUM",
         "FDX_THOME" => "FEDEX TAT@HOME",
         "FDX_THOME2" => "FEDEX TAT@HOME LIVRAISON A 2 PERSONNES",
-        
+
         //====================================================================//
         // FRANCE EXPRESS
         "CFE_CXI" => "FRANCE EXPRESS FREX ",
-        
+
         //====================================================================//
         // GLS
         "GLS_FDF" => "GLS GLS - Flex Delivery Service",
         "GLS_BP" => "GLS GLS BUSINESS",
         "GLS_EP" => "GLS GLS EXPRESS",
         "GLS_EBP" => "GLS GLS INTERNATIONAL",
-        
+
         //====================================================================//
         // LA POSTE
         "ASENDIA" => "LA POSTE Asendia ",
@@ -111,25 +110,25 @@ class CarrierCodes
         "LETS100" => "LA POSTE Lettre Suivie 100g ",
         "LETS150" => "LA POSTE Lettre Suivie 150g",
         "LETS300" => "LA POSTE Lettre Suivie 300g",
-        
+
         //====================================================================//
         // MONDIAL RELAY
         "MR_24R" => "MONDIAL RELAY MR - POINT RELAIS",
-        
+
         //====================================================================//
         // SDV
         "GEN001" => "SDV SDV",
-        
+
         //====================================================================//
         // COLISSIMO
         "SOCOL_6M" => "SO COLISSIMO SOCOLISSIMOA2P",
         "SOCOL_6H" => "SO COLISSIMO SOCOLISSIMOBPR",
-//        "SOCOL_6H" => "SO COLISSIMO SOCOLISSIMOCDI",
+        //        "SOCOL_6H" => "SO COLISSIMO SOCOLISSIMOCDI",
         "SOCOL_6J" => "SO COLISSIMO SOCOLISSIMOCIT",
         "SOCOL_6A" => "SO COLISSIMO SOCOLISSIMODOM",
         "SOCOL_6C" => "SO COLISSIMO SOCOLISSIMODOS",
         "SOCOL_6K" => "SO COLISSIMO SOCOLISSIMORDV",
-        
+
         //====================================================================//
         // TNT
         "TNT_10" => "TNT National TNT 10H Express",
@@ -137,6 +136,5 @@ class CarrierCodes
         "TNT_J" => "TNT National TNT Express ",
         "TNT_JZ" => "TNT National TNT Livraison à domicile",
         "TNT_JD" => "TNT National TNT Relais colis ",
-    
     );
 }

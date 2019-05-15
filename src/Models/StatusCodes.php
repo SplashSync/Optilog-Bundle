@@ -22,13 +22,12 @@ class StatusCodes
 {
     /**
      * List of Optilog Orders Status for Splash
-     * 
+     *
      * Negative Status >> NOT Send to Optilog
-     * 
+     *
      * @var array
      */
     const SPLASH = array(
-        
         //====================================================================//
         // Real Optilog Statuses
         -1 => "OrderCanceled",          // Rejetée
@@ -45,12 +44,12 @@ class StatusCodes
         10 => "OrderDelivered",         // Retour
         60 => "OrderProblem",           // Litige en cours
     );
-    
+
 //    /**
 //     * Check if a Given Code Allow Creation of the Order
 //     *
 //     * @param string $statut
-//     * 
+//     *
 //     * @return bool
 //     */
 //    public static function isAllowedPush(string $statut): bool
@@ -68,8 +67,7 @@ class StatusCodes
 //        if (!$idStatut || ($idStatut < 0) | ($idStatut > 50)) {
 //            return false;
 //        }
-//        
+//
 //        return true;
 //    }
-    
 }

@@ -98,9 +98,9 @@ class OptilogConnector extends AbstractConnector
         $informations->longdesc = "Splash Integration for Optilog Api V2";
         //====================================================================//
         // Company Informations
-        $informations->company =    "Optolog";
-        $informations->address =    "Rond point Robert Schuman,";
-        $informations->zip =        "77127";
+        $informations->company = "Optolog";
+        $informations->address = "Rond point Robert Schuman,";
+        $informations->zip = "77127";
         $informations->town = "Lieusaint";
         $informations->country = "France";
         $informations->www = "http://www.optilog-fr.com";
@@ -133,12 +133,12 @@ class OptilogConnector extends AbstractConnector
         //====================================================================//
         // Verify Webservice Url is Set
         //====================================================================//
-        if (!isset($config["WsHost"]) || !in_array($config["WsHost"], API::ENDPOINTS)) {
+        if (!isset($config["WsHost"]) || !in_array($config["WsHost"], API::ENDPOINTS, true)) {
             Splash::log()->err("Webservice Host is Invalid");
 
             return false;
         }
-        
+
         //====================================================================//
         // Verify Api Key is Set
         //====================================================================//
@@ -156,7 +156,7 @@ class OptilogConnector extends AbstractConnector
 
             return false;
         }
-        
+
         //====================================================================//
         // Verify Api Password is Set
         //====================================================================//
@@ -270,7 +270,7 @@ class OptilogConnector extends AbstractConnector
     public function getPublicActions() : array
     {
         return array(
-//            "index" => "SendInBlueBundle:WebHooks:index",
+            //            "index" => "SendInBlueBundle:WebHooks:index",
         );
     }
 
@@ -280,7 +280,7 @@ class OptilogConnector extends AbstractConnector
     public function getSecuredActions() : array
     {
         return array(
-//            "webhooks" => "SendInBlueBundle:Actions:webhooks",
+            //            "webhooks" => "SendInBlueBundle:Actions:webhooks",
         );
     }
 

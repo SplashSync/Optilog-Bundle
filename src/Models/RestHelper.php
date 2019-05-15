@@ -35,9 +35,9 @@ class RestHelper
      */
     const ENDPOINTS = array(
         "Preprod V1" => "https://api.preprod.geolie.net/wsgestinbox.asmx",
-//        "Preprod V2" => "https://api.preprod.geolie.net/wsgestinbox_V2.asmx",
+        //        "Preprod V2" => "https://api.preprod.geolie.net/wsgestinbox_V2.asmx",
         "Production V1" => "https://api.geolie.net/wsgestinbox.asmx",
-//        "Production V2" => "https://api.geolie.net/wsgestinbox_V2.asmx",
+        //        "Production V2" => "https://api.geolie.net/wsgestinbox_V2.asmx",
     );
 
     /**
@@ -145,8 +145,8 @@ class RestHelper
         // Perform Request
         try {
             $response = Request::get($uri)
-                    ->sendsType(Mime::PLAIN)
-                    ->send();
+                ->sendsType(Mime::PLAIN)
+                ->send();
         } catch (ConnectionErrorException $ex) {
             Splash::log()->err($ex->getMessage());
 
@@ -198,24 +198,24 @@ class RestHelper
         // Check if Optilog Response has Errors
         if (!$response->hasBody()) {
             return null;
-        } 
+        }
         //====================================================================//
         // Decode Optilog Response
         $body = self::decodeBody($response->body);
         //====================================================================//
         // Check Response Message
-        /** @codingStandardsIgnoreStart */        
+        /** @codingStandardsIgnoreStart */
         if (isset($body->Message)) {
             Splash::log()->err($body->Message);
 
             return null;
         }
-        /** @codingStandardsIgnoreEnd */        
+        /** @codingStandardsIgnoreEnd */
         //====================================================================//
         // Check Response Status
         if (1 != $body->statut) {
-            Splash::log()->err($body->statutText); 
-            
+            Splash::log()->err($body->statutText);
+
             return null;
         }
 

@@ -35,7 +35,7 @@ trait TrackingTrait
             ->Name("Code Transporteur")
             ->description(
                 "Les associataions entre codes Code Optilog et "
-                . "Codes Transporteur Splash sont disponible dans la configuration du Connecteur."
+                ."Codes Transporteur Splash sont disponible dans la configuration du Connecteur."
             )
             ->MicroData("http://schema.org/ParcelDelivery", "identifier")
             ->group("Tracking")
@@ -73,7 +73,6 @@ trait TrackingTrait
         //====================================================================//
         // READ Fields
         switch ($fieldName) {
-            
             case 'Bordereau':
             case 'URL':
                 $this->getSimple($fieldName);
@@ -117,12 +116,9 @@ trait TrackingTrait
     /**
      * Get Optilog Carriers Code
      *
-     * @return null|string
-     */
-    /**
-     * 
      * @param string $carrierName
-     * @return string|null
+     *
+     * @return null|string
      */
     private function getCarrierCode(string $carrierName): ?string
     {
@@ -139,21 +135,22 @@ trait TrackingTrait
         $carrierCode = $carrierName;
         if (is_array($carriers) && isset($carriers[$carrierName])) {
             $carrierCode = $carrierName;
-        }      
+        }
         //====================================================================//
         // Check Carrier Code is Valid
-        if (!in_array($carrierCode, array_keys(CarrierCodes::CODES))) {
+        if (!in_array($carrierCode, array_keys(CarrierCodes::CODES), true)) {
             if (is_array($carriers) && !isset($carriers[$carrierName])) {
-                Splash::log()->war("Unable to Detect Optilog Carrier Code, Given : " . $carrierName);
+                Splash::log()->war("Unable to Detect Optilog Carrier Code, Given : ".$carrierName);
                 Splash::log()->www("Configured Names", $carriers);
-            }          
+            }
+
             return null;
         }
         //====================================================================//
         // Return Carrier Code
         return $carrierCode;
     }
-    
+
     /**
      * Get User Carriers Names
      *
@@ -170,7 +167,7 @@ trait TrackingTrait
             return CarrierCodes::CODES;
         }
         //====================================================================//
-        // Return Carrier Names        
+        // Return Carrier Names
         return array_flip($carriers);
-    }    
+    }
 }

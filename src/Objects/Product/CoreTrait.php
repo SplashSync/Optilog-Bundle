@@ -27,7 +27,7 @@ trait CoreTrait
      *
      * @var null|string
      */
-    protected $oldSKU = null;
+    protected $oldSKU;
 
     /**
      * Build Core Fields using FieldFactory
@@ -42,7 +42,7 @@ trait CoreTrait
             ->isListed()
             ->MicroData("http://schema.org/Product", "model")
             ->isRequired();
-        
+
         //====================================================================//
         // Name
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
@@ -51,7 +51,7 @@ trait CoreTrait
             ->MicroData("http://schema.org/Product", "name")
             ->isListed()
             ->isRequired();
-            
+
         //====================================================================//
         // Active => Product Is available_for_order
         $this->fieldsFactory()->create(SPL_T_BOOL)
@@ -112,7 +112,7 @@ trait CoreTrait
                 if ($this->object->ID == $fieldData) {
                     continue;
                 }
-                
+
                 $this->setSimple("ID", $fieldData);
                 $this->oldSKU = $fieldData;
 
@@ -122,7 +122,6 @@ trait CoreTrait
                 $this->setSimple($fieldName, $fieldData);
 
                 break;
-            
             default:
                 return;
         }

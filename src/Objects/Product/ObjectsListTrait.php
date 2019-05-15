@@ -15,8 +15,8 @@
 
 namespace   Splash\Connectors\Optilog\Objects\Product;
 
-use Splash\Connectors\Optilog\Models\RestHelper as API;
 use Splash\Bundle\Helpers\Objects\CachedListHelper;
+use Splash\Connectors\Optilog\Models\RestHelper as API;
 
 /**
  * Optilog Products Objects List Functions
@@ -33,7 +33,7 @@ trait ObjectsListTrait
         //====================================================================//
         // Check if Product Lists is Available in Cache
         $cachedList = new CachedListHelper($this->getWebserviceId(), "products.list");
-        if(!$cachedList->hasCache()) {
+        if (!$cachedList->hasCache()) {
             //====================================================================//
             // Get Product Lists from Api
             $rawData = API::post("jGetStocks", array(array("ID" => "*")));
@@ -57,7 +57,7 @@ trait ObjectsListTrait
         //====================================================================//
         // Parse Data in response
         foreach ($listData as $product) {
-            /** @codingStandardsIgnoreStart */            
+            /** @codingStandardsIgnoreStart */
             $response[] = array(
                 'id' => $product->ID,
                 'sku' => $product->ID,
@@ -66,7 +66,7 @@ trait ObjectsListTrait
                 'Stk_Physique' => $product->Stk_Physique,
                 'IsActif' => $product->IsActif,
             );
-            /** @codingStandardsIgnoreEnd */        
+            /** @codingStandardsIgnoreEnd */
         }
 
         return $response;

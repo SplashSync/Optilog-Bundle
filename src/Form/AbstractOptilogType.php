@@ -15,13 +15,13 @@
 
 namespace Splash\Connectors\Optilog\Form;
 
+use Burgov\Bundle\KeyValueFormBundle\Form\Type\KeyValueType;
+use Splash\Connectors\Optilog\Models\CarrierCodes;
+use Splash\Connectors\Optilog\Models\RestHelper as API;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Splash\Connectors\Optilog\Models\RestHelper as API;
-use Burgov\Bundle\KeyValueFormBundle\Form\Type\KeyValueType;
-use Splash\Connectors\Optilog\Models\CarrierCodes;
 
 /**
  * Base Form Type for Optilog Connectors Servers
@@ -54,7 +54,7 @@ abstract class AbstractOptilogType extends AbstractType
 
         return $this;
     }
-    
+
     /**
      * Add Api User Field to FormBuilder
      *
@@ -80,7 +80,7 @@ abstract class AbstractOptilogType extends AbstractType
 
         return $this;
     }
-    
+
     /**
      * Add Api Password Field to FormBuilder
      *
@@ -106,8 +106,7 @@ abstract class AbstractOptilogType extends AbstractType
 
         return $this;
     }
-    
-    
+
     /**
      * Add Api Key Field to FormBuilder
      *
@@ -133,8 +132,7 @@ abstract class AbstractOptilogType extends AbstractType
 
         return $this;
     }
-    
-    
+
     /**
      * Add User Carriers Names Field to FormBuilder
      *
@@ -156,17 +154,17 @@ abstract class AbstractOptilogType extends AbstractType
                 'required' => false,
                 'key_type' => TextType::class,
                 'key_options' => array(
-                    'label' => "Nom du Transporteur"
+                    'label' => "Nom du Transporteur",
                 ),
                 'value_type' => ChoiceType::class,
                 'value_options' => array(
                     'label' => "Code Optilog",
-                    'choices' => array_flip(CarrierCodes::CODES)
+                    'choices' => array_flip(CarrierCodes::CODES),
                 ),
                 'translation_domain' => "OptilogBundle",
             ))
         ;
 
         return $this;
-    }    
+    }
 }

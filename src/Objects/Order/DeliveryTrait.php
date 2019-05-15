@@ -20,7 +20,6 @@ namespace Splash\Connectors\Optilog\Objects\Order;
  */
 trait DeliveryTrait
 {
-
     /**
      * Build Fields using FieldFactory
      */
@@ -62,7 +61,7 @@ trait DeliveryTrait
             ->Name($groupName." (3)")
             ->Group($groupName)
             ->isWriteOnly();
-        
+
         //====================================================================//
         // Zip Code
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
@@ -89,7 +88,7 @@ trait DeliveryTrait
             ->MicroData("http://schema.org/PostalAddress", "addressCountry")
             ->Group($groupName)
             ->isWriteOnly();
-        
+
         //====================================================================//
         // Phone
         $this->fieldsFactory()->create(SPL_T_PHONE)
@@ -122,13 +121,14 @@ trait DeliveryTrait
      *
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     protected function setDeliveryFields($fieldName, $fieldData)
     {
         //====================================================================//
         // WRITE Field
         switch ($fieldName) {
-            
             //====================================================================//
             // Direct Writtings
             case 'Nom':
@@ -144,7 +144,6 @@ trait DeliveryTrait
                 $this->setSimple($fieldName, $fieldData);
 
                 break;
-            
             default:
                 return;
         }

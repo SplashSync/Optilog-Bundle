@@ -22,7 +22,6 @@ use Splash\Connectors\Optilog\Models\StatusCodes;
  */
 trait StatusTrait
 {
-
     /**
      * Build Fields using FieldFactory
      */
@@ -54,7 +53,6 @@ trait StatusTrait
             ->Name("Is Valid")
             ->MicroData("http://schema.org/OrderStatus", "OrderProcessing")
             ->isWriteOnly();
-
     }
 
     /**
@@ -68,11 +66,10 @@ trait StatusTrait
         //====================================================================//
         // READ Fields
         switch ($fieldName) {
-            
             case 'Statut':
                 $this->out[$fieldName] = $this->getSplashStatus();
 
-                break;            
+                break;
             default:
                 return;
         }
@@ -109,6 +106,7 @@ trait StatusTrait
      * Read Order Status
      *
      * @return string
+     *
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     private function getSplashStatus()

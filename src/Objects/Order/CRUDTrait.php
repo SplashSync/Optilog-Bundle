@@ -50,7 +50,9 @@ trait CRUDTrait
         }
         //====================================================================//
         // Prepare Product Data for Update
-        $product->Mode = "ALTER";        
+        /** @codingStandardsIgnoreStart */
+        $product->Mode = "ALTER";
+        /** @codingStandardsIgnoreEnd */
 
         return $product;
     }
@@ -66,39 +68,20 @@ trait CRUDTrait
         // Stack Trace
         Splash::log()->trace();
 
-//        //====================================================================//
-//        // Check Product SKU is given
-//        if (empty($this->in["sku"])) {
-//            return Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "sku");
-//        }
-//        //====================================================================//
-//        // Check Product Name is given
-//        if (empty($this->in["Libelle"])) {
-//            return Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "Libelle");
-//        }
-//        //====================================================================//
-//        // Check Product Weight is given
-//        if (empty($this->in["Poids"])) {
-//            return Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "Poids");
-//        }
-//        //====================================================================//
-//        // Init Object
-//        /** @codingStandardsIgnoreStart */
-//        $product = new stdClass();
-//        $product->Mode = "NEW";
-//        $product->Gamme = "Vernis";
-//        $product->ID = $this->in["sku"];
-//        $product->Libelle = $this->in["Libelle"];
-//        $product->Poids = UNITS::convertWeight($this->in["Poids"], UNITS::MASS_GRAM) ;
-//        /** @codingStandardsIgnoreEnd */
-//        //====================================================================//
-//        // Create Product Infos from Api
-//        $response = API::post("jSetArticles", array( $product ));
-//        if (null == $response) {
-//            return Splash::log()->errTrace("Unable to Create Product (".$this->in["sku"].").");
-//        }
+        //====================================================================//
+        // Check Order Unique Number is given
+        if (empty($this->in["DestID"])) {
+            return Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "DestID");
+        }
+        //====================================================================//
+        // Init Object
+        /** @codingStandardsIgnoreStart */
+        $order = new stdClass();
+        $order->Mode = "NEW";
+        $order->ID = $this->in["DestID"];
+        /** @codingStandardsIgnoreEnd */
 
-        return $this->load($product->ID);
+        return $order;
     }
 
     /**
@@ -127,6 +110,7 @@ trait CRUDTrait
         if (null == $response) {
             return Splash::log()->errTrace("Unable to Update Order (".$this->object->ID.").");
         }
+
         return $this->getObjectIdentifier();
     }
 
