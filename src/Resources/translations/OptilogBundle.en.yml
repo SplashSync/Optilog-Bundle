@@ -17,6 +17,10 @@ var:
         label:  API Key
         desc:   "Webservice API keys provide full access to your account, so keep them safe."
 
+    carriers:
+        label:  List of Availables Carriers Names
+        desc:   "Fill this list to map your Carriers Names with Optilog Carriers Codes."
+
 
 ## Node Profile
 profile:

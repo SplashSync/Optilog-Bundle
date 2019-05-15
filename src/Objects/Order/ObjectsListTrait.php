@@ -13,9 +13,10 @@
  *  file that was distributed with this source code.
  */
 
-namespace   Splash\Connectors\Optilog\Objects\Product;
+namespace   Splash\Connectors\Optilog\Objects\Order;
 
 use Splash\Connectors\Optilog\Models\RestHelper as API;
+use Splash\Connectors\Optilog\Models\StatusCodes;
 use Splash\Bundle\Helpers\Objects\CachedListHelper;
 
 /**
@@ -32,11 +33,11 @@ trait ObjectsListTrait
     {
         //====================================================================//
         // Check if Product Lists is Available in Cache
-        $cachedList = new CachedListHelper($this->getWebserviceId(), "products.list");
+        $cachedList = new CachedListHelper($this->getWebserviceId(), "orders.list");
         if(!$cachedList->hasCache()) {
             //====================================================================//
             // Get Product Lists from Api
-            $rawData = API::post("jGetStocks", array(array("ID" => "*")));
+            $rawData = API::post("jGetStatutCommande", array(array("ID" => "*")));
             //====================================================================//
             // Request Failed
             if ((null == $rawData) || !isset($rawData->result)) {
@@ -53,18 +54,18 @@ trait ObjectsListTrait
         // Compute Totals
         $response = array(
             'meta' => array('current' => count($listData), 'total' => $cachedList->getFilteredTotal()),
-        );
+        );        
         //====================================================================//
         // Parse Data in response
-        foreach ($listData as $product) {
+        foreach ($listData as $order) {
             /** @codingStandardsIgnoreStart */            
             $response[] = array(
-                'id' => $product->ID,
-                'sku' => $product->ID,
-                'Libelle' => $product->Libelle,
-                'Stk_Dispo' => $product->Stk_Dispo,
-                'Stk_Physique' => $product->Stk_Physique,
-                'IsActif' => $product->IsActif,
+                'id' => $order->DestID,
+                'IntID' => $order->ID,
+                'DestID' => $order->DestID,
+                'Statut' => StatusCodes::SPLASH[$order->Statut],
+                'Bordereau' => $order->Bordereau,
+                'Commentaire' => $order->Commentaire,
             );
             /** @codingStandardsIgnoreEnd */        
         }

@@ -19,8 +19,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-//use Splash\Connectors\Optilog\Models\SoapHelper as API;
 use Splash\Connectors\Optilog\Models\RestHelper as API;
+use Burgov\Bundle\KeyValueFormBundle\Form\Type\KeyValueType;
+use Splash\Connectors\Optilog\Models\CarrierCodes;
 
 /**
  * Base Form Type for Optilog Connectors Servers
@@ -132,4 +133,40 @@ abstract class AbstractOptilogType extends AbstractType
 
         return $this;
     }
+    
+    
+    /**
+     * Add User Carriers Names Field to FormBuilder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     *
+     * @return $this
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function addCarriersListField(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            //==============================================================================
+            // Optilog Carriers Names => Codes For Authentification
+            ->add('Carriers', KeyValueType::class, array(
+                'label' => "var.carriers.label",
+                'help_block' => "var.carriers.desc",
+                'required' => false,
+                'key_type' => TextType::class,
+                'key_options' => array(
+                    'label' => "Nom du Transporteur"
+                ),
+                'value_type' => ChoiceType::class,
+                'value_options' => array(
+                    'label' => "Code Optilog",
+                    'choices' => array_flip(CarrierCodes::CODES)
+                ),
+                'translation_domain' => "OptilogBundle",
+            ))
+        ;
+
+        return $this;
+    }    
 }

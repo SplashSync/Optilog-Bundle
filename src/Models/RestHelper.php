@@ -34,8 +34,10 @@ class RestHelper
      * @var array
      */
     const ENDPOINTS = array(
-        "Preprod V2" => "https://api.preprod.geolie.net/wsgestinbox_V2.asmx",
-        "Production V2" => "https://api.geolie.net/wsgestinbox_V2.asmx",
+        "Preprod V1" => "https://api.preprod.geolie.net/wsgestinbox.asmx",
+//        "Preprod V2" => "https://api.preprod.geolie.net/wsgestinbox_V2.asmx",
+        "Production V1" => "https://api.geolie.net/wsgestinbox.asmx",
+//        "Production V2" => "https://api.geolie.net/wsgestinbox_V2.asmx",
     );
 
     /**
@@ -62,7 +64,9 @@ class RestHelper
         static::$endPoint = $apiUrl;
         //====================================================================//
         // Configure API Template Request
-        $template = Request::init(null, Mime::XML)
+        $template = Request::init()
+            ->sends(Mime::FORM)
+            ->expects(Mime::JSON)
             ->addHeaders(array(
                 "Clef" => $apiKey,
                 "UserName" => $apiUser,
@@ -85,7 +89,7 @@ class RestHelper
     {
         //====================================================================//
         // Perform HelloWorld Test
-        $response = self::get("HelloWorld", array("Nom" => "Splash Sync"));
+        $response = self::get("jHelloWorld", array("Nom" => "SplashSync"));
         //====================================================================//
         // If Test Failed
         if (null === $response) {
@@ -107,7 +111,7 @@ class RestHelper
     {
         //====================================================================//
         // Perform HelloWorld Test
-        $response = self::get("HelloWorldSecure", array("Nom" => "SplashSync"));
+        $response = self::get("jHelloWorldSecure", array("Nom" => "SplashSync"));
         //====================================================================//
         // If Test Failed
         if (null === $response) {
@@ -140,7 +144,9 @@ class RestHelper
         //====================================================================//
         // Perform Request
         try {
-            $response = Request::get($uri)->send();
+            $response = Request::get($uri)
+                    ->sendsType(Mime::PLAIN)
+                    ->send();
         } catch (ConnectionErrorException $ex) {
             Splash::log()->err($ex->getMessage());
 
@@ -152,25 +158,7 @@ class RestHelper
     }
 
     /**
-     * Optilog API GET Request with data Encapsulation
-     *
-     * @param string $path API REST Path
-     * @param array  $body Request Data
-     *
-     * @return null|stdClass
-     */
-    public static function getWithData(string $path, array $body = null): ?stdClass
-    {
-        //====================================================================//
-        // Prepare Parameters
-        $data = array("data" => json_encode($body) );
-        //====================================================================//
-        // Execute Raw GET Request
-        return self::get($path, $data);
-    }
-
-    /**
-     * SendInBlue API POST Request
+     * Optilog API POST Request
      *
      * @param string   $path API REST Path
      * @param stdClass $body Request Data
@@ -183,7 +171,8 @@ class RestHelper
         // Perform Request
         try {
             $response = Request::post(static::$endPoint."/".$path)
-                ->sendsAndExpects(Mime::JSON)
+                ->sends(Mime::FORM)
+                ->expects(Mime::JSON)
                 ->body(array("data" => json_encode($body)))
                 ->send();
         } catch (ConnectionErrorException $ex) {
@@ -197,7 +186,7 @@ class RestHelper
     }
 
     /**
-     * Analyze SendInBlue Api Response & Push Errors to Splash Log
+     * Analyze Optilog Api Response & Push Errors to Splash Log
      *
      * @param Response $response
      *
@@ -209,7 +198,7 @@ class RestHelper
         // Check if Optilog Response has Errors
         if (!$response->hasBody()) {
             return null;
-        }
+        } 
         //====================================================================//
         // Decode Optilog Response
         $body = self::decodeBody($response->body);
@@ -225,8 +214,8 @@ class RestHelper
         //====================================================================//
         // Check Response Status
         if (1 != $body->statut) {
-            Splash::log()->err($body->statutText);
-
+            Splash::log()->err($body->statutText); 
+            
             return null;
         }
 

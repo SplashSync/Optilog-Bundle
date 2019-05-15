@@ -18,43 +18,55 @@ namespace Splash\Connectors\Optilog\Objects;
 use Splash\Bundle\Models\AbstractStandaloneObject;
 use Splash\Connectors\Optilog\Services\OptilogConnector;
 use Splash\Models\Objects\IntelParserTrait;
+use Splash\Models\Objects\ObjectsTrait;
 use Splash\Models\Objects\SimpleFieldsTrait;
-use Splash\Models\Objects\PricesTrait;
 
 /**
- * Optilog Implementation of Product
+ * Optilog Implementation of Customers Orders
  */
-class Product extends AbstractStandaloneObject
+class Order extends AbstractStandaloneObject
 {
+    // Splash Php Core Traits
     use IntelParserTrait;
     use SimpleFieldsTrait;
-    use PricesTrait;
-    use Product\CRUDTrait;
-    use Product\ObjectsListTrait;
-    use Product\CoreTrait;
-    use Product\MainTrait;
-    use Product\PricesTrait;
-    use Product\StockTrait;
+    use ObjectsTrait;
+
+    // Optilog Order Traits
+    use Order\ObjectsListTrait;
+    use Order\CRUDTrait;
+    use Order\CoreTrait;
+    use Order\TrackingTrait;
+    use Order\DeliveryTrait;
+    use Order\ItemsTrait;
+    use Order\StatusTrait;
+
+    //====================================================================//
+    // Object Definition Parameters
+    //====================================================================//
 
     /**
-     *  Object Disable Flag. Override this flag to disable Object.
+     *  Object Disable Flag. Uncomment this line to Override this flag and disable Object.
      */
-    protected static $DISABLED = false;
-    
+//    protected static    $DISABLED        =  True;
+
     /**
-     *  Object Name
+     *  Object Name (Translated by Module)
      */
-    protected static $NAME = "Product";
-    
+    protected static $NAME = "Customer Order";
+
     /**
-     *  Object Description
+     *  Object Description (Translated by Module)
      */
-    protected static $DESCRIPTION = "Optilog Product";
-    
+    protected static $DESCRIPTION = "Optilog Order Object";
+
     /**
      *  Object Icon (FontAwesome or Glyph ico tag)
      */
-    protected static $ICO = "fa fa-product-hunt";
+    protected static $ICO = "fa fa-shopping-cart";
+
+    //====================================================================//
+    // General Class Variables
+    //====================================================================//
 
     /**
      * @var OptilogConnector

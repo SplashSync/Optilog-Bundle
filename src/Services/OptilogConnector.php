@@ -40,7 +40,8 @@ class OptilogConnector extends AbstractConnector
      * @var array
      */
     protected static $objectsMap = array(
-        "ThirdParty" => "Splash\\Connectors\\Optilog\\Objects\\Product",
+        "Product" => "Splash\\Connectors\\Optilog\\Objects\\Product",
+        "Order" => "Splash\\Connectors\\Optilog\\Objects\\Order",
     );
 
     /**
@@ -49,7 +50,7 @@ class OptilogConnector extends AbstractConnector
      * @var array
      */
     protected static $widgetsMap = array(
-//        "SelfTest" => "Splash\\Connectors\\SendInBlue\\Widgets\\SelfTest",
+        "SelfTest" => "Splash\\Connectors\\Optilog\\Widgets\\SelfTest",
     );
 
     /**
@@ -82,61 +83,6 @@ class OptilogConnector extends AbstractConnector
         if (!API::connect()) {
             return false;
         }
-//        //====================================================================//
-//        // Get List of Available Lists
-//        if (!$this->fetchMailingLists()) {
-//            return false;
-//        }
-//        //====================================================================//
-//        // Get List of Available Members Properties
-//        if (!$this->fetchAttributesLists()) {
-//            return false;
-//        }
-        
-//        $id = "TEST-SPLASH-" . uniqid();
-//        $id = 'dgCmd$ctl03$ctl00';
-////
-//        dump(API::post("SetCommandes", array(
-////            "data" => '{ "Commandes":[{}] }'
-////            "data" => '{ "Commandes":[ { "Mode":"ALTER", "ID":"monID", "DestID":"123", "Nom":"Emile SPECIMEN", "Adresse1":"9 Rue du Testeur", "CodePostal":"75004", "Ville":"PARIS", "CodePays":"FR", "Articles": [ { "ID":"DV1006X2", "Quantite":1 }, { "ID":"EK3022X1", "Quantite":3 } ] } ] }'
-//
-//            "Commandes" => array(array(
-//                "Mode" => "NEW",
-//                "ID" => $id,
-//                "Operation" => "CHE00119",
-//                "DO" => " Bernard SPLASH",
-//                "DestID" => $id,
-//                "Nom" => "B. Paquier",
-//                "Adresse1" => "28 Av. des Colombes",
-//                "CodePostal" => "33700",
-//                "Ville" => "Merignac",
-//                "CodePays" => "FR",
-//                "Transporteur" => "CHR_B2B_13",
-//                "Articles" => array(
-//                    array(
-//                        "ID" => "DV1006X2",
-//                        "Quantite" => "2",
-//                    )
-//                )
-////            )
-//        ))
-//                )));
-//
-//        dump(API::get("GetStatutCommande", array(
-//            "data" => json_encode( array(
-//                array("ID" => "TEST-SPLASH-5CCF6E824A7378")
-//            )
-//            )
-//        )));
-////
-////
-//        exit;
-//        dump(API::get("GetStatutCommande", array(
-//            "data" => json_encode( array(
-//                array("ID" => "*")
-//            )
-//            )
-//        )));
 
         return true;
     }
@@ -168,7 +114,7 @@ class OptilogConnector extends AbstractConnector
         //====================================================================//
         // Server Informations
         $informations->servertype = "Optilog Api V2";
-//        $informations->serverurl = API::ENDPOINT;
+        $informations->serverurl = "www.optilog.fr";
         //====================================================================//
         // Module Informations
         $informations->moduleauthor = SPLASH_AUTHOR;
