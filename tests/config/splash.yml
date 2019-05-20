@@ -13,6 +13,6 @@ splash:
             connector:          optilog
             config:  
                 WsHost:         ThisIsSecretWsHost
-                ApiUser:        ThisIsSecretApiUser
+                ApiUser:        splash
                 ApiPwd:         ThisIsSecretApiPwd
                 ApiKey:         ThisIsSecretApiKey
