@@ -29,7 +29,7 @@ trait CRUDTrait
      *
      * @param string $objectId Object id
      *
-     * @return null|stdClass
+     * @return false|stdClass
      */
     public function load($objectId)
     {
@@ -44,17 +44,20 @@ trait CRUDTrait
         }
         //====================================================================//
         // Extract Order Infos from Results
-        $product = array_shift($response->result);
-        if ((null == $product) || !isset($product->ID)) {
+        $order = array_shift($response->result);
+        if ((null == $order) || !($order instanceof stdClass)) {
+            return Splash::log()->errTrace("Unable to load Product (".$objectId.").");
+        }
+        if (!isset($order->ID)) {
             return Splash::log()->errTrace("Unable to load Order (".$objectId.").");
         }
         //====================================================================//
         // Prepare Product Data for Update
         /** @codingStandardsIgnoreStart */
-        $product->Mode = "ALTER";
+        $order->Mode = "ALTER";
         /** @codingStandardsIgnoreEnd */
 
-        return $product;
+        return $order;
     }
 
     /**

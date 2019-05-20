@@ -49,7 +49,7 @@ class SelfTest extends AbstractStandaloneWidget
     protected static $ICO = "fa fa-info-circle";
 
     /**
-     * @var SendInBlueConnector
+     * @var OptilogConnector
      */
     protected $connector;
 

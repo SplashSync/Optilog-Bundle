@@ -31,6 +31,11 @@ use stdClass;
 class RestHelper
 {
     /**
+     * @var int
+     */
+    const TIMEOUT = 10;
+
+    /**
      * @var array
      */
     const ENDPOINTS = array(
@@ -72,7 +77,7 @@ class RestHelper
                 "UserName" => $apiUser,
                 "Password" => $apiPwd,
             ))
-            ->timeout(3);
+            ->timeout(self::TIMEOUT);
         //====================================================================//
         // Set it as a template
         Request::ini($template);
@@ -160,8 +165,8 @@ class RestHelper
     /**
      * Optilog API POST Request
      *
-     * @param string   $path API REST Path
-     * @param stdClass $body Request Data
+     * @param string         $path API REST Path
+     * @param array|stdClass $body Request Data
      *
      * @return null|stdClass
      */
@@ -202,6 +207,11 @@ class RestHelper
         //====================================================================//
         // Decode Optilog Response
         $body = self::decodeBody($response->body);
+        if (null === $body) {
+            Splash::log()->err("Received an empty response");
+
+            return null;
+        }
         //====================================================================//
         // Check Response Message
         /** @codingStandardsIgnoreStart */
@@ -225,7 +235,7 @@ class RestHelper
     /**
      * Decode Optilog Api Reponse to Std Object
      *
-     * @param Response $responseBody
+     * @param Response|SimpleXMLElement|stdClass $responseBody
      *
      * @return null|stdClass Null if Errors Detected
      */
@@ -239,6 +249,10 @@ class RestHelper
             return json_decode($responseBody->d);
         }
 
-        return $responseBody;
+        if ($responseBody instanceof stdClass) {
+            return $responseBody;
+        }
+
+        return null;
     }
 }

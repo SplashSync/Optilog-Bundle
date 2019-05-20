@@ -1,4 +1,5 @@
 services:
+    
     ################################################################################
     # SPLASH Optilog Connector Service
     splash.connectors.optilog:
@@ -6,10 +7,3 @@ services:
         arguments:  [ "@event_dispatcher", "@logger" ]
         tags:       
             - { name: "splash.connector"}
-
-#    ################################################################################
-#    # Enables Dependency Injection in Controller Actions
-#    Splash\Connectors\Optilog\Controller\:
-#        resource: '../../Controller'
-#        public: true
-#        tags: ['controller.service_arguments']

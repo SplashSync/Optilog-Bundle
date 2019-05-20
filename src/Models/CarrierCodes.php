@@ -29,7 +29,7 @@ class CarrierCodes
         //====================================================================//
         // CALBERSON
         "CFE_AFF" => "CALBERSON AFFRETEMENT",
-        "CFE_MESSPL" => "CALBERSON CALBERSON",
+        //        "CFE_MESSPL" => "CALBERSON CALBERSON",
         "CFE_CX" => "CALBERSON CX",
         "CFE_CXI" => "CALBERSON CXI ",
         "CFE_EURO1" => "CALBERSON EUROFIRST",
@@ -93,7 +93,7 @@ class CarrierCodes
 
         //====================================================================//
         // FRANCE EXPRESS
-        "CFE_CXI" => "FRANCE EXPRESS FREX ",
+        //        "CFE_CXI" => "FRANCE EXPRESS FREX ",
 
         //====================================================================//
         // GLS

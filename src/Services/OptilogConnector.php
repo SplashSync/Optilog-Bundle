@@ -16,9 +16,9 @@
 namespace Splash\Connectors\Optilog\Services;
 
 use ArrayObject;
+use Splash\Bundle\Interfaces\Connectors\TrackingInterface;
 use Splash\Bundle\Models\AbstractConnector;
 use Splash\Connectors\Optilog\Form\EditFormType;
-//use Splash\Connectors\Optilog\Models\SoapHelper as API;
 use Splash\Connectors\Optilog\Models\RestHelper as API;
 use Splash\Connectors\Optilog\Objects\WebHook;
 use Splash\Core\SplashCore as Splash;
@@ -29,7 +29,7 @@ use Symfony\Component\Routing\RouterInterface;
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
-class OptilogConnector extends AbstractConnector
+class OptilogConnector extends AbstractConnector implements TrackingInterface
 {
     use \Splash\Bundle\Models\Connectors\GenericObjectMapperTrait;
     use \Splash\Bundle\Models\Connectors\GenericWidgetMapperTrait;
@@ -211,15 +211,15 @@ class OptilogConnector extends AbstractConnector
     public function getProfile() : array
     {
         return array(
-            'enabled' => true,                                   // is Connector Enabled
-            'beta' => false,                                  // is this a Beta release
-            'type' => self::TYPE_ACCOUNT,                     // Connector Type or Mode
-            'name' => 'optilog',                           // Connector code (lowercase, no space allowed)
-            'connector' => 'splash.connectors.optilog',         // Connector Symfony Service
-            'title' => 'profile.card.title',                   // Public short name
-            'label' => 'profile.card.label',                   // Public long name
-            'domain' => 'OptilogBundle',                     // Translation domain for names
-            'ico' => '/bundles/optilog/img/Optilog-Logo-Mini.png', // Public Icon path
+            'enabled' => true,                                      // is Connector Enabled
+            'beta' => false,                                        // is this a Beta release
+            'type' => self::TYPE_HIDDEN,                            // Connector Type or Mode
+            'name' => 'optilog',                                    // Connector code (lowercase, no space allowed)
+            'connector' => 'splash.connectors.optilog',             // Connector Symfony Service
+            'title' => 'profile.card.title',                        // Public short name
+            'label' => 'profile.card.label',                        // Public long name
+            'domain' => 'OptilogBundle',                            // Translation domain for names
+            'ico' => '/bundles/optilog/img/Optilog-Logo-Mini.png',  // Public Icon path
             'www' => 'http://www.optilog-fr.com',                   // Website Url
         );
     }

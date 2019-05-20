@@ -15,6 +15,7 @@
 
 namespace Splash\Connectors\Optilog\Objects;
 
+use Splash\Bundle\Interfaces\Objects\TrackingInterface;
 use Splash\Bundle\Models\AbstractStandaloneObject;
 use Splash\Connectors\Optilog\Services\OptilogConnector;
 use Splash\Models\Objects\IntelParserTrait;
@@ -24,7 +25,7 @@ use Splash\Models\Objects\SimpleFieldsTrait;
 /**
  * Optilog Implementation of Product
  */
-class Product extends AbstractStandaloneObject
+class Product extends AbstractStandaloneObject implements TrackingInterface
 {
     use IntelParserTrait;
     use SimpleFieldsTrait;
@@ -35,6 +36,7 @@ class Product extends AbstractStandaloneObject
     use Product\MainTrait;
     use Product\PricesTrait;
     use Product\StockTrait;
+    use Product\TrackingTrait;
 
     /**
      *  Object Disable Flag. Override this flag to disable Object.
