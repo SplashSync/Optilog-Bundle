@@ -12,7 +12,7 @@ splash:
             server_host:        "%splash_host%"
             connector:          optilog
             config:  
-                WsHost:         ThisIsSecretOptWs
+                WsHost:         https://api.preprod.geolie.net/wsgestinbox.asmx
                 ApiUser:        splash
                 ApiPwd:         ThisIsSecretApiPwd
                 ApiKey:         ThisIsSecretApiKey

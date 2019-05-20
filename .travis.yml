@@ -38,7 +38,6 @@ before_install:
 # Create database, schema and fixtures
 install:   
     # Setup Optilog Connector
-    - sed -i -e 's/ThisIsSecretOptWs/'$OPTILOG'/g' tests/config/splash.yml >/dev/null 2>&1
     - sed -i -e 's/ThisIsSecretApiPwd/'$API_PWD'/g' tests/config/splash.yml >/dev/null 2>&1
     - sed -i -e 's/ThisIsSecretApiKey/'$API_KEY'/g' tests/config/splash.yml >/dev/null 2>&1
 
