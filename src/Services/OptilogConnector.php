@@ -21,9 +21,7 @@ use Splash\Bundle\Models\AbstractConnector;
 use Splash\Connectors\Optilog\Form\DebugFormType;
 use Splash\Connectors\Optilog\Form\EditFormType;
 use Splash\Connectors\Optilog\Models\RestHelper as API;
-use Splash\Connectors\Optilog\Objects\WebHook;
 use Splash\Core\SplashCore as Splash;
-use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Optilog REST API Connector for Splash
