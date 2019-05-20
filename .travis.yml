@@ -40,7 +40,7 @@ install:
     # Setup Optilog Connector
     - sed -i -e 's/ThisIsSecretApiPwd/'$API_PWD'/g' tests/config/splash.yml >/dev/null 2>&1
     - sed -i -e 's/ThisIsSecretApiKey/'$API_KEY'/g' tests/config/splash.yml >/dev/null 2>&1
-    - sed -i -e 's/ThisIsSecretOptUrl/'$OPT_TST'/g' tests/config/splash.yml >/dev/null 2>&1
+    - sed -i -e 's/ThisIsSecretOptWs/'$OPT_TST'/g' tests/config/splash.yml >/dev/null 2>&1
 
     # Setup Travis
     - curl -s https://raw.githubusercontent.com/SplashSync/Php-Bundle/master/src/Resources/travis/configure.sh  | bash
