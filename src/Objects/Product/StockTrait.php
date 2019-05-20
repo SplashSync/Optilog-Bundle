@@ -89,7 +89,7 @@ trait StockTrait
             // Stock Reel
             case 'Stk_Dispo':
                 //====================================================================//
-                // Debug => Random Stocks                
+                // Debug => Random Stocks
                 if ($this->connector->isDebugMode() && $this->getParameter($this->object->ID, false, 'RandomStocks')) {
                     $this->object->Stk_Dispo = rand(10, 100);
                 }

@@ -88,12 +88,12 @@ trait TrackerTrait
         //====================================================================//
         // Parse Data in response
         foreach ($rawData->result as $product) {
+            /** @codingStandardsIgnoreStart */
             //====================================================================//
             // Debug => Random Stocks
             if ($this->connector->isDebugMode() && $this->getParameter($product->ID, false, 'RandomStocks')) {
                 $product->Stk_Dispo = rand(10, 100);
             }
-            /** @codingStandardsIgnoreStart */
             $response[(string) $product->ID] = (int) $product->Stk_Dispo;
             /** @codingStandardsIgnoreEnd */
         }

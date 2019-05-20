@@ -88,12 +88,12 @@ trait TrackerTrait
         //====================================================================//
         // Parse Data in response
         foreach ($rawData->result as $order) {
+            /** @codingStandardsIgnoreStart */
             //====================================================================//
             // Debug => Force Order Status
             if ($this->connector->isDebugMode() && $this->getParameter($order->ID, false, 'ForcedStatus')) {
                 $order->Statut = $this->getParameter($order->ID, false, 'ForcedStatus');
             }
-            /** @codingStandardsIgnoreStart */
             $response[(string) $order->ID] = (int) $order->Statut;
             /** @codingStandardsIgnoreEnd */
         }
