@@ -165,7 +165,7 @@ trait CRUDTrait
         /** @codingStandardsIgnoreEnd */
         //====================================================================//
         // Update Product Infos from Api
-        $response = API::post("SetArticles", array( $product ));
+        $response = API::post("jSetArticles", array( $product ));
         if (null == $response) {
             return Splash::log()->errTrace("Unable to Delete Product (".$objectId.").");
         }
