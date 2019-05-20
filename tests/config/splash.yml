@@ -12,7 +12,7 @@ splash:
             server_host:        "%splash_host%"
             connector:          optilog
             config:  
-                WsHost:         ThisIsSecretWsHost
+                WsHost:         ThisIsSecretApiUrl
                 ApiUser:        splash
                 ApiPwd:         ThisIsSecretApiPwd
                 ApiKey:         ThisIsSecretApiKey
