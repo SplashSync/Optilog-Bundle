@@ -38,7 +38,7 @@ trait TrackingTrait
     {
         //====================================================================//
         // Check if Product Lists is Available in Cache
-        $cachedList = new CachedListHelper($this->getWebserviceId(), "products.stocks");
+        $cachedList = new CachedListHelper($this->getWebserviceId(), "products.stocks", 3600);
         $isCached = $cachedList->hasCache();
         //====================================================================//
         // Load Product Previously Stored Stocks Lists from Cache
