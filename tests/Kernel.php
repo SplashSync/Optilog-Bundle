@@ -47,7 +47,7 @@ class Kernel extends BaseKernel
 
         //==============================================================================
         // SPLASH CONNECTORS BUNDLE
-        $bundles[] = new Splash\Connectors\SendInBlue\SendInBlueBundle();
+        $bundles[] = new Splash\Connectors\Optilog\OptilogBundle();
 
         //==============================================================================
         // TEST & DEV BUNDLES
