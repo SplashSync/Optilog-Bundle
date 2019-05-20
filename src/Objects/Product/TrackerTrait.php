@@ -21,14 +21,14 @@ use Splash\Connectors\Optilog\Models\RestHelper as API;
 /**
  * Optilog Products Objects Changes Tracking
  */
-trait TrackingTrait
+trait TrackerTrait
 {
     /**
      * {@inheritdoc}
      */
     public function getTrackingDelay(): int
     {
-        return 1;
+        return 10;
     }
 
     /**
@@ -88,12 +88,15 @@ trait TrackingTrait
         //====================================================================//
         // Parse Data in response
         foreach ($rawData->result as $product) {
+            //====================================================================//
+            // Debug => Random Stocks
+            if ($this->connector->isDebugMode() && $this->getParameter($product->ID, false, 'RandomStocks')) {
+                $product->Stk_Dispo = rand(10, 100);
+            }
             /** @codingStandardsIgnoreStart */
             $response[(string) $product->ID] = (int) $product->Stk_Dispo;
             /** @codingStandardsIgnoreEnd */
         }
-
-        $response["PR1000"] = rand(10, 100);
 
         return $response;
     }

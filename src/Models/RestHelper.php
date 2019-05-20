@@ -190,6 +190,24 @@ class RestHelper
         return self::catchErrors($response);
     }
 
+    //====================================================================//
+    //  DEBUG FEATURES
+    //====================================================================//
+
+    /**
+     * Check If Server is In Debug Mode
+     *
+     * @return bool
+     */
+    public static function isDebugMode() : bool
+    {
+        return (static::$endPoint == self::ENDPOINTS["Preprod V1"]);
+    }
+
+    //====================================================================//
+    //  PRIVATE METHODS
+    //====================================================================//
+
     /**
      * Analyze Optilog Api Response & Push Errors to Splash Log
      *

@@ -18,6 +18,7 @@ namespace Splash\Connectors\Optilog\Services;
 use ArrayObject;
 use Splash\Bundle\Interfaces\Connectors\TrackingInterface;
 use Splash\Bundle\Models\AbstractConnector;
+use Splash\Connectors\Optilog\Form\DebugFormType;
 use Splash\Connectors\Optilog\Form\EditFormType;
 use Splash\Connectors\Optilog\Models\RestHelper as API;
 use Splash\Connectors\Optilog\Objects\WebHook;
@@ -108,9 +109,9 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
         $informations->phone = "01.64.13.46.50";
         //====================================================================//
         // Server Logo & Ico
-        $informations->icoraw = Splash::file()->readFileContents(dirname(dirname(__FILE__))."/Resources/public/img/Optilog-Logo-Mini.png");
+        $informations->icoraw = Splash::file()->readFileContents(dirname(dirname(__FILE__))."/Resources/public/img/Optilog-Ico.png");
         $informations->logourl = null;
-        $informations->logoraw = Splash::file()->readFileContents(dirname(dirname(__FILE__))."/Resources/public/img/Optilog-Logo-Mini.png");
+        $informations->logoraw = Splash::file()->readFileContents(dirname(dirname(__FILE__))."/Resources/public/img/Optilog-Logo.png");
         //====================================================================//
         // Server Informations
         $informations->servertype = "Optilog Api V2";
@@ -175,10 +176,6 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
             $config["ApiPwd"]
         );
     }
-
-    //====================================================================//
-    // Objects Interfaces
-    //====================================================================//
 
     //====================================================================//
     // Files Interfaces
@@ -253,7 +250,9 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
      */
     public function getFormBuilderName() : string
     {
-        return EditFormType::class;
+        $this->selfTest();
+
+        return $this->isDebugMode() ? DebugFormType::class : EditFormType::class;
     }
 
     /**
@@ -270,7 +269,6 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
     public function getPublicActions() : array
     {
         return array(
-            //            "index" => "SendInBlueBundle:WebHooks:index",
         );
     }
 
@@ -280,190 +278,20 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
     public function getSecuredActions() : array
     {
         return array(
-            //            "webhooks" => "SendInBlueBundle:Actions:webhooks",
         );
     }
 
     //====================================================================//
-    //  HIGH LEVEL WEBSERVICE CALLS
+    //  DEBUG FEATURES
     //====================================================================//
-//
-//    /**
-//     * Check & Update SendInBlue Api Account WebHooks.
-//     *
-//     * @return bool
-//     */
-//    public function verifyWebHooks() : bool
-//    {
-//        //====================================================================//
-//        // Connector SelfTest
-//        if (!$this->selfTest()) {
-//            return false;
-//        }
-//        //====================================================================//
-//        // Generate WebHook Url
-//        $webHookServer = filter_input(INPUT_SERVER, 'SERVER_NAME');
-//        //====================================================================//
-//        // When Running on a Local Server
-//        if (false !== strpos("localhost", $webHookServer)) {
-//            $webHookServer = "www.splashsync.com";
-//        }
-//        //====================================================================//
-//        // Create Object Class
-//        $webHookManager = new WebHook($this);
-//        $webHookManager->configure("webhook", $this->getWebserviceId(), $this->getConfiguration());
-//        //====================================================================//
-//        // Get List Of WebHooks for this List
-//        $webHooks = $webHookManager->objectsList();
-//        if (isset($webHooks["meta"])) {
-//            unset($webHooks["meta"]);
-//        }
-//        //====================================================================//
-//        // Filter & Clean List Of WebHooks
-//        foreach ($webHooks as $webHook) {
-//            //====================================================================//
-//            // This is a Splash WebHooks
-//            if (false !== strpos(trim($webHook['url']), $webHookServer)) {
-//                return true;
-//            }
-//        }
-//        //====================================================================//
-//        // Splash WebHooks was NOT Found
-//        return false;
-//    }
-//
-//    /**
-//     * Check & Update SendInBlue Api Account WebHooks.
-//     *
-//     * @param RouterInterface $router
-//     *
-//     * @return bool
-//     */
-//    public function updateWebHooks(RouterInterface $router) : bool
-//    {
-//        //====================================================================//
-//        // Connector SelfTest
-//        if (!$this->selfTest()) {
-//            return false;
-//        }
-//        //====================================================================//
-//        // Generate WebHook Url
-//        $webHookServer = filter_input(INPUT_SERVER, 'SERVER_NAME');
-//        $webHookUrl = $router->generate(
-//            'splash_connector_action',
-//            array(
-//                'connectorName' => $this->getProfile()["name"],
-//                'webserviceId' => $this->getWebserviceId(),
-//            ),
-//            RouterInterface::ABSOLUTE_URL
-//        );
-//        //====================================================================//
-//        // When Running on a Local Server
-//        if (false !== strpos("localhost", $webHookServer)) {
-//            $webHookServer = "www.splashsync.com";
-//            $webHookUrl = "https://www.splashsync.com/en/ws/SendInBlue/123456";
-//        }
-//        //====================================================================//
-//        // Create Object Class
-//        $webHookManager = new WebHook($this);
-//        $webHookManager->configure("webhook", $this->getWebserviceId(), $this->getConfiguration());
-//        //====================================================================//
-//        // Get List Of WebHooks for this List
-//        $webHooks = $webHookManager->objectsList();
-//        if (isset($webHooks["meta"])) {
-//            unset($webHooks["meta"]);
-//        }
-//        //====================================================================//
-//        // Filter & Clean List Of WebHooks
-//        $foundWebHook = false;
-//        foreach ($webHooks as $webHook) {
-//            //====================================================================//
-//            // This is Current Node WebHooks
-//            if (trim($webHook['url']) == $webHookUrl) {
-//                $foundWebHook = true;
-//
-//                continue;
-//            }
-//            //====================================================================//
-//            // This is a Splash WebHooks
-//            if (false !== strpos(trim($webHook['url']), $webHookServer)) {
-//                $webHookManager->delete($webHook['id']);
-//            }
-//        }
-//        //====================================================================//
-//        // Splash WebHooks was Found
-//        if ($foundWebHook) {
-//            return true;
-//        }
-//        //====================================================================//
-//        // Add Splash WebHooks
-//        return (false !== $webHookManager->create($webHookUrl));
-//    }
-//
-//    //====================================================================//
-//    //  LOW LEVEL PRIVATE FUNCTIONS
-//    //====================================================================//
-//
-//    /**
-//     * Get SendInBlue User Lists
-//     *
-//     * @return bool
-//     */
-//    private function fetchMailingLists()
-//    {
-//        //====================================================================//
-//        // Get User Lists from Api
-//        $response = API::get('contacts/lists');
-//        if (is_null($response)) {
-//            return false;
-//        }
-//        if (!isset($response->lists)) {
-//            return false;
-//        }
-//        //====================================================================//
-//        // Parse Lists to Connector Settings
-//        $listIndex = array();
-//        foreach ($response->lists as $listDetails) {
-//            //====================================================================//
-//            // Add List Index
-//            $listIndex[$listDetails->id] = $listDetails->name;
-//        }
-//        //====================================================================//
-//        // Store in Connector Settings
-//        $this->setParameter("ApiListsIndex", $listIndex);
-//        $this->setParameter("ApiListsDetails", $response->lists);
-//        //====================================================================//
-//        // Update Connector Settings
-//        $this->updateConfiguration();
-//
-//        return true;
-//    }
-//
-//    /**
-//     * Get SendInBlue User Attributes Lists
-//     *
-//     * @return bool
-//     */
-//    private function fetchAttributesLists()
-//    {
-//        //====================================================================//
-//        // Get User Lists from Api
-//        $response = API::get('contacts/attributes');
-//        if (is_null($response)) {
-//            return false;
-//        }
-//        // @codingStandardsIgnoreStart
-//        if (!isset($response->attributes)) {
-//            return false;
-//        }
-//        //====================================================================//
-//        // Store in Connector Settings
-//        $this->setParameter("ContactAttributes", $response->attributes);
-//        // @codingStandardsIgnoreEnd
-//        //====================================================================//
-//        // Update Connector Settings
-//        $this->updateConfiguration();
-//
-//        return true;
-//    }
+
+    /**
+     * Check If Server is In Debug Mode
+     *
+     * @return bool
+     */
+    public function isDebugMode() : bool
+    {
+        return API::isDebugMode();
+    }
 }

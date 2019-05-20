@@ -36,7 +36,7 @@ class Product extends AbstractStandaloneObject implements TrackingInterface
     use Product\MainTrait;
     use Product\PricesTrait;
     use Product\StockTrait;
-    use Product\TrackingTrait;
+    use Product\TrackerTrait;
 
     /**
      *  Object Disable Flag. Override this flag to disable Object.

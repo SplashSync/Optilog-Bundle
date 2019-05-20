@@ -112,6 +112,11 @@ trait StatusTrait
     private function getSplashStatus()
     {
         //====================================================================//
+        // Debug => Force Order Status
+        if ($this->connector->isDebugMode() && $this->getParameter($this->object->ID, false, 'ForcedStatus')) {
+            $this->object->Statut = $this->getParameter($this->object->ID, false, 'ForcedStatus');
+        }
+        //====================================================================//
         // If order is in  Static Status => Use Static Status
         if (isset(StatusCodes::SPLASH[$this->object->Statut])) {
             return StatusCodes::SPLASH[$this->object->Statut];

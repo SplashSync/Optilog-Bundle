@@ -18,7 +18,9 @@ namespace Splash\Connectors\Optilog\Form;
 use Burgov\Bundle\KeyValueFormBundle\Form\Type\KeyValueType;
 use Splash\Connectors\Optilog\Models\CarrierCodes;
 use Splash\Connectors\Optilog\Models\RestHelper as API;
+use Splash\Connectors\Optilog\Models\StatusCodes;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -160,6 +162,73 @@ abstract class AbstractOptilogType extends AbstractType
                 'value_options' => array(
                     'label' => "Code Optilog",
                     'choices' => array_flip(CarrierCodes::CODES),
+                ),
+                'translation_domain' => "OptilogBundle",
+            ))
+        ;
+
+        return $this;
+    }
+
+    /**
+     * Add List of SKUs for Random Stocks to FormBuilder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     *
+     * @return $this
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function addRandomStocksField(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            //==============================================================================
+            // Optilog Carriers Names => Codes For Authentification
+            ->add('RandomStocks', KeyValueType::class, array(
+                'label' => "[DEBUG] Random Products Stocks",
+                'required' => false,
+                'key_type' => TextType::class,
+                'key_options' => array(
+                    'label' => "SKU du Produit",
+                ),
+                'value_type' => CheckboxType::class,
+                'value_options' => array(
+                    'label' => "Random Stock",
+                ),
+                'translation_domain' => "OptilogBundle",
+            ))
+        ;
+
+        return $this;
+    }
+
+    /**
+     * Add List of Orders ID where Status is Forced to FormBuilder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     *
+     * @return $this
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function addForcedOrderStatusField(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            //==============================================================================
+            // Optilog Carriers Names => Codes For Authentification
+            ->add('ForcedStatus', KeyValueType::class, array(
+                'label' => "[DEBUG] Force Orders Status",
+                'required' => false,
+                'key_type' => TextType::class,
+                'key_options' => array(
+                    'label' => "Order Number",
+                ),
+                'value_type' => ChoiceType::class,
+                'value_options' => array(
+                    'label' => "Forced Status",
+                    'choices' => array_flip(StatusCodes::SPLASH),
                 ),
                 'translation_domain' => "OptilogBundle",
             ))

@@ -15,6 +15,7 @@
 
 namespace Splash\Connectors\Optilog\Objects;
 
+use Splash\Bundle\Interfaces\Objects\TrackingInterface;
 use Splash\Bundle\Models\AbstractStandaloneObject;
 use Splash\Connectors\Optilog\Services\OptilogConnector;
 use Splash\Models\Objects\IntelParserTrait;
@@ -24,7 +25,7 @@ use Splash\Models\Objects\SimpleFieldsTrait;
 /**
  * Optilog Implementation of Customers Orders
  */
-class Order extends AbstractStandaloneObject
+class Order extends AbstractStandaloneObject implements TrackingInterface
 {
     // Splash Php Core Traits
     use IntelParserTrait;
@@ -39,6 +40,7 @@ class Order extends AbstractStandaloneObject
     use Order\DeliveryTrait;
     use Order\ItemsTrait;
     use Order\StatusTrait;
+    use Order\TrackerTrait;
 
     //====================================================================//
     // Object Definition Parameters
