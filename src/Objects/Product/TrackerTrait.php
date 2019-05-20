@@ -28,7 +28,7 @@ trait TrackerTrait
      */
     public function getTrackingDelay(): int
     {
-        return 10;
+        return $this->connector->isDebugMode() ? 1 : 10;
     }
 
     /**
