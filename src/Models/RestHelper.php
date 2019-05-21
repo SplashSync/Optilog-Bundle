@@ -145,7 +145,6 @@ class RestHelper
         if (!empty($body)) {
             $uri .= "?".http_build_query($body);
         }
-        Splash::log()->war($uri);
         //====================================================================//
         // Perform Request
         try {
