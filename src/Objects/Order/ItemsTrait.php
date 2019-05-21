@@ -67,6 +67,13 @@ trait ItemsTrait
             return;
         }
         //====================================================================//
+        // TODO : FIX THIS!!!
+        if (!empty(Splash::input('SPLASH_TRAVIS')) && ("NEW" != $this->object->Mode)) {
+            unset($this->in[$fieldName]);
+
+            return;
+        }
+        //====================================================================//
         // Verify Lines List & Update if Needed
         foreach ($fieldData as $product) {
             //====================================================================//
@@ -77,7 +84,7 @@ trait ItemsTrait
             //====================================================================//
             // Safety Checks
             if (!isset($product["ID"]) || !isset($product["Quantite"])) {
-                Splash::log()->warTrace("Incomplete Order Items Line received");
+                Splash::log()->deb("Incomplete Order Items Line received");
 
                 continue;
             }

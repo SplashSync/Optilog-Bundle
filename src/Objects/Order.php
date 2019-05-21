@@ -17,6 +17,7 @@ namespace Splash\Connectors\Optilog\Objects;
 
 use Splash\Bundle\Interfaces\Objects\TrackingInterface;
 use Splash\Bundle\Models\AbstractStandaloneObject;
+use Splash\Client\Splash;
 use Splash\Connectors\Optilog\Services\OptilogConnector;
 use Splash\Models\Objects\IntelParserTrait;
 use Splash\Models\Objects\ObjectsTrait;
@@ -87,5 +88,9 @@ class Order extends AbstractStandaloneObject implements TrackingInterface
         //====================================================================//
         // Connector SelfTest
         $parentConnector->selfTest();
+
+        //====================================================================//
+        //  Load Translation File
+        Splash::translator()->load('local');
     }
 }

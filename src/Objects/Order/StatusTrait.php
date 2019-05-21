@@ -16,6 +16,7 @@
 namespace Splash\Connectors\Optilog\Objects\Order;
 
 use Splash\Connectors\Optilog\Models\StatusCodes;
+use Splash\Core\SplashCore      as Splash;
 
 /**
  * Access to Orders Status Fields
@@ -90,6 +91,13 @@ trait StatusTrait
         switch ($fieldName) {
             case 'Mode':
                 //====================================================================//
+                // Debug => Force Order Status
+                if ($this->connector->isDebugMode()) {
+                    Splash::log()->war("Order Validation is disabled in Preproduction.");
+
+                    break;
+                }
+                //====================================================================//
                 // TWO POSSIBLES INPUTS MODES
                 // => Order is Draft >> ALTER
                 // => Order is Validated >> VALIDATE
@@ -113,8 +121,8 @@ trait StatusTrait
     {
         //====================================================================//
         // Debug => Force Order Status
-        if ($this->connector->isDebugMode() && $this->getParameter($this->object->ID, false, 'ForcedStatus')) {
-            $this->object->Statut = $this->getParameter($this->object->ID, false, 'ForcedStatus');
+        if ($this->connector->isDebugMode() && $this->getParameter($this->object->DestID, false, 'ForcedStatus')) {
+            $this->object->Statut = $this->getParameter($this->object->DestID, false, 'ForcedStatus');
         }
         //====================================================================//
         // If order is in  Static Status => Use Static Status

@@ -31,6 +31,7 @@ trait PricesTrait
             ->Identifier("PV")
             ->Name("Prix de vente")
             ->MicroData("http://schema.org/Product", "price")
+            ->setPreferNone()
             ->isWriteOnly();
 
         //====================================================================//
@@ -39,6 +40,7 @@ trait PricesTrait
             ->Identifier("PA")
             ->Name("Prix d’achat")
             ->MicroData("http://schema.org/Product", "wholesalePrice")
+            ->setPreferNone()
             ->isWriteOnly();
     }
 

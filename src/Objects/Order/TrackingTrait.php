@@ -100,6 +100,8 @@ trait TrackingTrait
                 // Detect Carrier Code
                 $carrierCode = $this->getCarrierCode((string) $fieldData);
                 if (!$carrierCode) {
+                    Splash::log()->war("Unable to detect Carrier Code!!");
+
                     break;
                 }
                 //====================================================================//
@@ -130,11 +132,12 @@ trait TrackingTrait
         //====================================================================//
         // Load List from Connector Parameters
         $carriers = $this->getParameter("Carriers", array());
+
         //====================================================================//
         // Identify Carrier Code from Name
         $carrierCode = $carrierName;
         if (is_array($carriers) && isset($carriers[$carrierName])) {
-            $carrierCode = $carrierName;
+            $carrierCode = $carriers[$carrierName];
         }
         //====================================================================//
         // Check Carrier Code is Valid

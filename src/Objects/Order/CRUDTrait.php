@@ -85,13 +85,39 @@ trait CRUDTrait
         //====================================================================//
         // Init Object
         /** @codingStandardsIgnoreStart */
-        $order = new stdClass();
-        $order->Mode = "NEW";
-        $order->ID = $this->in["DestID"];
-        $order->Operation = $this->getParameter('ApiOp');
+        $this->object = new stdClass();
+        $this->object->Mode = "NEW";
+        $this->object->ID = $this->in["DestID"];
+        $this->object->DestID = $this->in["DestID"];
+        $this->object->Operation = $this->getParameter('ApiOp');
         /** @codingStandardsIgnoreEnd */
 
-        return $order;
+        //====================================================================//
+        // Write Minimal Object Data
+        $fields = is_a($this->in, "ArrayObject") ? $this->in->getArrayCopy() : $this->in;
+        foreach ($fields as $fieldName => $fieldData) {
+            //====================================================================//
+            // Write Delivery Fields
+            $this->setDeliveryFields($fieldName, $fieldData);
+            //====================================================================//
+            // Write Items Fields
+            $this->setItemsFields($fieldName, $fieldData);
+        }
+
+        //====================================================================//
+        // Create Order Infos from Api
+        $response = API::post("jSetCommandes", array( "Commandes" => array($this->object)));
+        if (null == $response) {
+            return Splash::log()->errTrace("Unable to Create Order (".$this->object->ID.").");
+        }
+
+        //====================================================================//
+        // Setup Object fro Edit
+        /** @codingStandardsIgnoreStart */
+        $this->object->Mode = "ALTER";
+        /** @codingStandardsIgnoreEnd */
+
+        return $this->object;
     }
 
     /**
@@ -111,11 +137,8 @@ trait CRUDTrait
         if (!$needed) {
             return $this->getObjectIdentifier();
         }
-//        //====================================================================//
-//        // Prepare Product Data for Update
-//        $this->object->Mode = "ALTER";
         //====================================================================//
-        // Update Product Infos from Api
+        // Update Order Infos from Api
         $response = API::post("jSetCommandes", array( "Commandes" => array($this->object)));
         if (null == $response) {
             return Splash::log()->errTrace("Unable to Update Order (".$this->object->ID.").");
@@ -158,10 +181,10 @@ trait CRUDTrait
      */
     public function getObjectIdentifier()
     {
-        if (!isset($this->object->ID)) {
+        if (!isset($this->object->DestID)) {
             return false;
         }
 
-        return $this->object->ID;
+        return $this->object->DestID;
     }
 }

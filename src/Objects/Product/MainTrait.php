@@ -42,6 +42,7 @@ trait MainTrait
             ->description("Poids d’une unité en grammes (Kg >> g)")
             ->Group($groupName)
             ->MicroData("http://schema.org/Product", "weight")
+            ->setPreferNone()
             ->isWriteOnly();
 
         //====================================================================//
@@ -52,6 +53,7 @@ trait MainTrait
             ->description("Hauteur en mm (M >> mm)")
             ->Group($groupName)
             ->MicroData("http://schema.org/Product", "height")
+            ->setPreferNone()
             ->isWriteOnly();
 
         //====================================================================//
@@ -62,6 +64,7 @@ trait MainTrait
             ->description("Longueur en mm (M >> mm)")
             ->Group($groupName)
             ->MicroData("http://schema.org/Product", "depth")
+            ->setPreferNone()
             ->isWriteOnly();
 
         //====================================================================//
@@ -72,6 +75,7 @@ trait MainTrait
             ->description("Largeur en mm (M >> mm)")
             ->Group($groupName)
             ->MicroData("http://schema.org/Product", "width")
+            ->setPreferNone()
             ->isWriteOnly();
 
         //====================================================================//

@@ -91,10 +91,10 @@ trait TrackerTrait
             /** @codingStandardsIgnoreStart */
             //====================================================================//
             // Debug => Force Order Status
-            if ($this->connector->isDebugMode() && $this->getParameter($order->ID, false, 'ForcedStatus')) {
-                $order->Statut = $this->getParameter($order->ID, false, 'ForcedStatus');
+            if ($this->connector->isDebugMode() && $this->getParameter($order->DestID, false, 'ForcedStatus')) {
+                $order->Statut = $this->getParameter($order->DestID, false, 'ForcedStatus');
             }
-            $response[(string) $order->ID] = (int) $order->Statut;
+            $response[(string) $order->DestID] = (int) $order->Statut;
             /** @codingStandardsIgnoreEnd */
         }
 

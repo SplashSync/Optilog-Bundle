@@ -58,7 +58,7 @@ trait ObjectsListTrait
         foreach ($listData as $order) {
             /** @codingStandardsIgnoreStart */
             $response[] = array(
-                'id' => $order->ID,
+                'id' => $order->DestID,
                 'IntID' => $order->ID,
                 'DestID' => $order->DestID,
                 'Statut' => StatusCodes::SPLASH[$order->Statut],
