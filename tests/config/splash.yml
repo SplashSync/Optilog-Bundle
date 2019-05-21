@@ -16,3 +16,4 @@ splash:
                 ApiUser:        splash
                 ApiPwd:         ThisIsSecretApiPwd
                 ApiKey:         ThisIsSecretApiKey
+                ApiOp:          ThisIsSecretApiOp
