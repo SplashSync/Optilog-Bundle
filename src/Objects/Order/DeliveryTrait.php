@@ -34,6 +34,7 @@ trait DeliveryTrait
             ->Name("Nom du destinataire")
             ->MicroData("http://schema.org/PostalAddress", "alternateName")
             ->Group($groupName)
+            ->isRequired()
             ->isWriteOnly();
 
         //====================================================================//
@@ -43,6 +44,7 @@ trait DeliveryTrait
             ->Name($groupName)
             ->MicroData("http://schema.org/PostalAddress", "streetAddress")
             ->Group($groupName)
+            ->isRequired()
             ->isWriteOnly();
 
         //====================================================================//
@@ -69,6 +71,7 @@ trait DeliveryTrait
             ->Name("Zip/Postal Code")
             ->MicroData("http://schema.org/PostalAddress", "postalCode")
             ->Group($groupName)
+            ->isRequired()
             ->isWriteOnly();
 
         //====================================================================//
@@ -78,6 +81,7 @@ trait DeliveryTrait
             ->Name("City")
             ->MicroData("http://schema.org/PostalAddress", "addressLocality")
             ->Group($groupName)
+            ->isRequired()
             ->isWriteOnly();
 
         //====================================================================//
@@ -87,6 +91,7 @@ trait DeliveryTrait
             ->Name("Code ISO du Pays")
             ->MicroData("http://schema.org/PostalAddress", "addressCountry")
             ->Group($groupName)
+            ->isRequired()
             ->isWriteOnly();
 
         //====================================================================//

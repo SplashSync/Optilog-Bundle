@@ -42,7 +42,6 @@ trait MainTrait
             ->description("Poids d’une unité en grammes (Kg >> g)")
             ->Group($groupName)
             ->MicroData("http://schema.org/Product", "weight")
-            ->isRequired()
             ->isWriteOnly();
 
         //====================================================================//

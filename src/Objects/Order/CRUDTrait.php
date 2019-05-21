@@ -46,7 +46,7 @@ trait CRUDTrait
         // Extract Order Infos from Results
         $order = array_shift($response->result);
         if ((null == $order) || !($order instanceof stdClass)) {
-            return Splash::log()->errTrace("Unable to load Product (".$objectId.").");
+            return Splash::log()->errTrace("Unable to load Order (".$objectId.").");
         }
         if (!isset($order->ID)) {
             return Splash::log()->errTrace("Unable to load Order (".$objectId.").");
@@ -77,11 +77,18 @@ trait CRUDTrait
             return Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "DestID");
         }
         //====================================================================//
+        // Check Optilog Operation Number is Given
+        if (empty($this->getParameter('ApiOp'))) {
+            return Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "Identifiant de l’opération");
+        }        
+        
+        //====================================================================//
         // Init Object
         /** @codingStandardsIgnoreStart */
         $order = new stdClass();
         $order->Mode = "NEW";
         $order->ID = $this->in["DestID"];
+        $order->Operation = $this->getParameter('ApiOp');
         /** @codingStandardsIgnoreEnd */
 
         return $order;

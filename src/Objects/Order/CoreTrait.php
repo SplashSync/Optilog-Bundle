@@ -33,6 +33,7 @@ trait CoreTrait
             ->Identifier("IntID")
             ->Name("Internal ID")
             ->isListed()
+            ->isNotTested()
             ->isReadOnly();
 
         //====================================================================//
@@ -42,7 +43,8 @@ trait CoreTrait
             ->Name("Reference")
             ->isListed()
             ->MicroData("http://schema.org/Order", "orderNumber")
-            ->isRequired();
+            ->isRequired()
+            ->isNotTested();
 
         //====================================================================//
         // Comment

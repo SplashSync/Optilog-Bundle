@@ -41,7 +41,8 @@ trait CoreTrait
             ->Name("Reference")
             ->isListed()
             ->MicroData("http://schema.org/Product", "model")
-            ->isRequired();
+            ->isRequired()
+            ->isNotTested();
 
         //====================================================================//
         // Name
@@ -52,6 +53,15 @@ trait CoreTrait
             ->isListed()
             ->isRequired();
 
+        //====================================================================//
+        // DEscription (For Standards Only)
+        $this->fieldsFactory()->create(SPL_T_VARCHAR)
+            ->Identifier("Description")
+            ->Name("Product Name with Options")
+            ->MicroData("http://schema.org/Product", "description")
+            ->isReadOnly()
+            ->setPreferNone();
+        
         //====================================================================//
         // Active => Product Is available_for_order
         $this->fieldsFactory()->create(SPL_T_BOOL)
@@ -81,6 +91,10 @@ trait CoreTrait
                 break;
             case 'Libelle':
                 $this->getSimple($fieldName);
+
+                break;
+            case 'Description':
+                $this->out[$fieldName] = $this->object->Libelle;
 
                 break;
             case 'IsActif':
@@ -118,8 +132,11 @@ trait CoreTrait
 
                 break;
             case 'Libelle':
-            case 'IsActif':
                 $this->setSimple($fieldName, $fieldData);
+
+                break;
+            case 'IsActif':
+                $this->setSimple($fieldName, (bool) $fieldData);
 
                 break;
             default:

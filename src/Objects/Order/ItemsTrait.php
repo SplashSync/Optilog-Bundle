@@ -38,6 +38,7 @@ trait ItemsTrait
             ->Name("Product SKU")
             ->MicroData("http://schema.org/Product", "productID")
             ->Group("Products")
+            ->isRequired()
             ->isWriteOnly();
 
         //====================================================================//
@@ -48,6 +49,7 @@ trait ItemsTrait
             ->Name("Quantity")
             ->MicroData("http://schema.org/QuantitativeValue", "value")
             ->Group("Products")
+            ->isRequired()
             ->isWriteOnly();
     }
 

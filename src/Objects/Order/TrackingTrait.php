@@ -98,7 +98,7 @@ trait TrackingTrait
             case 'Transporteur':
                 //====================================================================//
                 // Detect Carrier Code
-                $carrierCode = $this->getCarrierCode($fieldData);
+                $carrierCode = $this->getCarrierCode((string) $fieldData);
                 if (!$carrierCode) {
                     break;
                 }

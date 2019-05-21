@@ -25,6 +25,8 @@ use stdClass;
  */
 trait CRUDTrait
 {
+    private static $defaultGamme = "Vernis";
+    
     /**
      * Load Request Object
      *
@@ -78,19 +80,14 @@ trait CRUDTrait
             return Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "Libelle");
         }
         //====================================================================//
-        // Check Product Weight is given
-        if (empty($this->in["Poids"])) {
-            return Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "Poids");
-        }
-        //====================================================================//
         // Init Object
         /** @codingStandardsIgnoreStart */
         $product = new stdClass();
         $product->Mode = "NEW";
-        $product->Gamme = "Vernis";
+        $product->Gamme = static::$defaultGamme;
         $product->ID = $this->in["sku"];
         $product->Libelle = $this->in["Libelle"];
-        $product->Poids = UNITS::convertWeight($this->in["Poids"], UNITS::MASS_GRAM) ;
+        $product->Poids = 0;
         /** @codingStandardsIgnoreEnd */
         //====================================================================//
         // Create Product Infos from Api
@@ -119,6 +116,17 @@ trait CRUDTrait
         if (!$needed) {
             return $this->getObjectIdentifier();
         }
+        //====================================================================//
+        // Id Changed
+        if ($this->oldSKU) {
+            //====================================================================//
+            // Delete Old Product
+            $this->delete($this->oldSKU);
+            //====================================================================//
+            // Force Params for New Product
+            $this->object->Gamme = static::$defaultGamme;
+            $this->object->Poids = 0;
+        }        
         //====================================================================//
         // Prepare Product Data for Update
         $this->object->Mode = "ALTER";
