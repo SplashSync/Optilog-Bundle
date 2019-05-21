@@ -136,6 +136,32 @@ abstract class AbstractOptilogType extends AbstractType
     }
 
     /**
+     * Add Api Key Field to FormBuilder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     *
+     * @return $this
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function addApiOperationField(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            //==============================================================================
+            // Optilog Api Key For Authentification
+            ->add('ApiOp', TextType::class, array(
+                'label' => "var.apiop.label",
+                'help_block' => "var.apiop.desc",
+                'required' => true,
+                'translation_domain' => "OptilogBundle",
+            ))
+        ;
+
+        return $this;
+    }
+    
+    /**
      * Add User Carriers Names Field to FormBuilder
      *
      * @param FormBuilderInterface $builder
