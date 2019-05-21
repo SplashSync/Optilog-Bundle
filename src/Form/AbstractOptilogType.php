@@ -160,7 +160,7 @@ abstract class AbstractOptilogType extends AbstractType
 
         return $this;
     }
-    
+
     /**
      * Add User Carriers Names Field to FormBuilder
      *

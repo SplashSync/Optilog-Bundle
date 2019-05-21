@@ -61,7 +61,7 @@ trait CoreTrait
             ->MicroData("http://schema.org/Product", "description")
             ->isReadOnly()
             ->setPreferNone();
-        
+
         //====================================================================//
         // Active => Product Is available_for_order
         $this->fieldsFactory()->create(SPL_T_BOOL)

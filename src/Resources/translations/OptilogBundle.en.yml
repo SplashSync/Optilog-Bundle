@@ -17,6 +17,10 @@ var:
         label:  API Key
         desc:   "Webservice API keys provide full access to your account, so keep them safe."
 
+    apiop:
+        label:  "Identifiant de l’opération"
+        desc:   "Obtenir à partir de Géolie ou à obtenir auprès de votre contact."
+
     carriers:
         label:  List of Availables Carriers Names
         desc:   "Fill this list to map your Carriers Names with Optilog Carriers Codes."

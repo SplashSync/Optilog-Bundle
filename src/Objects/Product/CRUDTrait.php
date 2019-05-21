@@ -15,7 +15,6 @@
 
 namespace Splash\Connectors\Optilog\Objects\Product;
 
-use Splash\Components\UnitConverter as UNITS;
 use Splash\Connectors\Optilog\Models\RestHelper as API;
 use Splash\Core\SplashCore      as Splash;
 use stdClass;
@@ -26,7 +25,7 @@ use stdClass;
 trait CRUDTrait
 {
     private static $defaultGamme = "Vernis";
-    
+
     /**
      * Load Request Object
      *
@@ -126,7 +125,7 @@ trait CRUDTrait
             // Force Params for New Product
             $this->object->Gamme = static::$defaultGamme;
             $this->object->Poids = 0;
-        }        
+        }
         //====================================================================//
         // Prepare Product Data for Update
         $this->object->Mode = "ALTER";

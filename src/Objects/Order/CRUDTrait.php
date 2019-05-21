@@ -80,8 +80,8 @@ trait CRUDTrait
         // Check Optilog Operation Number is Given
         if (empty($this->getParameter('ApiOp'))) {
             return Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "Identifiant de l’opération");
-        }        
-        
+        }
+
         //====================================================================//
         // Init Object
         /** @codingStandardsIgnoreStart */
