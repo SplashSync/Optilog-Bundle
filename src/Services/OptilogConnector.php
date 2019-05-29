@@ -267,6 +267,7 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
     public function getPublicActions() : array
     {
         return array(
+            "index" => "OptilogBundle:WebHooks:index",
         );
     }
 
