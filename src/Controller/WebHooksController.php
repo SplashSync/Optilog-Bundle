@@ -28,12 +28,30 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class WebHooksController extends Controller
 {
     /**
+     * List of Available Action Types
+     *
      * @var array
      */
-    const ACTIONS = array(
-        "NEW" => SPL_A_CREATE,
-        "ALTER" => SPL_A_UPDATE,
-        "DELETE" => SPL_A_DELETE,
+    const ACTIONS = array(SPL_A_CREATE, SPL_A_UPDATE, SPL_A_DELETE);
+
+    /**
+     * List of Available Objects Types
+     *
+     * @var array
+     */
+    const OBJECTS = array(
+        "STK" => "Product",
+        "CMD" => "Order",
+    );
+
+    /**
+     * Id Key for Objects Types
+     *
+     * @var array
+     */
+    const IDS = array(
+        "STK" => "ID",
+        "CMD" => "DestID",
     );
 
     /**
@@ -200,77 +218,117 @@ class WebHooksController extends Controller
      */
     private function decodeEvent(array $event): ?array
     {
-        $response = $this->decodeEventCore($event);
-
         //==============================================================================
-        // Object Type & ID
-        if ($response) {
+        // Build Commit Contents
+        $response = array(
             //==============================================================================
-            // Action
-            if (!isset($event["Mode"]) || !isset(self::ACTIONS[$event["Mode"]])) {
-                Splash::log()->err("Empty or Unknown Action Type: ".print_r($event["Mode"], true));
-
-                return null;
-            }
-            $response["action"] = self::ACTIONS[$event["Mode"]];
-
+            // Extract Object Type & ID
+            "action" => self::getEventType($event),
+            "objectType" => self::getObjectType($event),
+            "objectId" => self::getObjectId($event),
             //==============================================================================
             // User & Comment
-            $response["user"] = isset($event["User"]) ? $event["User"] : "Optilog API";
-            $response["comment"] = isset($event["Comment"])
-                    ? $event["Comment"]
-                    : $response["objectType"]." ".$response["action"]." Notified";
+            "user" => self::getEventUser($event),
+            "comment" => self::getEventComment($event),
+        );
+        //==============================================================================
+        // Validate Contents
+        if (empty($response["action"]) || empty($response["objectType"]) || empty($response["objectId"])) {
+            return null;
         }
 
         return $response;
     }
 
     /**
-     * Validate & Decode Request Event Item
+     * Detect Request Event User
      *
      * @param array $event
      *
-     * @return null|array
+     * @return null|string
      */
-    private function decodeEventCore(array $event): ?array
+    private static function getEventUser(array $event): ?string
     {
-        $response = array();
+        return isset($event["User"]) ? (string) $event["User"] : "Optilog API";
+    }
 
-        //==============================================================================
-        // Object Type & ID
-        if (!isset($event["Type"])) {
-            Splash::log()->err("No Object Type Given");
+    /**
+     * Detect Request Event Comment
+     *
+     * @param array $event
+     *
+     * @return null|string
+     */
+    private static function getEventComment(array $event): ?string
+    {
+        return isset($event["Comment"])
+            ? $event["Comment"]
+            : "Optilog Change Notified: ".print_r($event, true);
+    }
+
+    /**
+     * Detect Request Event User
+     *
+     * @param array $event
+     *
+     * @return null|string
+     */
+    private static function getEventType(array $event): ?string
+    {
+        if (!isset($event["Mode"]) || !is_scalar($event["Mode"]) || !in_array($event["Mode"], self::ACTIONS, true)) {
+            Splash::log()->err("Empty or Unknown Action Type: ".print_r($event, true));
 
             return null;
         }
-        switch ($event["Type"]) {
-            case "Article":
-                if (!isset($event["ID"]) || !is_string($event["ID"])) {
-                    Splash::log()->err("No Object ID Given");
 
-                    return null;
-                }
-                $response["objectType"] = "Product";
-                $response["objectId"] = $event["ID"];
+        return $event["Mode"];
+    }
 
-                break;
-            case "Commande":
-                if (!isset($event["DestID"]) || !is_string($event["DestID"])) {
-                    Splash::log()->err("No Order DestID Given");
+    /**
+     * Detect Request Object Type
+     *
+     * @param array $event
+     *
+     * @return null|string
+     */
+    private static function getObjectType(array $event): ?string
+    {
+        //==============================================================================
+        // Object Type & ID
+        if (!isset($event["Type"]) || !is_scalar($event["Type"]) || !isset(self::OBJECTS[$event["Type"]])) {
+            Splash::log()->err("Empty or Unknown Object Type: ".print_r($event, true));
 
-                    return null;
-                }
-                $response["objectType"] = "Order";
-                $response["objectId"] = $event["DestID"];
-
-                break;
-            default:
-                Splash::log()->err("Unknown Object Type");
-
-                return null;
+            return null;
         }
 
-        return $response;
+        return self::OBJECTS[$event["Type"]];
+    }
+
+    /**
+     * Detect Request Object Id
+     *
+     * @param array $event
+     *
+     * @return null|string
+     */
+    private static function getObjectId(array $event): ?string
+    {
+        //==============================================================================
+        // Object Type
+        if (!isset($event["Type"]) || !isset(self::OBJECTS[$event["Type"]])) {
+            return null;
+        }
+
+        //==============================================================================
+        // Object ID
+        $idKey = self::IDS[$event["Type"]];
+        if (!isset($event[$idKey]) || !is_scalar($event[$idKey])) {
+            Splash::log()->err("No Object ID Found");
+
+            return null;
+        }
+
+        return (string) $event[$idKey];
     }
 
     /**

@@ -153,21 +153,21 @@ class S01WebHookTest extends TestCase
         // Generate Products Events
         for ($i = 0; $i < 10; $i++) {
             $productId = "SKU_".uniqid();
-            $hooks[] = self::buildProductEvent(SPL_A_CREATE, "NEW", $productId);
-            $hooks[] = self::buildProductEvent(SPL_A_UPDATE, "ALTER", $productId);
-            $hooks[] = self::buildProductEvent(SPL_A_UPDATE, "ALTER", $productId);
-            $hooks[] = self::buildProductEvent(SPL_A_UPDATE, "ALTER", $productId);
-            $hooks[] = self::buildProductEvent(SPL_A_DELETE, "DELETE", $productId);
+            $hooks[] = self::buildProductEvent(SPL_A_CREATE, SPL_A_CREATE, $productId);
+            $hooks[] = self::buildProductEvent(SPL_A_UPDATE, SPL_A_UPDATE, $productId);
+            $hooks[] = self::buildProductEvent(SPL_A_UPDATE, SPL_A_UPDATE, $productId);
+            $hooks[] = self::buildProductEvent(SPL_A_UPDATE, SPL_A_UPDATE, $productId);
+            $hooks[] = self::buildProductEvent(SPL_A_DELETE, SPL_A_DELETE, $productId);
         }
         //====================================================================//
         // Generate Orders Events
         for ($i = 0; $i < 10; $i++) {
             $orderId = "SKU_".uniqid();
-            $hooks[] = self::buildOrderEvent(SPL_A_CREATE, "NEW", $orderId);
-            $hooks[] = self::buildOrderEvent(SPL_A_UPDATE, "ALTER", $orderId);
-            $hooks[] = self::buildOrderEvent(SPL_A_UPDATE, "ALTER", $orderId);
-            $hooks[] = self::buildOrderEvent(SPL_A_UPDATE, "ALTER", $orderId);
-            $hooks[] = self::buildOrderEvent(SPL_A_DELETE, "DELETE", $orderId);
+            $hooks[] = self::buildOrderEvent(SPL_A_CREATE, SPL_A_CREATE, $orderId);
+            $hooks[] = self::buildOrderEvent(SPL_A_UPDATE, SPL_A_UPDATE, $orderId);
+            $hooks[] = self::buildOrderEvent(SPL_A_UPDATE, SPL_A_UPDATE, $orderId);
+            $hooks[] = self::buildOrderEvent(SPL_A_UPDATE, SPL_A_UPDATE, $orderId);
+            $hooks[] = self::buildOrderEvent(SPL_A_DELETE, SPL_A_DELETE, $orderId);
         }
 
         return $hooks;
@@ -222,7 +222,7 @@ class S01WebHookTest extends TestCase
     {
         return array(
             array( "Event" => json_encode(array(array(
-                "Type" => "Article",
+                "Type" => "STK",
                 "Mode" => $optAction,
                 "ID" => $objectId,
                 "User" => "PhpUnit",
@@ -247,7 +247,7 @@ class S01WebHookTest extends TestCase
     {
         return array(
             array( "Event" => json_encode(array(array(
-                "Type" => "Commande",
+                "Type" => "CMD",
                 "Mode" => $optAction,
                 "ID" => "OPT_".$objectId,
                 "DestID" => $objectId,
