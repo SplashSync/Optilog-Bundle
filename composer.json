@@ -31,7 +31,7 @@
             "vendor/splash/php-bundle/src/Tests/KernelTestCase.php"
         ],
         "psr-4": { 
-            "Splash\\Connectors\\SendInBlue\\Optilog\\":     "tests/"
+            "Splash\\Connectors\\Optilog\\Test\\":     "tests/"
         }        
     },
     

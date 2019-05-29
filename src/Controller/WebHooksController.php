@@ -15,7 +15,6 @@
 
 namespace Splash\Connectors\Optilog\Controller;
 
-use Psr\Log\LoggerInterface;
 use Splash\Bundle\Models\AbstractConnector;
 use Splash\Client\Splash;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -54,7 +53,6 @@ class WebHooksController extends Controller
     /**
      * Execute WebHook Actions for A Optilog Connector
      *
-     * @param LoggerInterface   $logger
      * @param Request           $request
      * @param AbstractConnector $connector
      *
@@ -62,7 +60,7 @@ class WebHooksController extends Controller
      *
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
-    public function indexAction(LoggerInterface $logger, Request $request, AbstractConnector $connector)
+    public function indexAction(Request $request, AbstractConnector $connector)
     {
         //====================================================================//
         // Validate Request Parameters
@@ -143,6 +141,41 @@ class WebHooksController extends Controller
             return self::buildResponse(true, 'Hello World');
         }
         //==============================================================================
+        // Safety Check => API Keys are Valid
+        if (null != $this->validateApiKey($connector, $request)) {
+            return $this->validateApiKey($connector, $request);
+        }
+        //==============================================================================
+        // Secured Ping => Return Ok
+        if ("HelloWorldSecure" == $eventData) {
+            return self::buildResponse(true, 'Hello Optilog !!');
+        }
+        //==============================================================================
+        // Safety Check => Event Data is An Array
+        $unserilizedData = json_decode((string) $eventData, true);
+        if (!is_array($unserilizedData)) {
+            return self::buildResponse(false, 'Unable to Deserialize Data');
+        }
+        //==============================================================================
+        // Request is Valid => Store Received Data
+        $this->events = $unserilizedData;
+
+        return null;
+    }
+
+    /**
+     * Validate Request Parameters
+     *
+     * @param AbstractConnector $connector
+     * @param Request           $request
+     *
+     * @throws BadRequestHttpException
+     *
+     * @return null|JsonResponse
+     */
+    private function validateApiKey(AbstractConnector $connector, Request $request): ?JsonResponse
+    {
+        //==============================================================================
         // Safety Check => API Keys are Here & Valid
         $connectorApiKey = $connector->getParameter("ApiKey");
         $requestApiKey = $request->headers->get("Clef");
@@ -154,20 +187,6 @@ class WebHooksController extends Controller
         if ($requestApiKey != $connectorApiKey) {
             return self::buildResponse(false, 'Connection Refused');
         }
-        //==============================================================================
-        // Secured Ping => Return Ok
-        if ("HelloWorldSecure" == $eventData) {
-            return self::buildResponse(true, 'Hello Optilog !!');
-        }
-        //==============================================================================
-        // Safety Check => Event Data is An Array
-        $unserilizedData = json_decode($eventData, true);
-        if (!is_array($unserilizedData)) {
-            return self::buildResponse(false, 'Unable to Deserialize Data');
-        }
-        //==============================================================================
-        // Request is Valid => Store Received Data
-        $this->events = $unserilizedData;
 
         return null;
     }
@@ -181,20 +200,54 @@ class WebHooksController extends Controller
      */
     private function decodeEvent(array $event): ?array
     {
+        $response = $this->decodeEventCore($event);
+
+        //==============================================================================
+        // Object Type & ID
+        if ($response) {
+            //==============================================================================
+            // Action
+            if (!isset($event["Mode"]) || !isset(self::ACTIONS[$event["Mode"]])) {
+                Splash::log()->err("Empty or Unknown Action Type: ".print_r($event["Mode"], true));
+
+                return null;
+            }
+            $response["action"] = self::ACTIONS[$event["Mode"]];
+
+            //==============================================================================
+            // User & Comment
+            $response["user"] = isset($event["User"]) ? $event["User"] : "Optilog API";
+            $response["comment"] = isset($event["Comment"])
+                    ? $event["Comment"]
+                    : $response["objectType"]." ".$response["action"]." Notified";
+        }
+
+        return $response;
+    }
+
+    /**
+     * Validate & Decode Request Event Item
+     *
+     * @param array $event
+     *
+     * @return null|array
+     */
+    private function decodeEventCore(array $event): ?array
+    {
         $response = array();
 
         //==============================================================================
         // Object Type & ID
         if (!isset($event["Type"])) {
             Splash::log()->err("No Object Type Given");
-            
+
             return null;
         }
         switch ($event["Type"]) {
             case "Article":
                 if (!isset($event["ID"]) || !is_string($event["ID"])) {
                     Splash::log()->err("No Object ID Given");
-                    
+
                     return null;
                 }
                 $response["objectType"] = "Product";
@@ -204,7 +257,7 @@ class WebHooksController extends Controller
             case "Commande":
                 if (!isset($event["DestID"]) || !is_string($event["DestID"])) {
                     Splash::log()->err("No Order DestID Given");
-                    
+
                     return null;
                 }
                 $response["objectType"] = "Order";
@@ -217,51 +270,7 @@ class WebHooksController extends Controller
                 return null;
         }
 
-        //==============================================================================
-        // Action
-        if (!isset($event["Mode"]) || !isset(self::ACTIONS[$event["Mode"]])) {
-            Splash::log()->err("Empty or Unknown Action Type: " . print_r($event["Mode"], true));
-            return null;
-        }
-        $response["action"] = self::ACTIONS[$event["Mode"]];
-
-        //==============================================================================
-        // User & Comment
-        $response["user"] = isset($event["User"]) ? $event["User"] : "Optilog API";
-        $response["comment"] = isset($event["Comment"])
-                ? $event["Comment"]
-                : $response["objectType"]." ".$response["action"]." Notified";
-
         return $response;
-    }
-
-    /**
-     * Extract Data from Resquest
-     *
-     * @param Request $request
-     *
-     * @throws BadRequestHttpException
-     *
-     * @return array
-     */
-    private function extractData(Request $request): array
-    {
-        //==============================================================================
-        // Safety Check => Data are here
-        if (!$request->isMethod('POST')) {
-            throw new BadRequestHttpException('Malformatted or missing data');
-        }
-        //==============================================================================
-        // Decode Received Data
-        $requestData = $request->request->all();
-        //==============================================================================
-        // Safety Check => Data are here
-        if (empty($requestData) || !isset($requestData['event']) || !isset($requestData['email'])) {
-            throw new BadRequestHttpException('Malformatted or missing data');
-        }
-        //==============================================================================
-        // Return Request Data
-        return $requestData;
     }
 
     /**
@@ -272,7 +281,7 @@ class WebHooksController extends Controller
      *
      * @return JsonResponse
      */
-    private static function buildResponse(bool $success = false, string $message = null) :JsonResponse
+    private static function buildResponse(bool $success, string $message = null) :JsonResponse
     {
         $response = array('statut' => $success ? 1 : 0);
         if ($message) {
