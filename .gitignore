@@ -1,4 +1,3 @@
 /var/
 /vendor/
-/tests/Controller/S01WebHookTest.php
 /.php_cs.cache
