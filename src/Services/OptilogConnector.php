@@ -97,7 +97,7 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
         $informations->longdesc = "Splash Integration for Optilog Api V2";
         //====================================================================//
         // Company Informations
-        $informations->company = "Optolog";
+        $informations->company = "Optilog";
         $informations->address = "Rond point Robert Schuman,";
         $informations->zip = "77127";
         $informations->town = "Lieusaint";
