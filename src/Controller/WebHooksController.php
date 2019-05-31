@@ -108,13 +108,12 @@ class WebHooksController extends Controller
         }
         //==============================================================================
         // Loop On Events
+        $this->commited = 0;
         foreach ($this->events as $event) {
             //==============================================================================
             // Validate & Decode Event
             $decoded = $this->decodeEvent($event);
             if (null == $decoded) {
-                var_dump($event);
-
                 continue;
             }
             //==============================================================================
@@ -344,6 +343,9 @@ class WebHooksController extends Controller
         $response = array('statut' => $success ? 1 : 0);
         if ($message) {
             $response["statutText"] = $message;
+        }
+        if (!empty(Splash::log()->err)) {
+            $response["logs"] = Splash::log()->getRawLog();
         }
 
         return new JsonResponse($response);
