@@ -177,7 +177,7 @@ class WebHooksController extends Controller
         // Request is Valid => Store Received Data
         $this->events = $unserilizedData;
         Splash::log()->cleanLog();
-        
+
         return null;
     }
 
