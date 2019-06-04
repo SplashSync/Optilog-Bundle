@@ -36,6 +36,7 @@ class Product extends AbstractStandaloneObject implements TrackingInterface
     use Product\MainTrait;
     use Product\PricesTrait;
     use Product\StockTrait;
+    use Product\LocationTrait;
     use Product\TrackerTrait;
 
     /**

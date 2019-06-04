@@ -35,6 +35,7 @@ class DebugFormType extends AbstractOptilogType
         $this->addApiPwdField($builder, $options);
         $this->addApiKeyField($builder, $options);
         $this->addApiOperationField($builder, $options);
+        $this->addLocationField($builder, $options);
         $this->addCarriersListField($builder, $options);
 
         $this->addRandomStocksField($builder, $options);

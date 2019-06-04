@@ -162,6 +162,42 @@ abstract class AbstractOptilogType extends AbstractType
     }
 
     /**
+     * Add Default Stock Location Field to FormBuilder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     *
+     * @return $this
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function addLocationField(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            //==============================================================================
+            // Optilog Default Stock Location
+            ->add('dfStock', TextType::class, array(
+                'label' => "var.dfStock.label",
+                'help_block' => "var.dfStock.desc",
+                'data' => "Divers",
+                'required' => true,
+                'translation_domain' => "OptilogBundle",
+            ))
+            //==============================================================================
+            // Optilog Default Stock Section
+            ->add('dfGamme', TextType::class, array(
+                'label' => "var.dfGamme.label",
+                'help_block' => "var.dfGamme.desc",
+                'data' => "Nouveaux",
+                'required' => true,
+                'translation_domain' => "OptilogBundle",
+            ))
+        ;
+
+        return $this;
+    }
+
+    /**
      * Add User Carriers Names Field to FormBuilder
      *
      * @param FormBuilderInterface $builder

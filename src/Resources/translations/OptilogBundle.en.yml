@@ -21,6 +21,14 @@ var:
         label:  "Identifiant de l’opération"
         desc:   "Obtenir à partir de Géolie ou à obtenir auprès de votre contact."
 
+    dfStock:
+        label:  "Stock par Défaut"
+        desc:   "Obtenir à partir de Géolie ou à obtenir auprès de votre contact."
+
+    dfGamme:
+        label:  "Gamme par Défaut"
+        desc:   "Obtenir à partir de Géolie ou à obtenir auprès de votre contact."
+
     carriers:
         label:  List of Availables Carriers Names
         desc:   "Fill this list to map your Carriers Names with Optilog Carriers Codes."

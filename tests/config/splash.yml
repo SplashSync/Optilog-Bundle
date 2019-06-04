@@ -17,3 +17,5 @@ splash:
                 ApiPwd:         ThisIsSecretApiPwd
                 ApiKey:         ThisIsSecretApiKey
                 ApiOp:          ThisIsSecretApiOp
+                dfStock:        Divers
+                dfGamme:        Nouveaux

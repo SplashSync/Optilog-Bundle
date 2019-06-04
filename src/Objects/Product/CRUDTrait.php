@@ -24,8 +24,6 @@ use stdClass;
  */
 trait CRUDTrait
 {
-    private static $defaultGamme = "Vernis";
-
     /**
      * Load Request Object
      *
@@ -83,7 +81,8 @@ trait CRUDTrait
         /** @codingStandardsIgnoreStart */
         $product = new stdClass();
         $product->Mode = "NEW";
-        $product->Gamme = static::$defaultGamme;
+        $product->Stock = $this->connector->getParameter("dfStock");
+        $product->Gamme = $this->connector->getParameter("dfGamme");
         $product->ID = $this->in["sku"];
         $product->Libelle = $this->in["Libelle"];
         $product->Poids = 0;
@@ -123,7 +122,6 @@ trait CRUDTrait
             $this->delete($this->oldSKU);
             //====================================================================//
             // Force Params for New Product
-            $this->object->Gamme = static::$defaultGamme;
             $this->object->Poids = 0;
         }
         //====================================================================//
