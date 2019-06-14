@@ -58,7 +58,7 @@ trait DatesFilterTrait
         }
         //====================================================================//
         // Convert Received Order date to Datetime
-        $receivedOrderDate = new DateTime($this->in["createdAt"]);
+        $receivedOrderDate = new DateTime((string) $this->in["createdAt"]);
         //====================================================================//
         // Check if Received date is After Setuped Date
         return ($receivedOrderDate > $minOrderDate);
