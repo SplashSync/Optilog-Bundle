@@ -31,10 +31,10 @@ trait DatesFilterTrait
         //====================================================================//
         // Creation Date
         $this->fieldsFactory()->create(SPL_T_DATETIME)
-            ->Identifier("createdAt")
-            ->Name("Date Created")
-            ->Group("Order Creation Date: Only used to Filter Orders for Optilog")
-            ->MicroData("http://schema.org/DataFeedItem", "dateCreated")
+            ->identifier("createdAt")
+            ->name("Date Created")
+            ->description("Order Creation Date: Only used to Filter Orders for Optilog")
+            ->microData("http://schema.org/DataFeedItem", "dateCreated")
             ->isWriteOnly();
     }
 
