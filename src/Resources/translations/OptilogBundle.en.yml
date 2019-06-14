@@ -21,6 +21,10 @@ var:
         label:  "Identifiant de l’opération"
         desc:   "Obtenir à partir de Géolie ou à obtenir auprès de votre contact."
 
+    minOrderDate:
+        label:  "Min Order Create Date"
+        desc:   "Mini Order Creation Date, previous orders are not exported to Optilog."
+
     dfStock:
         label:  "Stock par Défaut"
         desc:   "Obtenir à partir de Géolie ou à obtenir auprès de votre contact."
@@ -39,7 +43,7 @@ profile:
     connection:
         title: API Connection
     card:   
-        title:  Optilog SOAP API V2
+        title:  Optilog REST API V2
         label:  Connect your Shops with Optilog to Manage your Customers Deliveries
 
 ## Node Api Actions

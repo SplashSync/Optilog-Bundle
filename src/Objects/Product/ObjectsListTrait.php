@@ -61,6 +61,7 @@ trait ObjectsListTrait
             $response[] = array(
                 'id' => $product->ID,
                 'sku' => $product->ID,
+                'Stock' => $product->Stock,
                 'Libelle' => $product->Libelle,
                 'Stk_Dispo' => $product->Stk_Dispo,
                 'Stk_Physique' => $product->Stk_Physique,

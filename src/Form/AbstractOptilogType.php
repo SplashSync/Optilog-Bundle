@@ -22,6 +22,7 @@ use Splash\Connectors\Optilog\Models\StatusCodes;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -162,6 +163,33 @@ abstract class AbstractOptilogType extends AbstractType
     }
 
     /**
+     * Add Order Min Created Date & Time Filter to FormBuilder
+     *
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     *
+     * @return $this
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function addMinOrderCreateDateField(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            //==============================================================================
+            // Optilog Default Stock Location
+            ->add('minOrderDate', DateTimeType::class, array(
+                'label' => "var.minOrderDate.label",
+                'help_block' => "var.minOrderDate.desc",
+                'widget' => 'single_text',
+                'required' => false,
+                'translation_domain' => "OptilogBundle",
+            ))
+        ;
+
+        return $this;
+    }
+
+    /**
      * Add Default Stock Location Field to FormBuilder
      *
      * @param FormBuilderInterface $builder
@@ -179,17 +207,8 @@ abstract class AbstractOptilogType extends AbstractType
             ->add('dfStock', TextType::class, array(
                 'label' => "var.dfStock.label",
                 'help_block' => "var.dfStock.desc",
-                'data' => "Divers",
-                'required' => true,
-                'translation_domain' => "OptilogBundle",
-            ))
-            //==============================================================================
-            // Optilog Default Stock Section
-            ->add('dfGamme', TextType::class, array(
-                'label' => "var.dfGamme.label",
-                'help_block' => "var.dfGamme.desc",
-                'data' => "Nouveaux",
-                'required' => true,
+                'data' => "VETCO",
+                'required' => false,
                 'translation_domain' => "OptilogBundle",
             ))
         ;

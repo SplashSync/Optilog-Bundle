@@ -76,17 +76,23 @@ trait CRUDTrait
         if (empty($this->in["Libelle"])) {
             return Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "Libelle");
         }
+
         //====================================================================//
         // Init Object
         /** @codingStandardsIgnoreStart */
         $product = new stdClass();
         $product->Mode = "NEW";
-        $product->Stock = $this->connector->getParameter("dfStock");
-        $product->Gamme = $this->connector->getParameter("dfGamme");
         $product->ID = $this->in["sku"];
         $product->Libelle = $this->in["Libelle"];
         $product->Poids = 0;
+        //====================================================================//
+        // Setup Default Stock Loaction if Given
+        $newStock = $this->getNewStockLocation();
+        if (null !== $newStock) {
+            $product->Stock = $newStock;
+        }
         /** @codingStandardsIgnoreEnd */
+
         //====================================================================//
         // Create Product Infos from Api
         $response = API::post("jSetArticles", array( $product ));

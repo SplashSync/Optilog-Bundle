@@ -35,6 +35,7 @@ class EditFormType extends AbstractOptilogType
         $this->addApiPwdField($builder, $options);
         $this->addApiKeyField($builder, $options);
         $this->addApiOperationField($builder, $options);
+        $this->addMinOrderCreateDateField($builder, $options);
         $this->addLocationField($builder, $options);
         $this->addCarriersListField($builder, $options);
     }

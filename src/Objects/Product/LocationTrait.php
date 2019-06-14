@@ -22,6 +22,11 @@ use Splash\Core\SplashCore      as Splash;
  */
 trait LocationTrait
 {
+    protected static $knownStocks = array(
+        "VETCO" => "VET: Stock Propriétaire",
+        "CONSIGNE" => "VET: Stock Consigné",
+    );
+
     /**
      * Build Fields using FieldFactory
      */
@@ -41,17 +46,20 @@ trait LocationTrait
             ->Name("Stock")
             ->description("Nom du stock de l’article")
             ->MicroData("http://schema.org/Offer", "inventoryLocation")
-            ->isReadOnly()
+            ->addChoice("", "Stock par défaut")
+            ->addChoices(static::$knownStocks)
+            ->isListed()
             ->isNotTested();
 
         //====================================================================//
-        // Stock Location 2
+        // Internal Optilog Stock Location
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->Identifier("Gamme")
             ->Group($groupName)
             ->Name("Gamme")
-            ->description("Nom de la Gamme de l’article")
+            ->description("Nom de la Gamme de l’article (Interne)")
             ->MicroData("http://schema.org/Offer", "inventoryCategory")
+            ->isReadOnly()
             ->isNotTested();
     }
 
@@ -69,15 +77,13 @@ trait LocationTrait
             //====================================================================//
             // Nom du stock de l’article
             case 'Stock':
-                $this->out[$fieldName] = $this->object->NomStock;
-                // $this->getSimple('NomStock');
+                 $this->getSimple('Stock');
 
                 break;
             //====================================================================//
             // Nom de la Gamme de l’article
             case 'Gamme':
-                $this->out[$fieldName] = $this->object->NomGamme;
-                // $this->getSimple('NomGamme');
+                 $this->getSimple('Gamme');
 
                 break;
             default:
@@ -99,13 +105,20 @@ trait LocationTrait
         // WRITE Field
         switch ($fieldName) {
             case 'Stock':
-            case 'Gamme':
-                // On N'envoi pas de Valeurs Nulles
+                //====================================================================//
+                // No Empty Values Allowed
                 if (empty($fieldData)) {
-                    unset($this->object->{$fieldName});
+                    unset($this->object->Stock);
 
                     continue;
                 }
+                //====================================================================//
+                // New Value => Erase Gamme (Setuped by Optilog)
+                if (!empty($fieldData && ($fieldData != $this->object->Stock))) {
+                    unset($this->object->Gamme);
+                }
+                //====================================================================//
+                // Write new Value
                 $this->setSimple($fieldName, $fieldData);
 
                 break;
@@ -113,5 +126,27 @@ trait LocationTrait
                 return;
         }
         unset($this->in[$fieldName]);
+    }
+
+    /**
+     * Detect Stock Location for Creation using Inputs & Default Configuration
+     *
+     * @return null|string Stock Name to Write
+     */
+    protected function getNewStockLocation(): ?string
+    {
+        //====================================================================//
+        // Check If A Stock Name is Given
+        if (isset($this->in["Stock"]) && !empty($this->in["Stock"]) && is_scalar($this->in["Stock"])) {
+            return (string) $this->in["Stock"];
+        }
+        //====================================================================//
+        // Check if a Default Stock is Configured
+        $dfStock = $this->connector->getParameter("dfStock");
+        if (!empty($dfStock) && is_scalar($dfStock)) {
+            return (string) $dfStock;
+        }
+
+        return null;
     }
 }

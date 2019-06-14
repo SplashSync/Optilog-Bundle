@@ -15,7 +15,7 @@
 
 namespace Splash\Connectors\Optilog\Objects;
 
-use Splash\Bundle\Interfaces\Objects\TrackingInterface;
+//use Splash\Bundle\Interfaces\Objects\TrackingInterface;
 use Splash\Bundle\Models\AbstractStandaloneObject;
 use Splash\Connectors\Optilog\Services\OptilogConnector;
 use Splash\Models\Objects\IntelParserTrait;
@@ -25,7 +25,7 @@ use Splash\Models\Objects\SimpleFieldsTrait;
 /**
  * Optilog Implementation of Product
  */
-class Product extends AbstractStandaloneObject implements TrackingInterface
+class Product extends AbstractStandaloneObject // implements TrackingInterface
 {
     use IntelParserTrait;
     use SimpleFieldsTrait;

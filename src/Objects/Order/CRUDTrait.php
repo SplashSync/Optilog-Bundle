@@ -81,7 +81,14 @@ trait CRUDTrait
         if (empty($this->getParameter('ApiOp'))) {
             return Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "Identifiant de l’opération");
         }
+        //====================================================================//
+        // Check if Order is Allowed for Creation
+        // NOT ALLOWED => Set in Error
+        if (!$this->isAllowedDate()) {
+            $this->logFilteredOrder();
 
+            return false;
+        }
         //====================================================================//
         // Init Object
         /** @codingStandardsIgnoreStart */
