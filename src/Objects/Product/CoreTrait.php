@@ -127,8 +127,8 @@ trait CoreTrait
                     continue;
                 }
 
+                $this->oldSKU = $this->object->ID;
                 $this->setSimple("ID", $fieldData);
-                $this->oldSKU = $fieldData;
 
                 break;
             case 'Libelle':

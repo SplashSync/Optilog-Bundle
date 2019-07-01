@@ -83,9 +83,7 @@ trait ItemsTrait
             }
             //====================================================================//
             // Safety Checks
-            if (!isset($product["ID"]) || !isset($product["Quantite"])) {
-                Splash::log()->deb("Incomplete Order Items Line received");
-
+            if (!self::validateItem($product)) {
                 continue;
             }
             //====================================================================//
@@ -105,5 +103,30 @@ trait ItemsTrait
         }
 
         unset($this->in[$fieldName]);
+    }
+
+    /**
+     * Validate Order Item Data
+     *
+     * @param mixed $product Order Item data
+     *
+     * @return bool
+     */
+    private static function validateItem(array $product): bool
+    {
+        //====================================================================//
+        // Safety Checks
+        if (!isset($product["ID"]) || !isset($product["Quantite"])) {
+            Splash::log()->deb("Incomplete Order Items Line received");
+
+            return false;
+        }
+        if (empty($product["ID"]) || empty($product["Quantite"])) {
+            Splash::log()->deb("Incomplete Order Items Line received");
+
+            return false;
+        }
+
+        return true;
     }
 }

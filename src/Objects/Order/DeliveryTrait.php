@@ -93,6 +93,23 @@ trait DeliveryTrait
             ->Group($groupName)
             ->isRequired()
             ->isWriteOnly();
+    }
+
+    /**
+     * Build Fields using FieldFactory
+     */
+    protected function buildDeliveryPart2Fields()
+    {
+        $groupName = "Livraison";
+
+        //====================================================================//
+        // Code Point Relais
+        $this->fieldsFactory()->create(SPL_T_VARCHAR)
+            ->Identifier("CodePR")
+            ->Group($groupName)
+            ->Name("Code du point relais")
+            ->MicroData("http://schema.org/PostalAddress", "description")
+            ->isWriteOnly();
 
         //====================================================================//
         // Phone
@@ -143,6 +160,7 @@ trait DeliveryTrait
             case 'CodePostal':
             case 'Ville':
             case 'Pays':
+            case 'CodePR':
             case 'Telephone':
             case 'Mobile':
             case 'Email':

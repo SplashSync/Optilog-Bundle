@@ -141,7 +141,7 @@ trait CRUDTrait
         }
         //====================================================================//
         // Update Id if Changed
-        if ($this->oldSKU) {
+        if ($this->oldSKU) {         
             //====================================================================//
             // Dispatch Object Id Updated Event
             $this->connector->objectIdChanged("Product", $this->oldSKU, $this->object->ID);
@@ -186,6 +186,12 @@ trait CRUDTrait
      */
     public function getObjectIdentifier()
     {
+        //====================================================================//
+        // If Product SKU Changed
+        if (isset($this->oldSKU) && !empty($this->oldSKU)) {
+            return $this->oldSKU;
+        }
+
         if (!isset($this->object->ID)) {
             return false;
         }
