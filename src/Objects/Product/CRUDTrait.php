@@ -82,7 +82,7 @@ trait CRUDTrait
         /** @codingStandardsIgnoreStart */
         $product = new stdClass();
         $product->Mode = "NEW";
-        $product->ID = $this->in["sku"];
+        $product->ID = trim($this->in["sku"]);
         $product->Libelle = $this->in["Libelle"];
         $product->Poids = 0;
         //====================================================================//
