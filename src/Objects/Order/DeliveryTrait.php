@@ -28,9 +28,18 @@ trait DeliveryTrait
         $groupName = "Livraison";
 
         //====================================================================//
-        // Contact Full Name
+        // Company Name
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->Identifier("Nom")
+            ->Name("Nom de l'entreprise")
+            ->MicroData("http://schema.org/Organization", "legalName")
+            ->Group($groupName)
+            ->isWriteOnly();
+
+        //====================================================================//
+        // Contact Full Name
+        $this->fieldsFactory()->create(SPL_T_VARCHAR)
+            ->Identifier("Contact")
             ->Name("Nom du destinataire")
             ->MicroData("http://schema.org/PostalAddress", "alternateName")
             ->Group($groupName)
@@ -152,8 +161,19 @@ trait DeliveryTrait
         // WRITE Field
         switch ($fieldName) {
             //====================================================================//
-            // Direct Writtings
+            // Company | Contact Name
             case 'Nom':
+                if (empty($fieldData) && !empty($this->in['Contact'])) {
+                    $this->setSimple($fieldName, $this->in['Contact']);
+
+                    break;
+                }
+                $this->setSimple($fieldName, $fieldData);
+
+                break;
+            //====================================================================//
+            // Direct Writtings
+            case 'Contact':
             case 'Adresse1':
             case 'Adresse2':
             case 'Adresse3':
