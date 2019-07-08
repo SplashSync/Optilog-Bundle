@@ -123,12 +123,13 @@ trait CoreTrait
             // MAIN INFORMATIONS
             //====================================================================//
             case 'sku':
-                if ($this->object->ID == $fieldData) {
+                $newSku = trim($fieldData);
+                if ($this->object->ID == $newSku) {
                     continue;
                 }
 
                 $this->oldSKU = $this->object->ID;
-                $this->setSimple("ID", $fieldData);
+                $this->setSimple("ID", $newSku);
 
                 break;
             case 'Libelle':

@@ -108,7 +108,7 @@ trait ItemsTrait
     /**
      * Validate Order Item Data
      *
-     * @param mixed $product Order Item data
+     * @param array $product Order Item data
      *
      * @return bool
      */
