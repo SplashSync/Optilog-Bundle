@@ -41,6 +41,7 @@ class CarrierCodes
         // CHRONOPOST
         "CHR_B2B_10" => "CHRONOPOST CHRO 10H",
         "CHR_B2B_13" => "CHRONOPOST CHRO 13H",
+        "CHR_B2B_13_SA" => "CHRONOPOST CHRO 13H SAMEDI",
         "CHRB13SSIP" => "CHRONOPOST CHRO 13H SANS INSTANCE",
         "CHR_B2B_18" => "CHRONOPOST CHRO 18H",
         "CHRB18SSIP" => "CHRONOPOST CHRO 18H SANS INSTANCE",
@@ -58,7 +59,8 @@ class CarrierCodes
         // COLISSIMO
         "COL_9L" => "COLISSIMO ACCESS FRANCE",
         "COL_9V" => "COLISSIMO EXPERT FRANCE",
-        "COL_CY" => "COLISSIMO EXPERT INTER",
+        "COL_CB" => "COLISSIMO EXPERT EUROPE",
+        "COL_CP" => "COLISSIMO EXPERT INTER",
         "COL_7A" => "COLISSIMO EXPERT OUTRE-MER",
 
         //====================================================================//
