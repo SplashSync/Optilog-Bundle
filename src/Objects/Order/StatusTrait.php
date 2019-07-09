@@ -44,6 +44,15 @@ trait StatusTrait
             ->isReadOnly();
 
         //====================================================================//
+        // Order Real Status as Int
+        $this->fieldsFactory()->create(SPL_T_VARCHAR)
+            ->Identifier("StatutRaw")
+            ->Name("Order status Raw")
+            ->Description("Raw Optilog Status of the order")
+            ->MicroData("http://schema.org/Order", "orderStatusCode")
+            ->isReadOnly();
+
+        //====================================================================//
         // ORDER STATUS FLAGS
         //====================================================================//
 
@@ -69,6 +78,10 @@ trait StatusTrait
         switch ($fieldName) {
             case 'Statut':
                 $this->out[$fieldName] = $this->getSplashStatus();
+
+                break;
+            case 'StatutRaw':
+                $this->out[$fieldName] = (string) $this->object->Statut;
 
                 break;
             default:
