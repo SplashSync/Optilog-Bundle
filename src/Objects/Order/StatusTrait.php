@@ -77,7 +77,9 @@ trait StatusTrait
         // READ Fields
         switch ($fieldName) {
             case 'Statut':
-                $this->out[$fieldName] = $this->getSplashStatus();
+                if ($this->isAllowedStatusUpdates()) {
+                    $this->out[$fieldName] = $this->getSplashStatus();
+                }
 
                 break;
             case 'StatutRaw':
@@ -145,5 +147,26 @@ trait StatusTrait
         //====================================================================//
         // Default Status => Order is Closed & Delivered
         return "OrderDelivered";
+    }
+
+    /**
+     * Check if Order Status Updates are Allowed
+     *
+     * @return bool
+     */
+    private function isAllowedStatusUpdates(): bool
+    {
+        //====================================================================//
+        // Debug => Always Allow Order Status Updates
+        if ($this->connector->isDebugMode()) {
+            return true;
+        }
+        //====================================================================//
+        // If Order NOT Validated => No No Status Updated
+        if (0 == $this->object->Statut) {
+            return false;
+        }
+
+        return true;
     }
 }

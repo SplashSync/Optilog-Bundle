@@ -21,7 +21,7 @@ namespace   Splash\Connectors\Optilog\Models;
 class CarrierCodes
 {
     /**
-     * List des Codes Transporteurs
+     * Liste des Codes Transporteurs
      *
      * @var array
      */
@@ -139,4 +139,27 @@ class CarrierCodes
         "TNT_JZ" => "TNT National TNT Livraison à domicile",
         "TNT_JD" => "TNT National TNT Relais colis ",
     );
+
+    /**
+     * Liste des Codes Transporteurs Points Relais
+     *
+     * @var array
+     */
+    const RELAY = array(
+        "CHR_BB_REL",
+        "MR_24R",
+        "TNT_JD",
+    );
+
+    /**
+     * Detection des Codes Transporteurs avec Livraison en Point Relais
+     *
+     * @param string $carrierCode
+     *
+     * @return bool
+     */
+    public static function isRelayCarrier(string $carrierCode): bool
+    {
+        return in_array($carrierCode, self::RELAY, true);
+    }
 }

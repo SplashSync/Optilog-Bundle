@@ -37,40 +37,14 @@ class StatusCodes
         3 => "OrderProcessing",         // Préparée
         4 => "OrderInTransit",          // Expédiée
         5 => "OrderInTransit",          // Incident en cours
-//        5 => "OrderProblem",          // Incident en cours
+        //        5 => "OrderProblem",          // Incident en cours
         6 => "OrderInTransit",          // En instance
         7 => "OrderDelivered",          // Livré conforme
         8 => "OrderInTransit",          // Livré non-conforme
-//        8 => "OrderProblem",          // Livré non-conforme
+        //        8 => "OrderProblem",          // Livré non-conforme
         9 => "OrderInTransit",          // Perdu
-//        9 => "OrderProblem",            // Perdu
+        //        9 => "OrderProblem",            // Perdu
         10 => "OrderDelivered",         // Retour
         60 => "OrderProblem",           // Litige en cours
     );
-
-//    /**
-//     * Check if a Given Code Allow Creation of the Order
-//     *
-//     * @param string $statut
-//     *
-//     * @return bool
-//     */
-//    public static function isAllowedPush(string $statut): bool
-//    {
-//        //====================================================================//
-//        // If order Status NOT Found => No Export
-//        if (!in_array($statut, self::SPLASH)) {
-//            return false;
-//        }
-//        //====================================================================//
-//        // Detect ID Statut
-//        $idStatut = array_search(self::SPLASH, $statut);
-//        //====================================================================//
-//        // Filter Negative or Above 50 Values
-//        if (!$idStatut || ($idStatut < 0) | ($idStatut > 50)) {
-//            return false;
-//        }
-//
-//        return true;
-//    }
 }

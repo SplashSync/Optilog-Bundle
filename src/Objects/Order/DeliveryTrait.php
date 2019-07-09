@@ -15,6 +15,9 @@
 
 namespace Splash\Connectors\Optilog\Objects\Order;
 
+use Splash\Connectors\Optilog\Models\CarrierCodes;
+use Splash\Core\SplashCore      as Splash;
+
 /**
  * WriteOnly Access to Order Delivery Address Fields
  */
@@ -152,8 +155,6 @@ trait DeliveryTrait
      *
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
-     *
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     protected function setDeliveryFields($fieldName, $fieldData)
     {
@@ -172,6 +173,45 @@ trait DeliveryTrait
 
                 break;
             //====================================================================//
+            // Relay Point | Customer Comments
+            case 'CodePR':
+                //====================================================================//
+                // Detect Carrier Code
+                $carrierCode = isset($this->in['Transporteur'])
+                    ? $this->getCarrierCode((string) $this->in['Transporteur'])
+                    : $this->object->Transporteur;
+                //====================================================================//
+                // Relay Carrier => Push to CodePR
+                if ($carrierCode && CarrierCodes::isRelayCarrier($carrierCode)) {
+                    $this->setSimple($fieldName, $fieldData);
+
+                    break;
+                }
+                //====================================================================//
+                // Others Carriers => Push to label1
+                $this->setSimple("Libelle1", $fieldData);
+
+                break;
+            default:
+                return;
+        }
+        unset($this->in[$fieldName]);
+    }
+
+    /**
+     * Write Given Fields
+     *
+     * @param string $fieldName Field Identifier / Name
+     * @param mixed  $fieldData Field Data
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     */
+    protected function setDeliverySimpleFields($fieldName, $fieldData)
+    {
+        //====================================================================//
+        // WRITE Field
+        switch ($fieldName) {
+            //====================================================================//
             // Direct Writtings
             case 'Contact':
             case 'Adresse1':
@@ -180,7 +220,6 @@ trait DeliveryTrait
             case 'CodePostal':
             case 'Ville':
             case 'Pays':
-            case 'CodePR':
             case 'Telephone':
             case 'Mobile':
             case 'Email':

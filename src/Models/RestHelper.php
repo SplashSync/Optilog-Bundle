@@ -47,6 +47,15 @@ class RestHelper
     );
 
     /**
+     * List of Message Parts that are no Real Errors
+     *
+     * @var array
+     */
+    const NOT_AN_ERROR = array(
+        array("La commande", "est déjà validée"),
+    );
+
+    /**
      * Endpoint for Optilog Api
      *
      * @var string
@@ -233,7 +242,7 @@ class RestHelper
         //====================================================================//
         // Check Response Message
         /** @codingStandardsIgnoreStart */
-        if (isset($body->Message)) {
+        if (isset($body->Message) && self::isAnError($body->Message)) {
             Splash::log()->err($body->Message);
 
             return null;
@@ -241,13 +250,42 @@ class RestHelper
         /** @codingStandardsIgnoreEnd */
         //====================================================================//
         // Check Response Status
-        if (1 != $body->statut) {
+        if (1 != $body->statut && self::isAnError($body->statutText)) {
             Splash::log()->err($body->statutText);
 
             return null;
         }
 
         return $body;
+    }
+
+    /**
+     * Analyze Optilog Api Error Message to Filter Kown Errors
+     *
+     * @param string $message
+     *
+     * @return null|stdClass Null if Errors Detected
+     */
+    private static function isAnError(string $message): bool
+    {
+        //====================================================================//
+        // Walk on Known Responses
+        foreach (self::NOT_AN_ERROR as $errorParts) {
+            //====================================================================//
+            // Walk on Known Responses Part to Identify
+            foreach ($errorParts as $errorPart) {
+                if (false === strpos($message, $errorPart)) {
+                    continue;
+                }
+            }
+            //====================================================================//
+            // All Parts to Identifed
+            return false;
+        }
+
+        //====================================================================//
+        // Message is An Error
+        return true;
     }
 
     /**

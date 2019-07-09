@@ -113,7 +113,7 @@ trait CRUDTrait
 
         //====================================================================//
         // Create Order Infos from Api
-        $response = API::post("jSetCommandes", array( "Commandes" => array($this->object)));
+        $response = API::post("jSetCommandes", array("Commandes" => array($this->object)));
         if (null == $response) {
             return Splash::log()->errTrace("Unable to Create Order (".$this->object->ID.").");
         }
