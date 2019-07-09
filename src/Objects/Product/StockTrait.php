@@ -38,6 +38,7 @@ trait StockTrait
         $this->fieldsFactory()->create(SPL_T_INT)
             ->Identifier("Stk_Dispo")
             ->Name("Stock Disponible")
+            ->description("Stocks Available for Orders")
             ->MicroData("http://schema.org/Offer", "inventoryLevel")
             ->Group($groupName)
             ->isReadOnly()
@@ -48,7 +49,7 @@ trait StockTrait
         $this->fieldsFactory()->create(SPL_T_INT)
             ->Identifier("Stk_Physique")
             ->Name("Stock Physique")
-            ->description("Stock Disponible pour commande")
+            ->description("Current Total Inventory Level")
             ->Group($groupName)
             ->isReadOnly()
             ->isListed();
@@ -58,7 +59,7 @@ trait StockTrait
         $this->fieldsFactory()->create(SPL_T_INT)
             ->Identifier("Stk_Commande")
             ->Name("Stock Commande")
-            ->description("Stock Réservé pour commande(s) en cours")
+            ->description("Reserved for Waiting Orders")
             ->Group($groupName)
             ->isReadOnly();
 
