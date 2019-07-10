@@ -264,7 +264,7 @@ class RestHelper
      *
      * @param string $message
      *
-     * @return null|stdClass Null if Errors Detected
+     * @return bool
      */
     private static function isAnError(string $message): bool
     {
