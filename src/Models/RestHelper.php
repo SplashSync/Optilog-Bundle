@@ -273,18 +273,35 @@ class RestHelper
         foreach (self::NOT_AN_ERROR as $errorParts) {
             //====================================================================//
             // Walk on Known Responses Part to Identify
-            foreach ($errorParts as $errorPart) {
-                if (false === strpos($message, $errorPart)) {
-                    continue;
-                }
+            if (self::isNotAnError($message, $errorParts)) {
+                return false;
             }
-            //====================================================================//
-            // All Parts to Identifed
-            return false;
         }
 
         //====================================================================//
         // Message is An Error
+        return true;
+    }
+
+    /**
+     * Check if Error Message is Kown None Error Message
+     *
+     * @param string $message
+     * @param array  $known
+     *
+     * @return bool
+     */
+    private static function isNotAnError(string $message, array $known): bool
+    {
+        //====================================================================//
+        // Walk on Known Responses Part to Identify
+        foreach ($known as $errorPart) {
+            if (false === strpos($message, $errorPart)) {
+                return false;
+            }
+        }
+        //====================================================================//
+        // Message is Not An Error
         return true;
     }
 
