@@ -47,4 +47,27 @@ class StatusCodes
         10 => "OrderDelivered",         // Retour
         60 => "OrderProblem",           // Litige en cours
     );
+
+    /**
+     * List of Optilog Orders Status Names
+     *
+     * Negative Status >> NOT Send to Optilog
+     *
+     * @var array
+     */
+    const NAMES = array(
+        -1 => "Rejetée",
+        0 => "En attente de validation",
+        1 => "En saisie / Acceptée",
+        2 => "En cours de préparation",
+        3 => "Préparée",
+        4 => "Expédiée",
+        5 => "Incident en cours",
+        6 => "En instance",
+        7 => "Livré conforme",
+        8 => "Livré non-conforme",
+        9 => "Livré non-conforme",
+        10 => "Retour",
+        60 => "Litige en cours",
+    );
 }

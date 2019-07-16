@@ -84,6 +84,11 @@ trait StatusTrait
                 break;
             case 'StatutRaw':
                 $this->out[$fieldName] = (string) $this->object->Statut;
+                //====================================================================//
+                // If order is in  Static Status => Use Static Status
+                if (isset(StatusCodes::NAMES[$this->object->Statut])) {
+                    $this->out[$fieldName] .= (string) " - ".StatusCodes::NAMES[$this->object->Statut];
+                }
 
                 break;
             default:
