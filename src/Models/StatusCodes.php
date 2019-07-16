@@ -30,7 +30,7 @@ class StatusCodes
     const SPLASH = array(
         //====================================================================//
         // Real Optilog Statuses
-        -1 => "OrderCanceled",          // Rejetée
+        -1 => "OrderOutOfStock",        // Rejetée
         0 => "OrderProcessing",         // En attente de validation
         1 => "OrderProcessing",         // En saisie / Acceptée
         2 => "OrderProcessing",         // En cours de préparation

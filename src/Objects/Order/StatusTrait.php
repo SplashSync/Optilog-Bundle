@@ -62,7 +62,15 @@ trait StatusTrait
             ->Identifier("Mode")
             ->Name("Is Valid")
             ->MicroData("http://schema.org/OrderStatus", "OrderProcessing")
-            ->isWriteOnly();
+            ->setPreferWrite();
+
+        //====================================================================//
+        // Is Canceled
+        $this->fieldsFactory()->create(SPL_T_BOOL)
+            ->Identifier("isCanceled")
+            ->Name("Is Canceled")
+            ->MicroData("http://schema.org/OrderStatus", "OrderCancelled")
+            ->setPreferWrite();
     }
 
     /**
@@ -76,6 +84,14 @@ trait StatusTrait
         //====================================================================//
         // READ Fields
         switch ($fieldName) {
+            case 'Mode':
+                $this->out[$fieldName] = ($this->object->Statut > 0);
+
+                break;
+            case 'isCanceled':
+                $this->out[$fieldName] = (-1 == $this->object->Statut);
+
+                break;
             case 'Statut':
                 if ($this->isAllowedStatusUpdates()) {
                     $this->out[$fieldName] = $this->getSplashStatus();
@@ -87,7 +103,7 @@ trait StatusTrait
                 //====================================================================//
                 // If order is in  Static Status => Use Static Status
                 if (isset(StatusCodes::NAMES[$this->object->Statut])) {
-                    $this->out[$fieldName] .= (string) " - ".StatusCodes::NAMES[$this->object->Statut];
+                    $this->out[$fieldName] .= (string) " | ".StatusCodes::NAMES[$this->object->Statut];
                 }
 
                 break;
@@ -111,17 +127,20 @@ trait StatusTrait
         switch ($fieldName) {
             case 'Mode':
                 //====================================================================//
-                // Debug => Force Order Status
-                if ($this->connector->isDebugMode()) {
-                    Splash::log()->war("Order Validation is disabled in Preproduction.");
-
-                    break;
+                // VALIDATE ORDER IF ALLOWED
+                if (!empty($fieldData) && ($this->isAllowedValidate())) {
+                    $this->object->Mode = "VALIDATE";
+                    $this->needUpdate();
                 }
+
+                break;
+            case 'isCanceled':
                 //====================================================================//
-                // TWO POSSIBLES INPUTS MODES
-                // => Order is Draft >> ALTER
-                // => Order is Validated >> VALIDATE
-                $this->object->Mode = $fieldData ? "VALIDATE" : "ALTER";
+                // CANCEL ORDER IF ALLOWED
+                if (!empty($fieldData) && ($this->isAllowedCancel())) {
+                    $this->object->Mode = "DELETE";
+                    $this->needUpdate();
+                }
 
                 break;
             default:
@@ -167,10 +186,56 @@ trait StatusTrait
             return true;
         }
         //====================================================================//
-        // If Order NOT Validated => No No Status Updated
+        // If Order NOT Validated => No Status Updated
         if (0 == $this->object->Statut) {
             return false;
         }
+
+        return true;
+    }
+
+    /**
+     * Check if Order Status Validation is Allowed
+     *
+     * @return bool
+     */
+    private function isAllowedValidate(): bool
+    {
+        //====================================================================//
+        // Debug => Force Order Status
+        if ($this->connector->isDebugMode()) {
+            Splash::log()->war("Order Validation is disabled in Preproduction.");
+
+            return false;
+        }
+        //====================================================================//
+        // If Order NOT Validated Yet
+        if ($this->object->Statut > 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Check if Order Status Cancelation is Allowed
+     *
+     * @return bool
+     */
+    private function isAllowedCancel(): bool
+    {
+//        //====================================================================//
+//        // Debug => Force Order Status
+//        if ($this->connector->isDebugMode()) {
+//            Splash::log()->war("Order Validation is disabled in Preproduction.");
+//
+//            return false;
+//        }
+//        //====================================================================//
+//        // If Order NOT Validated Yet
+//        if ($this->object->Statut > 0) {
+//            return false;
+//        }
 
         return true;
     }

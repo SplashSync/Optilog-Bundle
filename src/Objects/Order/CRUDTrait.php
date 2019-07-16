@@ -121,8 +121,9 @@ trait CRUDTrait
         }
 
         //====================================================================//
-        // Setup Object fro Edit
+        // Setup Object for Edit
         /** @codingStandardsIgnoreStart */
+        $this->object->Statut = 0;
         $this->object->Mode = "ALTER";
         /** @codingStandardsIgnoreEnd */
 
