@@ -1,6 +1,5 @@
 /var/
-/vendor/
-/.php_cs.cache
-/nbproject/private/
-/nbproject/
 /src/.php_cs.cache
+/.php_cs.cache
+/vendor/
+/nbproject/
