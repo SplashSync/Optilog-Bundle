@@ -107,6 +107,7 @@ trait CRUDTrait
             // Write Delivery Fields
             $this->setDeliveryFields($fieldName, $fieldData);
             $this->setDeliverySimpleFields($fieldName, $fieldData);
+            $this->setTrackingFields($fieldName, $fieldData);
             //====================================================================//
             // Write Items Fields
             $this->setItemsFields($fieldName, $fieldData);
