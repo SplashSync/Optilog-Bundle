@@ -216,7 +216,7 @@ trait CRUDTrait
             return true;
         }
         //====================================================================//
-        // Check If Order Status is Above 2
+        // Check If Order Status is Above 1
         if ($this->object->Statut > 1) {
             return false;
         }
