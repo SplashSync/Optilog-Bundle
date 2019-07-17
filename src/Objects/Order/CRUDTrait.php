@@ -197,9 +197,9 @@ trait CRUDTrait
 
         return $this->object->DestID;
     }
-    
+
     /**
-     * Check if this Order Data Update is Allowed 
+     * Check if this Order Data Update is Allowed
      *
      * @return bool
      */
@@ -207,7 +207,7 @@ trait CRUDTrait
     {
         //====================================================================//
         // Check If Mode is ALTER
-        if ($this->object->Mode != "ALTER") {
+        if ("ALTER" != $this->object->Mode) {
             return true;
         }
         //====================================================================//
@@ -220,7 +220,7 @@ trait CRUDTrait
         if ($this->object->Statut > 1) {
             return false;
         }
-        
+
         return true;
-    }    
+    }
 }
