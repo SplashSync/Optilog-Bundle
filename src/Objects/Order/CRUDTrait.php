@@ -144,7 +144,7 @@ trait CRUDTrait
         Splash::log()->trace();
         //====================================================================//
         // No Update Required
-        if (!$needed) {
+        if (!$needed || !$this->isAllowedUpdate()) {
             return $this->getObjectIdentifier();
         }
         //====================================================================//
@@ -197,4 +197,30 @@ trait CRUDTrait
 
         return $this->object->DestID;
     }
+    
+    /**
+     * Check if this Order Data Update is Allowed 
+     *
+     * @return bool
+     */
+    protected function isAllowedUpdate(): ?bool
+    {
+        //====================================================================//
+        // Check If Mode is ALTER
+        if ($this->object->Mode != "ALTER") {
+            return true;
+        }
+        //====================================================================//
+        // Check If Order Status is Defined
+        if (!isset($this->object->Statut)) {
+            return true;
+        }
+        //====================================================================//
+        // Check If Order Status is Above 2
+        if ($this->object->Statut > 1) {
+            return false;
+        }
+        
+        return true;
+    }    
 }
