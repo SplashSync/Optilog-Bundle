@@ -169,8 +169,8 @@ trait StatusTrait
             return StatusCodes::SPLASH[$this->object->Statut];
         }
         //====================================================================//
-        // Default Status => Order is Closed & Delivered
-        return "OrderDelivered";
+        // Unknown Status => No Order Status Update
+        return "";
     }
 
     /**
