@@ -138,7 +138,7 @@ trait StatusTrait
                 //====================================================================//
                 // CANCEL ORDER IF ALLOWED
                 if (!empty($fieldData) && ($this->isAllowedCancel())) {
-                    $this->object->Mode = "DELETE";
+                    $this->object->Mode = "UNVALIDATE";
                     $this->needUpdate();
                 }
 
