@@ -87,10 +87,18 @@ trait ItemsTrait
                 continue;
             }
             //====================================================================//
-            // Decode product Id
+            // Decode Product Id
             $productId = self::objects()->id($product["ID"]);
             if (!$productId) {
                 Splash::log()->warTrace("Invalid order Items SKU received");
+
+                continue;
+            }
+            //====================================================================//
+            // Search for This Items in Products List
+            $articleIndex = $this->searchItem($productId);
+            if (null !== $articleIndex) {
+                $this->object->Articles[$articleIndex]["Quantite"] += $product["Quantite"];
 
                 continue;
             }
@@ -128,5 +136,32 @@ trait ItemsTrait
         }
 
         return true;
+    }
+
+    /**
+     * Serach for Order Item in Articles
+     *
+     * @param string $productId Product SKU
+     *
+     * @return null|int
+     */
+    private function searchItem(string $productId): ?int
+    {
+        //====================================================================//
+        // Safety Checks - Articles List if Empty
+        if (!is_array($this->object->Articles)) {
+            return null;
+        }
+        //====================================================================//
+        // Walk on Articles List
+        foreach ($this->object->Articles as $index => $item) {
+            //====================================================================//
+            // Same Articles SKU
+            if ($item["ID"] == $productId) {
+                return (int) $index;
+            }
+        }
+
+        return null;
     }
 }
