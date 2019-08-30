@@ -138,6 +138,15 @@ class CarrierCodes
         "TNT_J" => "TNT National TNT Express ",
         "TNT_JZ" => "TNT National TNT Livraison à domicile",
         "TNT_JD" => "TNT National TNT Relais colis ",
+
+        //====================================================================//
+        // Dropshiping
+        "DROP" => "Dropshipping",
+
+        //====================================================================//
+        // VET Spécific Carrier Codes
+        "VET_COL" => "VET - Custom Colissimo",
+        "VET_PRIV" => "VET - Custom Colis Privé",
     );
 
     /**
@@ -152,6 +161,16 @@ class CarrierCodes
     );
 
     /**
+     * Liste des Codes Transporteurs Custom
+     *
+     * @var array
+     */
+    const CUSTOM = array(
+        "VET_COL",
+        "VET_PRIV",
+    );
+
+    /**
      * Detection des Codes Transporteurs avec Livraison en Point Relais
      *
      * @param string $carrierCode
@@ -161,5 +180,17 @@ class CarrierCodes
     public static function isRelayCarrier(string $carrierCode): bool
     {
         return in_array($carrierCode, self::RELAY, true);
+    }
+
+    /**
+     * Detection des Codes Transporteurs Custom
+     *
+     * @param string $carrierCode
+     *
+     * @return bool
+     */
+    public static function isCustomCarrier(string $carrierCode): bool
+    {
+        return in_array($carrierCode, self::CUSTOM, true);
     }
 }

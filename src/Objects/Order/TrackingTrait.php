@@ -24,6 +24,11 @@ use Splash\Core\SplashCore      as Splash;
 trait TrackingTrait
 {
     /**
+     * @var null|float
+     */
+    private $totalPrice;
+
+    /**
      * Build Fields using FieldFactory
      */
     protected function buildTrackingFields()
@@ -60,6 +65,14 @@ trait TrackingTrait
             ->MicroData("http://schema.org/ParcelDelivery", "trackingUrl")
             ->group("Tracking")
             ->isReadOnly();
+
+        //====================================================================//
+        // Order Total Price TTC
+        $this->fieldsFactory()->create(SPL_T_DOUBLE)
+            ->Identifier("total")
+            ->Name("Total (Tax incl.)")
+            ->MicroData("http://schema.org/Invoice", "totalPaymentDueTaxIncluded")
+            ->isWriteOnly();
     }
 
     /**
@@ -96,6 +109,9 @@ trait TrackingTrait
         // WRITE Field
         switch ($fieldName) {
             case 'Transporteur':
+                //====================================================================//
+                // Detect Order Total Price
+                $this->detectOrderTotalPrice();
                 //====================================================================//
                 // Detect Carrier Code
                 $carrierCode = $this->getCarrierCode((string) $fieldData);
@@ -140,6 +156,11 @@ trait TrackingTrait
             $carrierCode = $carriers[$carrierName];
         }
         //====================================================================//
+        // Manage Custom Carrier Codes
+        if (CarrierCodes::isCustomCarrier($carrierCode)) {
+            $carrierCode = $this->doCustomCarrierUpdates($carrierCode);
+        }
+        //====================================================================//
         // Check Carrier Code is Valid
         if (!in_array($carrierCode, array_keys(CarrierCodes::CODES), true)) {
             if (is_array($carriers) && !isset($carriers[$carrierName])) {
@@ -172,5 +193,51 @@ trait TrackingTrait
         //====================================================================//
         // Return Carrier Names
         return array_flip($carriers);
+    }
+
+    /**
+     * Fetch Order Total Price
+     */
+    private function detectOrderTotalPrice(): void
+    {
+        //====================================================================//
+        // If NOT in Write Context
+        if (!isset($this->in["total"])) {
+            $this->totalPrice = null;
+
+            return;
+        }
+        $this->totalPrice = (float) $this->in["total"];
+        unset($this->in["total"]);
+    }
+
+    /**
+     * Update Carrier Code thanks to Custom Configurations
+     *
+     * @param string $carrierName
+     *
+     * @return string
+     */
+    private function doCustomCarrierUpdates(string $carrierName): string
+    {
+        //====================================================================//
+        // Safety Check - NO Order Total Price Given
+        if (null === $this->totalPrice) {
+            return $carrierName;
+        }
+        //====================================================================//
+        // Apply Custom Rules
+        switch ($carrierName) {
+            //====================================================================//
+            // VET - Colissimo, Signed above 49 €
+            case "VET_COL":
+                return ($this->totalPrice < 49) ? "COL_9L" : "COL_9V";
+            //====================================================================//
+            // VET - Colis Privé, Signed above 49 €
+            case "VET_PRIV":
+                return ($this->totalPrice < 49) ? "COLPRIV" : "COLPRIVAS";
+        }
+
+        return $carrierName;
     }
 }
