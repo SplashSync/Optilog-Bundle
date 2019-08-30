@@ -152,8 +152,8 @@ trait TrackingTrait
         //====================================================================//
         // Identify Carrier Code from Name
         $carrierCode = $carrierName;
-        if (is_array($carriers) && isset($carriers[$carrierName])) {
-            $carrierCode = $carriers[$carrierName];
+        if (is_array($carriers) && isset($carriers[trim($carrierName)])) {
+            $carrierCode = $carriers[trim($carrierName)];
         }
         //====================================================================//
         // Manage Custom Carrier Codes
@@ -170,6 +170,7 @@ trait TrackingTrait
 
             return null;
         }
+//        Splash::log()->war("Detect Optilog Carrier : ".$carrierCode);
         //====================================================================//
         // Return Carrier Code
         return $carrierCode;
