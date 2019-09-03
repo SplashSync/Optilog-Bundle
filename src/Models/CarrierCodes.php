@@ -61,7 +61,7 @@ class CarrierCodes
         "COL_9V" => "COLISSIMO EXPERT FRANCE",
         "COL_CB" => "COLISSIMO EXPERT EUROPE",
         "COL_CP" => "COLISSIMO EXPERT INTER",
-        "COL_7A" => "COLISSIMO EXPERT OUTRE-MER",
+        "COL_9W" => "COLISSIMO EXPERT OUTRE-MER",
 
         //====================================================================//
         // DHL
