@@ -54,6 +54,7 @@ class RestHelper
     const NOT_AN_ERROR = array(
         array("La commande", "est déjà validée"),
         array("La commande", "est en cours d'expédition !"),
+        array("La commande", "est déjà en attente de validation"),
     );
 
     /**
