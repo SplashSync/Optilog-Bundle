@@ -203,7 +203,7 @@ trait TrackingTrait
     {
         //====================================================================//
         // If NOT in Write Context
-        if (!array_key_exists("total", $this->in)) {
+        if (!array_key_exists("total", (array) $this->in)) {
             $this->totalPrice = null;
 
             return;
