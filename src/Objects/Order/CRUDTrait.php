@@ -208,6 +208,12 @@ trait CRUDTrait
         //====================================================================//
         // Check If Mode is ALTER
         if ("ALTER" != $this->object->Mode) {
+            //====================================================================//
+            // Check If Mode is UNVALIDATE & Status is Draft or Canceled
+            if (("UNVALIDATE" == $this->object->Mode) && ($this->object->Statut <= 0)) {
+                return false;
+            }
+
             return true;
         }
         //====================================================================//
