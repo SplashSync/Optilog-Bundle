@@ -37,6 +37,11 @@ trait CRUDTrait
         // Stack Trace
         Splash::log()->trace();
         //====================================================================//
+        // Detect Rejected Order Id => Init Rejected Object
+        if ($this->isRejectedId($objectId)) {
+            return $this->initRejected();
+        }
+        //====================================================================//
         // Get Order Infos from Api
         $response = API::post("jGetStatutCommande", array(array("ID" => $objectId)));
         if ((null == $response) || !isset($response->result) || empty($response->result)) {
@@ -84,10 +89,10 @@ trait CRUDTrait
         //====================================================================//
         // Check if Order is Allowed for Creation
         // NOT ALLOWED => Set in Error
-        if (!$this->isAllowedDate()) {
+        if (!$this->isAllowedDate() || !$this->isAllowedCarrier()) {
             $this->logFilteredOrder();
 
-            return false;
+            return $this->initRejected();
         }
         //====================================================================//
         // Init Object
@@ -205,6 +210,13 @@ trait CRUDTrait
      */
     protected function isAllowedUpdate(): ?bool
     {
+        //====================================================================//
+        // Check If Rejected Order
+        if ($this->isRejectedId($this->object->DestID)) {
+            Splash::log()->war("Rejected Order Detected... Update Skipped");
+            
+            return false;
+        }
         //====================================================================//
         // Check If Mode is ALTER
         if ("ALTER" != $this->object->Mode) {

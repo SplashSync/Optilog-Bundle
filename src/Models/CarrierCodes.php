@@ -144,6 +144,10 @@ class CarrierCodes
         "DROP" => "Dropshipping",
 
         //====================================================================//
+        // REJECTED => This Order is NOT to be Shipped by Optilog
+        "REJECTED" => "REJECTED - NOT Shipped by Optilog",
+
+        //====================================================================//
         // VET Spécific Carrier Codes
         "VET_COL" => "VET - Custom Colissimo",
         "VET_PRIV" => "VET - Custom Colis Privé",

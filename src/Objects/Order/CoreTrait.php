@@ -94,6 +94,11 @@ trait CoreTrait
         // WRITE Field
         switch ($fieldName) {
             case 'DestID':
+                //====================================================================//
+                // Detect Rejected Order Id => No Update Allowed
+                if ($this->isRejectedId($this->object->DestID)) {
+                    break;
+                }
                 $this->setSimple($fieldName, $fieldData);
 
                 break;

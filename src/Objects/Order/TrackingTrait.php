@@ -132,6 +132,29 @@ trait TrackingTrait
     }
 
     /**
+     * Check if this Order is Allowed Writting on Optilog
+     *
+     * @return bool
+     */
+    protected function isAllowedCarrier(): ?bool
+    {
+        //====================================================================//
+        // Check If Received Order Carrier Name is Given
+        if (!isset($this->in["Transporteur"]) || empty($this->in["Transporteur"]) || !is_scalar($this->in["Transporteur"])) {
+            return true;
+        }
+        //====================================================================//
+        // Detect Carrier Code
+        $carrierCode = $this->getCarrierCode((string) $this->in["Transporteur"]);
+        if ("REJECTED" != $carrierCode) {
+            return true;
+        }
+        Splash::log()->war("Rejected Carrier Code Detected...");
+
+        return false;
+    }
+
+    /**
      * Get Optilog Carriers Code
      *
      * @param string $carrierName
@@ -170,7 +193,6 @@ trait TrackingTrait
 
             return null;
         }
-//        Splash::log()->war("Detect Optilog Carrier : ".$carrierCode);
         //====================================================================//
         // Return Carrier Code
         return $carrierCode;
