@@ -56,7 +56,7 @@ trait RejectedTrait
         /** @codingStandardsIgnoreEnd */
 
         $this->in["Transporteur"] = self::$rejectedId;
-        
+
         return $this->object;
     }
 }

@@ -214,7 +214,7 @@ trait CRUDTrait
         // Check If Rejected Order
         if ($this->isRejectedId($this->object->DestID)) {
             Splash::log()->war("Rejected Order Detected... Update Skipped");
-            
+
             return false;
         }
         //====================================================================//
