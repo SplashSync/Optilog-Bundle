@@ -224,18 +224,11 @@ trait StatusTrait
      */
     private function isAllowedCancel(): bool
     {
-//        //====================================================================//
-//        // Debug => Force Order Status
-//        if ($this->connector->isDebugMode()) {
-//            Splash::log()->war("Order Validation is disabled in Preproduction.");
-//
-//            return false;
-//        }
-//        //====================================================================//
-//        // If Order NOT Validated Yet
-//        if ($this->object->Statut > 0) {
-//            return false;
-//        }
+        //====================================================================//
+        // If Order NOT Validated Yet => Stay in ALTER Mode
+        if ($this->object->Statut <= 0) {
+            return false;
+        }
 
         return true;
     }
