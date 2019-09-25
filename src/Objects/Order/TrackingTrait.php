@@ -254,11 +254,11 @@ trait TrackingTrait
             //====================================================================//
             // VET - Colissimo, Signed above 49 €
             case "VET_COL":
-                return ($this->totalPrice < 49) ? "COL_9L" : "COL_9V";
+                return ($this->totalPrice < 85) ? "COL_9L" : "COL_9V";
             //====================================================================//
             // VET - Colis Privé, Signed above 49 €
             case "VET_PRIV":
-                return ($this->totalPrice < 49) ? "COLPRIV" : "COLPRIVAS";
+                return ($this->totalPrice < 85) ? "COLPRIV" : "COLPRIVAS";
         }
 
         return $carrierName;
