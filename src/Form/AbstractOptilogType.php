@@ -207,7 +207,6 @@ abstract class AbstractOptilogType extends AbstractType
             ->add('dfStock', TextType::class, array(
                 'label' => "var.dfStock.label",
                 'help_block' => "var.dfStock.desc",
-                'data' => "VETCO",
                 'required' => false,
                 'translation_domain' => "OptilogBundle",
             ))
