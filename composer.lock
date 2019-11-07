@@ -1095,12 +1095,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SplashSync/Php-Bundle.git",
-                "reference": "eeb3838053c07d2e038e70d78f11e65eb82a1636"
+                "reference": "d528977768eecfdce249905393d458569de8c5f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SplashSync/Php-Bundle/zipball/eeb3838053c07d2e038e70d78f11e65eb82a1636",
-                "reference": "eeb3838053c07d2e038e70d78f11e65eb82a1636",
+                "url": "https://api.github.com/repos/SplashSync/Php-Bundle/zipball/d528977768eecfdce249905393d458569de8c5f5",
+                "reference": "d528977768eecfdce249905393d458569de8c5f5",
                 "shasum": ""
             },
             "require": {
@@ -1116,7 +1116,7 @@
                 "j13k/yaml-lint": "^1.1",
                 "jakub-onderka/php-parallel-lint": "^1.0",
                 "phpmd/phpmd": "^2.6",
-                "phpro/grumphp": "^0.14",
+                "phpro/grumphp": "~0.16",
                 "phpstan/phpstan-doctrine": "^0.10",
                 "phpstan/phpstan-phpunit": "^0.10",
                 "phpstan/phpstan-shim": "^0.10",
@@ -1159,7 +1159,7 @@
                 }
             ],
             "description": "Splash Core Bundle for Symfony Applications",
-            "time": "2019-10-27T17:30:58+00:00"
+            "time": "2019-11-07T21:33:13+00:00"
         },
         {
             "name": "splash/phpcore",
@@ -5071,12 +5071,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SplashSync/Php-Console.git",
-                "reference": "2e0b41f154e9595e3ac788f12eee522eae4447bd"
+                "reference": "e48d53a5ba6d971838de311cbd62c265757d722a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SplashSync/Php-Console/zipball/2e0b41f154e9595e3ac788f12eee522eae4447bd",
-                "reference": "2e0b41f154e9595e3ac788f12eee522eae4447bd",
+                "url": "https://api.github.com/repos/SplashSync/Php-Console/zipball/e48d53a5ba6d971838de311cbd62c265757d722a",
+                "reference": "e48d53a5ba6d971838de311cbd62c265757d722a",
                 "shasum": ""
             },
             "require": {
@@ -5130,7 +5130,7 @@
                 }
             ],
             "description": "Console Application for All Splash Php Applications",
-            "time": "2019-10-28T18:17:18+00:00"
+            "time": "2019-11-07T23:07:04+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",

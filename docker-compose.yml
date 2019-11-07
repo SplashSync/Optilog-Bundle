@@ -1,0 +1,61 @@
+################################################################################
+#
+#  This file is part of SplashSync Project.
+# 
+#  Copyright (C) Splash Sync <www.splashsync.com>
+# 
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# 
+#  For the full copyright and license information, please view the LICENSE
+#  file that was distributed with this source code.
+# 
+#  @author Bernard Paquier <contact@splashsync.com>
+#
+################################################################################
+
+################################################################################
+# Docker Compose File
+#
+# This Docker File intend to Create a Complete Dev Envirenement 
+# for Splash Optiolog Connector
+#
+# For a faster access to you container, you can add this IP to /etc/hosts
+# 
+# 172.106.0.100         docker.optilog.local
+#
+################################################################################
+
+
+version: '2'
+
+services:
+    
+    ################################################################################
+    # Splash Toolkit Container   
+    toolkit:
+        image: 'splashsync/toolkit'
+        container_name: optilog-toolkit
+        volumes:
+            # Specify Local Configuration File
+            - './docker/toolkit/splash.yml:/app/config/packages/splash.yml:ro'
+            # Uncomment to use Local Sources instead of Release
+            - './src/:/app/vendor/splash/optilog/src/:ro'
+        hostname:           toolkit.optilog.local
+        networks:
+            optilog:        { ipv4_address: 172.106.0.100, aliases: [ toolkit.optilog.local ] }
+            splashsync:     { aliases: [ toolkit.optilog.local ] }
+            
+networks:
+    ################################################################################
+    # Default Private Network    
+    optilog:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 172.106.0.0/24
+    ################################################################################
+    # External Splash Network
+    splashsync:
+        external: true
