@@ -65,7 +65,7 @@ trait PricesTrait
                 if (empty($newPrice)) {
                     unset($this->object->{$fieldName});
 
-                    continue;
+                    break;
                 }
                 $this->setSimple($fieldName, $newPrice);
 

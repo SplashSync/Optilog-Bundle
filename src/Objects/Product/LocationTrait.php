@@ -108,7 +108,7 @@ trait LocationTrait
                 if (empty($fieldData)) {
                     unset($this->object->Stock);
 
-                    continue;
+                    break;
                 }
                 //====================================================================//
                 // New Value => Erase Gamme (Setuped by Optilog)

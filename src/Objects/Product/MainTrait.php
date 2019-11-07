@@ -110,7 +110,7 @@ trait MainTrait
                 if (empty($fieldData)) {
                     unset($this->object->{$fieldName});
 
-                    continue;
+                    break;
                 }
                 $this->setSimpleFloat($fieldName, UNITS::convertWeight($fieldData, UNITS::MASS_GRAM));
 
@@ -122,7 +122,7 @@ trait MainTrait
                 if (empty($fieldData)) {
                     unset($this->object->{$fieldName});
 
-                    continue;
+                    break;
                 }
                 $this->setSimpleFloat($fieldName, UNITS::convertLength($fieldData, UNITS::LENGTH_MM));
 
@@ -135,7 +135,7 @@ trait MainTrait
                 if (empty($fieldData)) {
                     unset($this->object->{$fieldName});
 
-                    continue;
+                    break;
                 }
                 $this->setSimple($fieldName, $fieldData);
 

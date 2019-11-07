@@ -123,7 +123,7 @@ trait CoreTrait
             case 'sku':
                 $newSku = trim($fieldData);
                 if ($this->object->ID == $newSku) {
-                    continue;
+                    break;
                 }
 
                 $this->oldSKU = $this->object->ID;
