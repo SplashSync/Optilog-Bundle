@@ -41,7 +41,7 @@ services:
             # Specify Local Configuration File
             - './docker/toolkit/splash.yml:/app/config/packages/splash.yml:ro'
             # Uncomment to use Local Sources instead of Release
-            - './src/:/app/vendor/splash/optilog/src/:ro'
+            # - './src/:/app/vendor/splash/optilog/src/:ro'
         hostname:           toolkit.optilog.local
         networks:
             optilog:        { ipv4_address: 172.106.0.100, aliases: [ toolkit.optilog.local ] }
