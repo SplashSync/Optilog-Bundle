@@ -16,7 +16,6 @@
 namespace Splash\Connectors\Optilog\Objects\Product;
 
 use Splash\Components\UnitConverter as UNITS;
-use Splash\Core\SplashCore      as Splash;
 
 /**
  * Access to Product Main Fields

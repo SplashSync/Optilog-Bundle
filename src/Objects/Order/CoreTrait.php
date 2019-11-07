@@ -15,8 +15,6 @@
 
 namespace Splash\Connectors\Optilog\Objects\Order;
 
-use Splash\Core\SplashCore      as Splash;
-
 /**
  * Access to Order Core Fields
  */

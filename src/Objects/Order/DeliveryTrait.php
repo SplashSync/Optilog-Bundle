@@ -16,7 +16,6 @@
 namespace Splash\Connectors\Optilog\Objects\Order;
 
 use Splash\Connectors\Optilog\Models\CarrierCodes;
-use Splash\Core\SplashCore      as Splash;
 
 /**
  * WriteOnly Access to Order Delivery Address Fields

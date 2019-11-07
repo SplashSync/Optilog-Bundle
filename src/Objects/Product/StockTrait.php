@@ -15,8 +15,6 @@
 
 namespace Splash\Connectors\Optilog\Objects\Product;
 
-use Splash\Core\SplashCore      as Splash;
-
 /**
  * Access to Product Stock Fields
  */

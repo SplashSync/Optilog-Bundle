@@ -44,6 +44,8 @@ class RestHelper
         "Production V1" => "https://api.geolie.net/wsgestinbox.asmx",
         //        "Production V2" => "https://api.geolie.net/wsgestinbox_V2.asmx",
         "Develop V1" => "http://www.optilog-fr.com/WSGetInBox_dev/wsGestInbox.asmx",
+        // Test
+        "Test V1" => "http://test-api.geolie.net/wsGestInbox.asmx",
     );
 
     /**
