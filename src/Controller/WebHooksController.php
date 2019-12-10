@@ -104,40 +104,6 @@ class WebHooksController extends Controller
     }
 
     /**
-     * Execute Files reading
-     *
-     * @param AbstractConnector $connector
-     *
-     * @return null|JsonResponse
-     */
-    private function executeFilesReading(AbstractConnector $connector) : ?JsonResponse
-    {
-        //==============================================================================
-        // Check Infos are Available
-        if (empty($this->events) || !is_array($this->events)) {
-            return null;
-        }
-        //==============================================================================
-        // Loop On Events
-        foreach ($this->events as $event) {
-            //==============================================================================
-            // Detect & Respond to File Events
-            $fileEvent = $this->detectFileEvent($event);
-            if (null == $fileEvent) {
-                continue;
-            }
-            //==============================================================================
-            // Try Reading of File on Local System
-            $rawFile = $connector->file($fileEvent["path"], $fileEvent["md5"]);
-            //==============================================================================
-            // Return File Response
-            return self::buildFileResponse($rawFile);
-        }
-
-        return null;
-    }
-
-    /**
      * Execute Changes Commits
      *
      * @param AbstractConnector $connector
@@ -170,6 +136,45 @@ class WebHooksController extends Controller
             );
             $this->commited++;
         }
+    }
+
+    /**
+     * Execute Files reading
+     *
+     * @param AbstractConnector $connector
+     *
+     * @return null|JsonResponse
+     */
+    private function executeFilesReading(AbstractConnector $connector) : ?JsonResponse
+    {
+        //==============================================================================
+        // Check Infos are Available
+        if (empty($this->events) || !is_array($this->events)) {
+            return null;
+        }
+        //==============================================================================
+        // Loop On Events
+        foreach ($this->events as $event) {
+            //==============================================================================
+            // Detect & Respond to File Events
+            $fileEvent = $this->detectFileEvent($event);
+            if (null === $fileEvent) {
+                continue;
+            }
+            //==============================================================================
+            // Respond to Incomplete Requests
+            if (empty($fileEvent)) {
+                return self::buildFileResponse(false);
+            }
+            //==============================================================================
+            // Try Reading of File on Local System
+            $rawFile = $connector->file($fileEvent["path"], $fileEvent["md5"]);
+            //==============================================================================
+            // Return File Response
+            return self::buildFileResponse($rawFile);
+        }
+
+        return null;
     }
 
     /**
@@ -309,7 +314,7 @@ class WebHooksController extends Controller
         //==============================================================================
         // Validate Contents
         if (empty($response["action"]) || empty($response["path"]) || empty($response["md5"])) {
-            return null;
+            return array();
         }
 
         return $response;

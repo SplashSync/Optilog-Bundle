@@ -26,7 +26,7 @@ trait PdfTrait
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
      */
-    protected function setPdfFields($fieldName, $fieldData)
+    protected function setPdfFields($fieldName, $fieldData): void
     {
         //====================================================================//
         // READ Fields
@@ -49,7 +49,7 @@ trait PdfTrait
     /**
      * Build Fields using FieldFactory
      */
-    private function buildPdfFields()
+    private function buildPdfFields(): void
     {
         //====================================================================//
         // Invoice PDF
