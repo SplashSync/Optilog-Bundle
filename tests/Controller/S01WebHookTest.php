@@ -28,8 +28,10 @@ class S01WebHookTest extends TestCase
 
     /**
      * Test WebHook For Ping
+     *
+     * @return void
      */
-    public function testWebhookPing()
+    public function testWebhookPing(): void
     {
         //====================================================================//
         // Load Connector
@@ -56,8 +58,10 @@ class S01WebHookTest extends TestCase
 
     /**
      * Test WebHook For Connect
+     *
+     * @return void
      */
-    public function testWebhookConnect()
+    public function testWebhookConnect(): void
     {
         //====================================================================//
         // Load Connector
@@ -81,8 +85,10 @@ class S01WebHookTest extends TestCase
 
     /**
      * Test WebHook with Errors
+     *
+     * @return void
      */
-    public function testWebhookErrors()
+    public function testWebhookErrors(): void
     {
         //====================================================================//
         // Load Connector
@@ -121,8 +127,10 @@ class S01WebHookTest extends TestCase
      * @param string $objectType
      * @param string $action
      * @param string $objectId
+     *
+     * @return void
      */
-    public function testWebhookRequest(array $data, string $objectType, string $action, string $objectId)
+    public function testWebhookRequest(array $data, string $objectType, string $action, string $objectId): void
     {
         //====================================================================//
         // Load Connector
@@ -145,7 +153,7 @@ class S01WebHookTest extends TestCase
      *
      * @return array
      */
-    public function webHooksInputsProvider()
+    public function webHooksInputsProvider(): array
     {
         $hooks = array();
 
@@ -175,6 +183,8 @@ class S01WebHookTest extends TestCase
 
     /**
      * Verify WebHook is Ok Response
+     *
+     * @return void
      */
     protected function assertOkResponse(): void
     {
@@ -184,6 +194,8 @@ class S01WebHookTest extends TestCase
 
     /**
      * Verify WebHook is Ko Response
+     *
+     * @return void
      */
     protected function assertKoResponse(): void
     {
