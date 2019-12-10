@@ -28,7 +28,7 @@ class EditFormType extends AbstractOptilogType
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addWsHostField($builder, $options);
         $this->addApiUserField($builder, $options);

@@ -25,7 +25,7 @@ trait DeliveryTrait
     /**
      * Build Fields using FieldFactory
      */
-    protected function buildDeliveryFields()
+    protected function buildDeliveryFields(): void
     {
         $groupName = "Livraison";
 
@@ -109,7 +109,7 @@ trait DeliveryTrait
     /**
      * Build Fields using FieldFactory
      */
-    protected function buildDeliveryPart2Fields()
+    protected function buildDeliveryPart2Fields(): void
     {
         $groupName = "Livraison";
 
@@ -155,7 +155,7 @@ trait DeliveryTrait
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
      */
-    protected function setDeliveryFields($fieldName, $fieldData)
+    protected function setDeliveryFields($fieldName, $fieldData): void
     {
         //====================================================================//
         // WRITE Field
@@ -205,7 +205,7 @@ trait DeliveryTrait
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    protected function setDeliverySimpleFields($fieldName, $fieldData)
+    protected function setDeliverySimpleFields($fieldName, $fieldData): void
     {
         //====================================================================//
         // WRITE Field

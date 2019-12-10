@@ -25,7 +25,7 @@ trait MainTrait
     /**
      * Build Address Fields using FieldFactory
      */
-    protected function buildMainFields()
+    protected function buildMainFields(): void
     {
         $groupName = "Dimensions";
 
@@ -97,7 +97,7 @@ trait MainTrait
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
      */
-    protected function setMainFields($fieldName, $fieldData)
+    protected function setMainFields($fieldName, $fieldData): void
     {
         //====================================================================//
         // WRITE Field

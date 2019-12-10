@@ -36,15 +36,12 @@ class StatusCodes
         2 => "OrderProcessing",         // En cours de préparation
         3 => "OrderProcessing",         // Préparée
         4 => "OrderInTransit",          // Expédiée
-        5 => "OrderInTransit",          // Incident en cours
-        //        5 => "OrderProblem",          // Incident en cours
+        5 => "OrderProblem",            // Incident en cours
         6 => "OrderInTransit",          // En instance
         7 => "OrderDelivered",          // Livré conforme
-        8 => "OrderInTransit",          // Livré non-conforme
-        //        8 => "OrderProblem",          // Livré non-conforme
-        9 => "OrderInTransit",          // Perdu
-        //        9 => "OrderProblem",            // Perdu
-        10 => "OrderDelivered",         // Retour
+        8 => "OrderProblem",            // Livré non-conforme
+        9 => "OrderProblem",            // Perdu
+        10 => "OrderReturned",          // Retour
         60 => "OrderProblem",           // Litige en cours
     );
 

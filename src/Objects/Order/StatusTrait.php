@@ -26,7 +26,7 @@ trait StatusTrait
     /**
      * Build Fields using FieldFactory
      */
-    protected function buildStatusFields()
+    protected function buildStatusFields(): void
     {
         //====================================================================//
         // ORDER STATUS
@@ -79,7 +79,7 @@ trait StatusTrait
      * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
      */
-    protected function getStatusFields($key, $fieldName)
+    protected function getStatusFields($key, $fieldName): void
     {
         //====================================================================//
         // READ Fields
@@ -120,7 +120,7 @@ trait StatusTrait
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
      */
-    protected function setStatusFields($fieldName, $fieldData)
+    protected function setStatusFields($fieldName, $fieldData): void
     {
         //====================================================================//
         // WRITE Field

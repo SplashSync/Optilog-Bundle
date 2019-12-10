@@ -46,6 +46,8 @@ class RestHelper
         "Develop V1" => "http://www.optilog-fr.com/WSGetInBox_dev/wsGestInbox.asmx",
         // Test
         "Test V1" => "http://test-api.geolie.net/wsGestInbox.asmx",
+        // Backup Url (Insecure)
+        "Backup URL V1 (UNSECURED)" => "http://secours.logsys.fr/api/wsgestinbox.asmx",
     );
 
     /**

@@ -23,7 +23,7 @@ trait PricesTrait
     /**
      * Build Fields using FieldFactory
      */
-    protected function buildPricesFields()
+    protected function buildPricesFields(): void
     {
         //====================================================================//
         // Product Selling Price
@@ -50,7 +50,7 @@ trait PricesTrait
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
      */
-    protected function setPricesFields($fieldName, $fieldData)
+    protected function setPricesFields($fieldName, $fieldData): void
     {
         //====================================================================//
         // WRITE Field

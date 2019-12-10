@@ -40,22 +40,22 @@ class Product extends AbstractStandaloneObject // implements TrackingInterface
     use Product\TrackerTrait;
 
     /**
-     *  Object Disable Flag. Override this flag to disable Object.
+     * {@inheritdoc}
      */
     protected static $DISABLED = false;
 
     /**
-     *  Object Name
+     * {@inheritdoc}
      */
     protected static $NAME = "Product";
 
     /**
-     *  Object Description
+     * {@inheritdoc}
      */
     protected static $DESCRIPTION = "Optilog Product";
 
     /**
-     *  Object Icon (FontAwesome or Glyph ico tag)
+     * {@inheritdoc}
      */
     protected static $ICO = "fa fa-product-hunt";
 

@@ -20,6 +20,9 @@ namespace Splash\Connectors\Optilog\Objects\Product;
  */
 trait LocationTrait
 {
+    /**
+     * @var array
+     */
     protected static $knownStocks = array(
         "VETCO" => "VET: Stock Propriétaire",
         "CONSIGNE" => "VET: Stock Consigné",
@@ -28,7 +31,7 @@ trait LocationTrait
     /**
      * Build Fields using FieldFactory
      */
-    protected function buildLocationFields()
+    protected function buildLocationFields(): void
     {
         $groupName = "Stocks";
 
@@ -67,7 +70,7 @@ trait LocationTrait
      * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
      */
-    protected function getLocationFields($key, $fieldName)
+    protected function getLocationFields($key, $fieldName): void
     {
         //====================================================================//
         // READ Fields
@@ -97,7 +100,7 @@ trait LocationTrait
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
      */
-    protected function setLocationFields($fieldName, $fieldData)
+    protected function setLocationFields($fieldName, $fieldData): void
     {
         //====================================================================//
         // WRITE Field

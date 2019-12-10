@@ -28,11 +28,11 @@ trait ItemsTrait
     /**
      * Build Fields using FieldFactory
      */
-    protected function buildItemsFields()
+    protected function buildItemsFields(): void
     {
         //====================================================================//
         // Order Line Product Identifier (SKU is Here)
-        $this->fieldsFactory()->create(self::objects()->Encode("Product", SPL_T_ID))
+        $this->fieldsFactory()->create((string) self::objects()->encode("Product", SPL_T_ID))
             ->Identifier("ID")
             ->InList("lines")
             ->Name("Product SKU")
@@ -59,7 +59,7 @@ trait ItemsTrait
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
      */
-    private function setItemsFields($fieldName, $fieldData)
+    private function setItemsFields($fieldName, $fieldData): void
     {
         //====================================================================//
         // Safety Check

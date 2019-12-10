@@ -26,7 +26,7 @@ trait DatesFilterTrait
     /**
      * Build Core Fields using FieldFactory
      */
-    protected function buildFilterFields()
+    protected function buildFilterFields(): void
     {
         //====================================================================//
         // Creation Date
@@ -96,7 +96,7 @@ trait DatesFilterTrait
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    private function setFilterFields($fieldName, $fieldData)
+    private function setFilterFields($fieldName, $fieldData): void
     {
         //====================================================================//
         // WRITE Field

@@ -30,7 +30,7 @@ trait CoreTrait
     /**
      * Build Core Fields using FieldFactory
      */
-    private function buildCoreFields()
+    private function buildCoreFields(): void
     {
         //====================================================================//
         // Reference
@@ -75,7 +75,7 @@ trait CoreTrait
      * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
      */
-    private function getCoreFields($key, $fieldName)
+    private function getCoreFields($key, $fieldName): void
     {
         //====================================================================//
         // READ Fields
@@ -112,7 +112,7 @@ trait CoreTrait
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
      */
-    private function setCoreFields($fieldName, $fieldData)
+    private function setCoreFields($fieldName, $fieldData): void
     {
         //====================================================================//
         // WRITE Field

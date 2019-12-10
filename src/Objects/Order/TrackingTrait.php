@@ -31,7 +31,7 @@ trait TrackingTrait
     /**
      * Build Fields using FieldFactory
      */
-    protected function buildTrackingFields()
+    protected function buildTrackingFields(): void
     {
         //====================================================================//
         // Order Shipping Method
@@ -81,7 +81,7 @@ trait TrackingTrait
      * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
      */
-    protected function getTrackingFields($key, $fieldName)
+    protected function getTrackingFields($key, $fieldName): void
     {
         //====================================================================//
         // READ Fields
@@ -103,7 +103,7 @@ trait TrackingTrait
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
      */
-    protected function setTrackingFields($fieldName, $fieldData)
+    protected function setTrackingFields($fieldName, $fieldData): void
     {
         //====================================================================//
         // WRITE Field

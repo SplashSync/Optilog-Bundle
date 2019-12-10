@@ -189,7 +189,8 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
         if (!$this->selfTest()) {
             return false;
         }
-        Splash::log()->err("There are No Files Reading for Mailchime Up To Now!");
+
+        Splash::log()->err("There are No Files Reading for Optilog Up To Now!");
 
         return false;
     }
@@ -199,7 +200,7 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
     //====================================================================//
 
     /**
-     * @abstract   Get Connector Profile Informations
+     * Get Connector Profile Informations
      *
      * @return array
      */

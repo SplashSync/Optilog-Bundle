@@ -24,6 +24,8 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Splash Optilog WebHooks Actions Controller
+ *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class WebHooksController extends Controller
 {
@@ -78,7 +80,7 @@ class WebHooksController extends Controller
      *
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
-    public function indexAction(Request $request, AbstractConnector $connector)
+    public function indexAction(Request $request, AbstractConnector $connector): JsonResponse
     {
         //====================================================================//
         // Validate Request Parameters
@@ -87,11 +89,52 @@ class WebHooksController extends Controller
             return $validate;
         }
 
+        //====================================================================//
+        // Detect Files Requests
+        $fileResponse = $this->executeFilesReading($connector);
+        if ($fileResponse instanceof JsonResponse) {
+            return $fileResponse;
+        }
+
         //==============================================================================
         // Commit Changes
         $this->executeCommits($connector);
 
         return self::buildResponse(true, 'Notified '.$this->commited.' Changes');
+    }
+
+    /**
+     * Execute Files reading
+     *
+     * @param AbstractConnector $connector
+     *
+     * @return null|JsonResponse
+     */
+    private function executeFilesReading(AbstractConnector $connector) : ?JsonResponse
+    {
+        //==============================================================================
+        // Check Infos are Available
+        if (empty($this->events) || !is_array($this->events)) {
+            return null;
+        }
+        //==============================================================================
+        // Loop On Events
+        foreach ($this->events as $event) {
+            //==============================================================================
+            // Detect & Respond to File Events
+            $fileEvent = $this->detectFileEvent($event);
+            if (null == $fileEvent) {
+                continue;
+            }
+            //==============================================================================
+            // Try Reading of File on Local System
+            $rawFile = $connector->file($fileEvent["path"], $fileEvent["md5"]);
+            //==============================================================================
+            // Return File Response
+            return self::buildFileResponse($rawFile);
+        }
+
+        return null;
     }
 
     /**
@@ -241,13 +284,45 @@ class WebHooksController extends Controller
     }
 
     /**
+     * Check if File Event & Decode Request Event Item
+     *
+     * @param array $event
+     *
+     * @return null|array
+     */
+    private function detectFileEvent(array $event): ?array
+    {
+        //==============================================================================
+        // Validate Contents
+        if (!isset($event["Type"]) || ("FILE" != $event["Type"])) {
+            return null;
+        }
+        //==============================================================================
+        // Build File Event Contents
+        $response = array(
+            //==============================================================================
+            // Extract Object Type & ID
+            "action" => $event["Type"],
+            "path" => $event["Path"],
+            "md5" => $event["Md5"],
+        );
+        //==============================================================================
+        // Validate Contents
+        if (empty($response["action"]) || empty($response["path"]) || empty($response["md5"])) {
+            return null;
+        }
+
+        return $response;
+    }
+
+    /**
      * Detect Request Event User
      *
      * @param array $event
      *
-     * @return null|string
+     * @return string
      */
-    private static function getEventUser(array $event): ?string
+    private static function getEventUser(array $event): string
     {
         return isset($event["User"]) ? (string) $event["User"] : "Optilog API";
     }
@@ -257,13 +332,19 @@ class WebHooksController extends Controller
      *
      * @param array $event
      *
-     * @return null|string
+     * @return string
      */
-    private static function getEventComment(array $event): ?string
+    private static function getEventComment(array $event): string
     {
-        return isset($event["Comment"])
-            ? $event["Comment"]
-            : "Optilog Change Notified: ".print_r($event, true);
+        if (isset($event["Comment"])) {
+            return (string) $event["Comment"];
+        }
+
+        if (isset($event["DT"])) {
+            return (string) "Change Date: ".$event["DT"];
+        }
+
+        return "Optilog Event: ".print_r($event, true);
     }
 
     /**
@@ -332,7 +413,7 @@ class WebHooksController extends Controller
     }
 
     /**
-     * Preapare REST Json Response
+     * Prepare REST Json Response
      *
      * @param bool        $success
      * @param null|string $message
@@ -344,6 +425,29 @@ class WebHooksController extends Controller
         $response = array('statut' => $success ? 1 : 0);
         if ($message) {
             $response["statutText"] = $message;
+        }
+        if (!empty(Splash::log()->err)) {
+            $response["logs"] = Splash::log()->getRawLog();
+        }
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * Prepare REST Json File Response
+     *
+     * @param array|bool $file
+     *
+     * @return JsonResponse
+     */
+    private static function buildFileResponse($file) :JsonResponse
+    {
+        $response = array(
+            'statut' => is_array($file) ? 1 : 0,
+            'statutText' => is_array($file) ? "Found 1 Document" : "Document not found...",
+        );
+        if (is_array($file)) {
+            $response["file"] = $file;
         }
         if (!empty(Splash::log()->err)) {
             $response["logs"] = Splash::log()->getRawLog();

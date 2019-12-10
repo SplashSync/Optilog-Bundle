@@ -23,7 +23,7 @@ trait StockTrait
     /**
      * Build Fields using FieldFactory
      */
-    protected function buildStockFields()
+    protected function buildStockFields(): void
     {
         $groupName = "Stocks";
 
@@ -77,7 +77,7 @@ trait StockTrait
      * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
      */
-    protected function getStockFields($key, $fieldName)
+    protected function getStockFields($key, $fieldName): void
     {
         //====================================================================//
         // READ Fields

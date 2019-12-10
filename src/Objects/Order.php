@@ -44,28 +44,24 @@ class Order extends AbstractStandaloneObject // implements TrackingInterface
     use Order\StatusTrait;
     use Order\TrackerTrait;
     use Order\RejectedTrait;
+    use Order\PdfTrait;
 
     //====================================================================//
     // Object Definition Parameters
     //====================================================================//
 
     /**
-     *  Object Disable Flag. Uncomment this line to Override this flag and disable Object.
-     */
-//    protected static    $DISABLED        =  True;
-
-    /**
-     *  Object Name (Translated by Module)
+     * {@inheritdoc}
      */
     protected static $NAME = "Customer Order";
 
     /**
-     *  Object Description (Translated by Module)
+     * {@inheritdoc}
      */
     protected static $DESCRIPTION = "Optilog Order Object";
 
     /**
-     *  Object Icon (FontAwesome or Glyph ico tag)
+     * {@inheritdoc}
      */
     protected static $ICO = "fa fa-shopping-cart";
 

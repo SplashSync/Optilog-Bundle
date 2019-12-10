@@ -24,9 +24,9 @@ use Splash\Core\SplashCore      as Splash;
  */
 class SelfTest extends AbstractStandaloneWidget
 {
-    //====================================================================//
-    // Define Standard Options for this Widget
-    // Override this array to change default options for your widget
+    /**
+     * {@inheritdoc}
+     */
     public static $OPTIONS = array(
         "Width" => self::SIZE_DEFAULT,
         'UseCache' => true,
@@ -34,17 +34,17 @@ class SelfTest extends AbstractStandaloneWidget
     );
 
     /**
-     * Widget Name
+     * {@inheritdoc}
      */
     protected static $NAME = "Server SelfTest";
 
     /**
-     * Widget Description
+     * {@inheritdoc}
      */
     protected static $DESCRIPTION = "Results of your Server SelfTests";
 
     /**
-     * Widget Icon (FontAwesome or Glyph ico tag)
+     * {@inheritdoc}
      */
     protected static $ICO = "fa fa-info-circle";
 
@@ -111,7 +111,7 @@ class SelfTest extends AbstractStandaloneWidget
     /**
      * Block Building - Text Intro
      */
-    private function buildIntroBlock()
+    private function buildIntroBlock(): void
     {
         //====================================================================//
         // Into Text Block
@@ -121,7 +121,7 @@ class SelfTest extends AbstractStandaloneWidget
     /**
      * Block Building - Notifications Parameters
      */
-    private function buildNotificationsBlock()
+    private function buildNotificationsBlock(): void
     {
         //====================================================================//
         // Get Log
