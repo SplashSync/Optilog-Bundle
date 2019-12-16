@@ -252,11 +252,11 @@ trait TrackingTrait
         // Apply Custom Rules
         switch ($carrierName) {
             //====================================================================//
-            // VET - Colissimo, Signed above 49 €
+            // VET - Colissimo, Signed above 100 €
             case "VET_COL":
-                return ($this->totalPrice < 85) ? "COL_9L" : "COL_9V";
+                return ($this->totalPrice < 100) ? "COL_9L" : "COL_9V";
             //====================================================================//
-            // VET - Colis Privé, Signed above 49 €
+            // VET - Colis Privé, Signed above 85 €
             case "VET_PRIV":
                 return ($this->totalPrice < 85) ? "COLPRIV" : "COLPRIVAS";
         }
