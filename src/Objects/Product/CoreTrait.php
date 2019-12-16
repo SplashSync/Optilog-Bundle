@@ -52,13 +52,21 @@ trait CoreTrait
             ->isRequired();
 
         //====================================================================//
-        // DEscription (For Standards Only)
+        // Description (For Standards Only)
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->Identifier("Description")
             ->Name("Product Name with Options")
             ->MicroData("http://schema.org/Product", "description")
             ->isReadOnly()
             ->setPreferNone();
+
+        //====================================================================//
+        // Référence Fournisseur
+        $this->fieldsFactory()->create(SPL_T_VARCHAR)
+            ->Identifier("IdFournisseur")
+            ->Name("Manufacturer Part Number")
+            ->MicroData("http://schema.org/Product", "mpn")
+            ->isWriteOnly();
 
         //====================================================================//
         // Active => Product Is available_for_order
@@ -131,6 +139,7 @@ trait CoreTrait
 
                 break;
             case 'Libelle':
+            case 'IdFournisseur':
                 $this->setSimple($fieldName, $fieldData);
 
                 break;
