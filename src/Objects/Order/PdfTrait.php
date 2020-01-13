@@ -53,7 +53,7 @@ trait PdfTrait
     {
         //====================================================================//
         // Invoice PDF
-        $this->fieldsFactory()->create(SPL_T_FILE)
+        $this->fieldsFactory()->create(SPL_T_STREAM)
             ->Identifier("Facture")
             ->Name("Facture Client [PDF]")
             ->MicroData("http://schema.org/Order", "invoicePdf")
@@ -61,7 +61,7 @@ trait PdfTrait
 
         //====================================================================//
         // Delivery PDF
-        $this->fieldsFactory()->create(SPL_T_FILE)
+        $this->fieldsFactory()->create(SPL_T_STREAM)
             ->Identifier("BonLivraison")
             ->Name("Bon de Livraison [PDF]")
             ->MicroData("http://schema.org/Order", "deliveryPdf")
