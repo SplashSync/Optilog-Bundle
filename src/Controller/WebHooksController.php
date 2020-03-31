@@ -23,21 +23,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
- * Splash Optilog WebHooks Actions Controller
+ * Splash Optilog WebHooks Actions Controller.
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class WebHooksController extends Controller
 {
     /**
-     * List of Available Action Types
+     * List of Available Action Types.
      *
      * @var array
      */
     const ACTIONS = array(SPL_A_CREATE, SPL_A_UPDATE, SPL_A_DELETE);
 
     /**
-     * List of Available Objects Types
+     * List of Available Objects Types.
      *
      * @var array
      */
@@ -47,7 +47,7 @@ class WebHooksController extends Controller
     );
 
     /**
-     * Id Key for Objects Types
+     * Id Key for Objects Types.
      *
      * @var array
      */
@@ -71,7 +71,7 @@ class WebHooksController extends Controller
     //====================================================================//
 
     /**
-     * Execute WebHook Actions for A Optilog Connector
+     * Execute WebHook Actions for A Optilog Connector.
      *
      * @param Request           $request
      * @param AbstractConnector $connector
@@ -104,11 +104,11 @@ class WebHooksController extends Controller
     }
 
     /**
-     * Execute Changes Commits
+     * Execute Changes Commits.
      *
      * @param AbstractConnector $connector
      */
-    private function executeCommits(AbstractConnector $connector) : void
+    private function executeCommits(AbstractConnector $connector): void
     {
         //==============================================================================
         // Check Infos are Available
@@ -125,6 +125,11 @@ class WebHooksController extends Controller
             if (null == $decoded) {
                 continue;
             }
+//            //==============================================================================
+//            // Limit Number of Commits to 100 Items
+//            if ($this->commited > 100) {
+//                break;
+//            }
             //==============================================================================
             // Commit Changes to Splash
             $connector->commit(
@@ -134,18 +139,21 @@ class WebHooksController extends Controller
                 $decoded["user"],
                 $decoded["comment"]
             );
-            $this->commited++;
+            ++$this->commited;
+            //==============================================================================
+            // Set Script Execution Time
+            set_time_limit(30);
         }
     }
 
     /**
-     * Execute Files reading
+     * Execute Files reading.
      *
      * @param AbstractConnector $connector
      *
      * @return null|JsonResponse
      */
-    private function executeFilesReading(AbstractConnector $connector) : ?JsonResponse
+    private function executeFilesReading(AbstractConnector $connector): ?JsonResponse
     {
         //==============================================================================
         // Check Infos are Available
@@ -178,7 +186,7 @@ class WebHooksController extends Controller
     }
 
     /**
-     * Validate Request Parameters
+     * Validate Request Parameters.
      *
      * @param AbstractConnector $connector
      * @param Request           $request
@@ -230,7 +238,7 @@ class WebHooksController extends Controller
     }
 
     /**
-     * Validate Request Parameters
+     * Validate Request Parameters.
      *
      * @param AbstractConnector $connector
      * @param Request           $request
@@ -258,7 +266,7 @@ class WebHooksController extends Controller
     }
 
     /**
-     * Validate & Decode Request Event Item
+     * Validate & Decode Request Event Item.
      *
      * @param array $event
      *
@@ -277,7 +285,7 @@ class WebHooksController extends Controller
             //==============================================================================
             // User & Comment
             "user" => self::getEventUser($event),
-            "comment" => self::getEventComment($event),
+            "comment" => "[".$this->commited."]".self::getEventComment($event),
         );
         //==============================================================================
         // Validate Contents
@@ -289,7 +297,7 @@ class WebHooksController extends Controller
     }
 
     /**
-     * Check if File Event & Decode Request Event Item
+     * Check if File Event & Decode Request Event Item.
      *
      * @param array $event
      *
@@ -321,7 +329,7 @@ class WebHooksController extends Controller
     }
 
     /**
-     * Detect Request Event User
+     * Detect Request Event User.
      *
      * @param array $event
      *
@@ -333,7 +341,7 @@ class WebHooksController extends Controller
     }
 
     /**
-     * Detect Request Event Comment
+     * Detect Request Event Comment.
      *
      * @param array $event
      *
@@ -353,7 +361,7 @@ class WebHooksController extends Controller
     }
 
     /**
-     * Detect Request Event User
+     * Detect Request Event User.
      *
      * @param array $event
      *
@@ -371,7 +379,7 @@ class WebHooksController extends Controller
     }
 
     /**
-     * Detect Request Object Type
+     * Detect Request Object Type.
      *
      * @param array $event
      *
@@ -391,7 +399,7 @@ class WebHooksController extends Controller
     }
 
     /**
-     * Detect Request Object Id
+     * Detect Request Object Id.
      *
      * @param array $event
      *
@@ -418,14 +426,14 @@ class WebHooksController extends Controller
     }
 
     /**
-     * Prepare REST Json Response
+     * Prepare REST Json Response.
      *
      * @param bool        $success
      * @param null|string $message
      *
      * @return JsonResponse
      */
-    private static function buildResponse(bool $success, string $message = null) :JsonResponse
+    private static function buildResponse(bool $success, string $message = null): JsonResponse
     {
         $response = array('statut' => $success ? 1 : 0);
         if ($message) {
@@ -439,13 +447,13 @@ class WebHooksController extends Controller
     }
 
     /**
-     * Prepare REST Json File Response
+     * Prepare REST Json File Response.
      *
      * @param array|bool $file
      *
      * @return JsonResponse
      */
-    private static function buildFileResponse($file) :JsonResponse
+    private static function buildFileResponse($file): JsonResponse
     {
         $response = array(
             'statut' => is_array($file) ? 1 : 0,
