@@ -285,7 +285,7 @@ class WebHooksController extends Controller
             //==============================================================================
             // User & Comment
             "user" => self::getEventUser($event),
-            "comment" => "[".$this->commited."]".self::getEventComment($event),
+            "comment" => "[".$this->commited."] ".self::getEventComment($event),
         );
         //==============================================================================
         // Validate Contents
