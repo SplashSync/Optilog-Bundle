@@ -21,35 +21,9 @@ namespace Splash\Connectors\Optilog\Objects\Order;
 trait PdfTrait
 {
     /**
-     * Write Given Fields
-     *
-     * @param string $fieldName Field Identifier / Name
-     * @param mixed  $fieldData Field Data
-     */
-    protected function setPdfFields($fieldName, $fieldData): void
-    {
-        //====================================================================//
-        // READ Fields
-        switch ($fieldName) {
-            //====================================================================//
-            // Order Invoice PDF
-            case 'Facture':
-            //====================================================================//
-            // Order Delivery PDF
-            case 'BonLivraison':
-                $this->setSimple($fieldName, $fieldData);
-
-                break;
-            default:
-                return;
-        }
-
-        unset($this->in[$fieldName]);
-    }
-    /**
      * Build Fields using FieldFactory
      */
-    private function buildPdfFields(): void
+    protected function buildPdfFields(): void
     {
         //====================================================================//
         // Invoice PDF
@@ -66,5 +40,35 @@ trait PdfTrait
             ->Name("Bon de Livraison [PDF]")
             ->MicroData("http://schema.org/Order", "deliveryPdf")
             ->isWriteOnly();
+    }
+
+    /**
+     * Write Given Fields
+     *
+     * @param string $fieldName Field Identifier / Name
+     * @param mixed  $fieldData Field Data
+     */
+    protected function setPdfFields($fieldName, $fieldData): void
+    {
+        //====================================================================//
+        // READ Fields
+        switch ($fieldName) {
+            //====================================================================//
+            // Order Invoice PDF
+            case 'Facture':
+                $this->object->Facture = $fieldData;
+
+                break;
+            //====================================================================//
+            // Order Delivery PDF
+            case 'BonLivraison':
+                $this->object->BonLivraison = $fieldData;
+
+                break;
+            default:
+                return;
+        }
+
+        unset($this->in[$fieldName]);
     }
 }
