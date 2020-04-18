@@ -62,7 +62,8 @@ trait StatusTrait
             ->Identifier("Mode")
             ->Name("Is Valid")
             ->MicroData("http://schema.org/OrderStatus", "OrderProcessing")
-            ->setPreferWrite();
+            ->setPreferWrite()
+            ->isLogged();
 
         //====================================================================//
         // Is Canceled
@@ -70,7 +71,8 @@ trait StatusTrait
             ->Identifier("isCanceled")
             ->Name("Is Canceled")
             ->MicroData("http://schema.org/OrderStatus", "OrderCancelled")
-            ->setPreferWrite();
+            ->setPreferWrite()
+            ->isLogged();
     }
 
     /**
@@ -95,10 +97,6 @@ trait StatusTrait
             case 'Statut':
                 if ($this->isAllowedStatusUpdates()) {
                     $this->out[$fieldName] = $this->getSplashStatus();
-                }
-                if ("OrderReturned" == $this->out[$fieldName]) {
-                    $this->out["Facture"] = null;
-                    $this->out["BonLivraison"] = null;
                 }
 
                 break;
@@ -267,7 +265,7 @@ trait StatusTrait
     {
         //====================================================================//
         // If Order Cancled or Returned
-        if (in_array($this->object->Statut, array(-1, 10), true)) {
+        if ($this->object->Statut <= 0) {
             return true;
         }
 
