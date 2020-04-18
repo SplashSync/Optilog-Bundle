@@ -59,6 +59,7 @@ class RestHelper
         array("La commande", "est déjà validée"),
         array("La commande", "est en cours d'expédition !"),
         array("La commande", "est déjà en attente de validation"),
+        array("La commande", "ne peut plus être modifiée car annulée !"),
     );
 
     /**
