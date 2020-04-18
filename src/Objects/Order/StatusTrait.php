@@ -85,16 +85,20 @@ trait StatusTrait
         // READ Fields
         switch ($fieldName) {
             case 'Mode':
-                $this->out[$fieldName] = ($this->object->Statut > 0);
+                $this->out[$fieldName] = $this->isValidStatus();
 
                 break;
             case 'isCanceled':
-                $this->out[$fieldName] = (-1 == $this->object->Statut);
+                $this->out[$fieldName] = $this->isCanceledStatus();
 
                 break;
             case 'Statut':
                 if ($this->isAllowedStatusUpdates()) {
                     $this->out[$fieldName] = $this->getSplashStatus();
+                }
+                if ("OrderReturned" == $this->out[$fieldName]) {
+                    $this->out["Facture"] = null;
+                    $this->out["BonLivraison"] = null;
                 }
 
                 break;
@@ -231,5 +235,42 @@ trait StatusTrait
         }
 
         return true;
+    }
+
+    /**
+     * Check if Order Status is Valid Order
+     *
+     * @return bool
+     */
+    private function isValidStatus(): bool
+    {
+        //====================================================================//
+        // If Order NOT Validated Yet
+        if ($this->object->Statut <= 0) {
+            return false;
+        }
+        //====================================================================//
+        // If Order Returned
+        if (in_array($this->object->Statut, array(10), true)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Check if Order Status is Canceled Order
+     *
+     * @return bool
+     */
+    private function isCanceledStatus(): bool
+    {
+        //====================================================================//
+        // If Order Cancled or Returned
+        if (in_array($this->object->Statut, array(-1, 10), true)) {
+            return true;
+        }
+
+        return false;
     }
 }
