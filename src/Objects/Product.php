@@ -27,9 +27,15 @@ use Splash\Models\Objects\SimpleFieldsTrait;
  */
 class Product extends AbstractStandaloneObject // implements TrackingInterface
 {
+    // Splash Php Core Traits
     use IntelParserTrait;
     use SimpleFieldsTrait;
     use PricesTrait;
+
+    // Optilog Core Traits
+    use Core\DocumentsTrait;
+
+    // Optilog Products Traits
     use Product\CRUDTrait;
     use Product\ObjectsListTrait;
     use Product\CoreTrait;
@@ -38,6 +44,7 @@ class Product extends AbstractStandaloneObject // implements TrackingInterface
     use Product\StockTrait;
     use Product\LocationTrait;
     use Product\TrackerTrait;
+    use Product\ImagesTrait;
 
     /**
      * {@inheritdoc}

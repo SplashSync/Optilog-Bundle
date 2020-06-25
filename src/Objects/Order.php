@@ -33,6 +33,9 @@ class Order extends AbstractStandaloneObject // implements TrackingInterface
     use SimpleFieldsTrait;
     use ObjectsTrait;
 
+    // Optilog Core Traits
+    use Core\DocumentsTrait;
+
     // Optilog Order Traits
     use Order\ObjectsListTrait;
     use Order\CRUDTrait;

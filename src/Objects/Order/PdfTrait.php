@@ -57,12 +57,14 @@ trait PdfTrait
             // Order Invoice PDF
             case 'Facture':
                 $this->object->Facture = $fieldData;
+                $this->addDocumentField($fieldData, self::$docTypeInvoice);
 
                 break;
             //====================================================================//
             // Order Delivery PDF
             case 'BonLivraison':
                 $this->object->BonLivraison = $fieldData;
+                $this->addDocumentField($fieldData, self::$docTypeDelivery);
 
                 break;
             default:
