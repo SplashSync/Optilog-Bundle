@@ -8,10 +8,10 @@ matrix:
           env: SF_VERSION="3.4.*"  
         # Symfony 4.2 Branch
         - php: 7.3
-          env: SF_VERSION="4.4.*"
+          env: SF_VERSION="4.2.*"
         
     allow_failures:
-        - env: SF_VERSION="4.4.*"
+        - env: SF_VERSION="4.2.*"
     fast_finish: true
 
 ################################################################################
