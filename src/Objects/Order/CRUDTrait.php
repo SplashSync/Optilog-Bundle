@@ -61,6 +61,9 @@ trait CRUDTrait
         /** @codingStandardsIgnoreStart */
         $order->Mode = "ALTER";
         /** @codingStandardsIgnoreEnd */
+        //====================================================================//
+        // Load Order Details
+        $this->loadOrderDetails((string) $order->ID);
 
         return $order;
     }

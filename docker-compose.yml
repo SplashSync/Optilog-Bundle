@@ -18,8 +18,8 @@
 ################################################################################
 # Docker Compose File
 #
-# This Docker File intend to Create a Complete Dev Envirenement 
-# for Splash Optiolog Connector
+# This Docker File intend to Create a Complete Dev Environnement
+# for Splash Optilog Connector
 #
 # For a faster access to you container, you can add this IP to /etc/hosts
 # 

@@ -48,6 +48,8 @@ class Order extends AbstractStandaloneObject // implements TrackingInterface
     use Order\TrackerTrait;
     use Order\RejectedTrait;
     use Order\PdfTrait;
+    use Order\LabelsTrait;
+    use Order\ShippedTrait;
 
     //====================================================================//
     // Object Definition Parameters

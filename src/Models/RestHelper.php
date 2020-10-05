@@ -40,13 +40,9 @@ class RestHelper
      */
     const ENDPOINTS = array(
         "Preprod V1" => "https://api.preprod.geolie.net/wsgestinbox.asmx",
-        //        "Preprod V2" => "https://api.preprod.geolie.net/wsgestinbox_V2.asmx",
         "Production V1" => "https://api.geolie.net/wsgestinbox.asmx",
-        //        "Production V2" => "https://api.geolie.net/wsgestinbox_V2.asmx",
         "Develop V1" => "http://www.optilog-fr.com/WSGetInBox_dev/wsGestInbox.asmx",
-        // Test
         "Test V1" => "http://test-api.geolie.net/wsGestInbox.asmx",
-        // Backup Url (Insecure)
         "Backup URL V1 (UNSECURED)" => "http://secours.logsys.fr/api/wsgestinbox.asmx",
     );
 
@@ -192,6 +188,37 @@ class RestHelper
         // Perform Request
         try {
             $response = Request::post(static::$endPoint."/".$path)
+                ->sends(Mime::FORM)
+                ->expects(Mime::JSON)
+                ->body(array("data" => json_encode($body)))
+                ->send();
+        } catch (ConnectionErrorException $ex) {
+            Splash::log()->err($ex->getMessage());
+
+            return null;
+        }
+        //====================================================================//
+        // Catch Errors in Response
+        return self::catchErrors($response);
+    }
+
+    /**
+     * Optilog API POST Request
+     *
+     * @param string         $path API REST Path
+     * @param array|stdClass $body Request Data
+     *
+     * @return null|stdClass
+     */
+    public static function postV2(string $path, $body): ?stdClass
+    {
+        //====================================================================//
+        // Build EndPoint Url
+        $endPointV2 = str_replace("wsgestinbox.asmx", "wsgestinbox_V2.asmx", static::$endPoint);
+        //====================================================================//
+        // Perform Request
+        try {
+            $response = Request::post($endPointV2."/".$path)
                 ->sends(Mime::FORM)
                 ->expects(Mime::JSON)
                 ->body(array("data" => json_encode($body)))
