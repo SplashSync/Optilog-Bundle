@@ -98,7 +98,7 @@ trait ItemsTrait
             // Search for This Items in Products List
             $articleIndex = $this->searchItem($productId);
             if (null !== $articleIndex) {
-                $this->object->Articles[$articleIndex]["Quantite"] += $product["Quantite"];
+                $this->object->Articles[$articleIndex]["Quantite"] += (int) $product["Quantite"];
 
                 continue;
             }
@@ -106,7 +106,7 @@ trait ItemsTrait
             // Add Product Line to List
             $this->object->Articles[] = array(
                 "ID" => $productId,
-                "Quantite" => $product["Quantite"],
+                "Quantite" => (int) $product["Quantite"],
             );
         }
 
