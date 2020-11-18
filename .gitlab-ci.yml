@@ -45,6 +45,7 @@ stages:
     before_script:
         # Setup Travis
         - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/ci/configure.sh  | sh
+        - composer self-update --1;
         # Deploy Symfony Files
         - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/symfony/deploy.sh | sh
         # Setup Symfony Version & Create Database
