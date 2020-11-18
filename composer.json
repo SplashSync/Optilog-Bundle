@@ -38,7 +38,7 @@
     
     "require": {
         "php":                                          "^7.1",
-        "splash/php-bundle":                            "dev-master",
+        "splash/php-bundle":                            "1.0.0",
         "nategood/httpful":                             "^0.2",
         "burgov/key-value-form-bundle":                 "@stable"        
     },
