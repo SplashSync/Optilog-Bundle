@@ -30,7 +30,7 @@ splash:
             # FAKE CREDENTIALS : ASK YOURS TO YOUR MAIN OPTILOG CONTACT
             ########################################################################
             config:  
-                WsHost:         https://api.preprod.geolie.net/wsgestinbox.asmx
+                WsHost:         https://api.preprod.geolie.net/wsgestinbox_V2.asmx
                 ApiUser:        splash
                 ApiPwd:         ThisIsSecretApiPwd
                 ApiKey:         ThisIsSecretApiKey
