@@ -6,7 +6,7 @@ parameters:
     database_port:          null
     database_name:          symfony
     database_user:          root
-    database_password: 
+    database_password:      Optilog-Bundle
         
     kernel.secret:          ThisIsNotASecretKey
     

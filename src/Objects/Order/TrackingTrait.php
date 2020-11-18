@@ -16,6 +16,7 @@
 namespace   Splash\Connectors\Optilog\Objects\Order;
 
 use Splash\Connectors\Optilog\Models\CarrierCodes;
+use Splash\Connectors\Optilog\Models\RestHelper;
 use Splash\Core\SplashCore      as Splash;
 
 /**
@@ -88,6 +89,7 @@ trait TrackingTrait
         switch ($fieldName) {
             case 'Bordereau':
             case 'URL':
+                $this->getFirstParcelFromV2();
                 $this->getSimple($fieldName);
 
                 break;
@@ -262,5 +264,34 @@ trait TrackingTrait
         }
 
         return $carrierName;
+    }
+
+    /**
+     * API V2: Fetch Informations from First Shipped Parcel
+     *
+     * @return void
+     */
+    private function getFirstParcelFromV2(): void
+    {
+        //====================================================================//
+        // Safety Check - We are on API V2
+        if (!RestHelper::isApiV2Mode()) {
+            return;
+        }
+        //====================================================================//
+        // Safety Check - First Parcel information available
+        if (!isset($this->object->Colis->Parcels[0]) || !is_object($this->object->Colis->Parcels[0])) {
+            $this->object->Bordereau = null;
+            $this->object->Url = null;
+
+            return;
+        }
+        $firstParcel = &$this->object->Colis->Parcels[0];
+
+        /** @codingStandardsIgnoreStart @phpstan-ignore-next-line */
+        $this->object->Bordereau = isset($firstParcel->Bordereau) ? $firstParcel->Bordereau : "";
+        /** @phpstan-ignore-next-line */
+        $this->object->URL = isset($firstParcel->URL) ? $firstParcel->URL : "";
+        /** @codingStandardsIgnoreEnd */
     }
 }

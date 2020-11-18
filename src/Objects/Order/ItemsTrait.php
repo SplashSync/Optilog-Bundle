@@ -39,7 +39,8 @@ trait ItemsTrait
             ->MicroData("http://schema.org/Product", "productID")
             ->Group("Products")
             ->isRequired()
-            ->isWriteOnly();
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
 
         //====================================================================//
         // Order Line Quantity
@@ -50,7 +51,20 @@ trait ItemsTrait
             ->MicroData("http://schema.org/QuantitativeValue", "value")
             ->Group("Products")
             ->isRequired()
-            ->isWriteOnly();
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
+
+        //====================================================================//
+        // Order Line Served Quantity
+        $this->fieldsFactory()->create(SPL_T_INT)
+            ->Identifier("Servie")
+            ->InList("lines")
+            ->Name("Shipped Qty")
+            ->MicroData("http://schema.org/QuantitativeValue", "status")
+            ->Group("Products")
+            ->isRequired()
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
     }
 
     /**
@@ -59,7 +73,7 @@ trait ItemsTrait
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
      */
-    private function setItemsFields($fieldName, $fieldData): void
+    protected function setItemsFields($fieldName, $fieldData): void
     {
         //====================================================================//
         // Safety Check
@@ -74,13 +88,11 @@ trait ItemsTrait
             return;
         }
         //====================================================================//
+        // Init Articles List
+        $this->object->Articles = array();
+        //====================================================================//
         // Verify Lines List & Update if Needed
         foreach ($fieldData as $product) {
-            //====================================================================//
-            // Create Articles List if Empty
-            if (!isset($this->object->Articles)) {
-                $this->object->Articles = array();
-            }
             //====================================================================//
             // Safety Checks
             if (!self::validateItem($product)) {
@@ -111,6 +123,53 @@ trait ItemsTrait
         }
 
         unset($this->in[$fieldName]);
+    }
+
+    /**
+     * Read requested Field
+     *
+     * @param string $key       Input List Key
+     * @param string $fieldName Field Identifier / Name
+     */
+    protected function getItemsFields($key, $fieldName): void
+    {
+        //====================================================================//
+        // Check if List field & Init List Array
+        $fieldId = self::lists()->InitOutput($this->out, "lines", $fieldName);
+        if (!$fieldId) {
+            return;
+        }
+        //====================================================================//
+        // Verify List is Not Empty
+        if (!isset($this->object->Articles) || !is_array($this->object->Articles)) {
+            return;
+        }
+        //====================================================================//
+        // Fill List with Data
+        foreach ($this->object->Articles as $index => $product) {
+            //====================================================================//
+            // READ Fields
+            switch ($fieldId) {
+                //====================================================================//
+                // Order Line Direct Reading Data
+                case 'ID':
+                    $value = self::objects()->encode("Product", $product->{$fieldId});
+
+                    break;
+                case 'Quantite':
+                case 'Servie':
+                    $value = isset($product->{$fieldId}) ? (int) $product->{$fieldId} : 0;
+
+                    break;
+                default:
+                    return;
+            }
+            //====================================================================//
+            // Insert Data in List
+            self::lists()->Insert($this->out, "lines", $fieldName, $index, $value);
+        }
+
+        unset($this->in[$key]);
     }
 
     /**

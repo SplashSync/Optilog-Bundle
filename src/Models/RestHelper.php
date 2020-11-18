@@ -41,9 +41,8 @@ class RestHelper
     const ENDPOINTS = array(
         "Preprod V1" => "https://api.preprod.geolie.net/wsgestinbox.asmx",
         "Production V1" => "https://api.geolie.net/wsgestinbox.asmx",
-        "Develop V1" => "http://www.optilog-fr.com/WSGetInBox_dev/wsGestInbox.asmx",
-        "Test V1" => "http://test-api.geolie.net/wsGestInbox.asmx",
-        "Backup URL V1 (UNSECURED)" => "http://secours.logsys.fr/api/wsgestinbox.asmx",
+        "Preprod V2" => "https://api.preprod.geolie.net/wsgestinbox_V2.asmx",
+        "Production V2" => "https://api.geolie.net/wsgestinbox_V2.asmx",
     );
 
     /**
@@ -99,7 +98,7 @@ class RestHelper
     }
 
     /**
-     * Ping Optilog API as Annonymous User
+     * Ping Optilog API as Anonymous User
      *
      * @return bool
      */
@@ -177,17 +176,21 @@ class RestHelper
     /**
      * Optilog API POST Request
      *
-     * @param string         $path API REST Path
-     * @param array|stdClass $body Request Data
+     * @param string         $path     API REST Path
+     * @param array|stdClass $body     Request Data
+     * @param null|string    $endPoint
      *
      * @return null|stdClass
      */
-    public static function post(string $path, $body): ?stdClass
+    public static function post(string $path, $body, string $endPoint = null): ?stdClass
     {
+        //====================================================================//
+        // Detect Endpoint Overrides
+        $endPoint = $endPoint ?? static::$endPoint;
         //====================================================================//
         // Perform Request
         try {
-            $response = Request::post(static::$endPoint."/".$path)
+            $response = Request::post($endPoint."/".$path)
                 ->sends(Mime::FORM)
                 ->expects(Mime::JSON)
                 ->body(array("data" => json_encode($body)))
@@ -203,7 +206,25 @@ class RestHelper
     }
 
     /**
-     * Optilog API POST Request
+     * Optilog API V1 POST Request (Forced)
+     *
+     * @param string         $path API REST Path
+     * @param array|stdClass $body Request Data
+     *
+     * @return null|stdClass
+     */
+    public static function postV1(string $path, $body): ?stdClass
+    {
+        //====================================================================//
+        // Build EndPoint Url
+        $endPoint = str_replace("wsgestinbox_V2.asmx", "wsgestinbox.asmx", static::$endPoint);
+        //====================================================================//
+        // Execute Post Request
+        return self::post($path, $body, $endPoint);
+    }
+
+    /**
+     * Optilog API V2 POST Request (Forced)
      *
      * @param string         $path API REST Path
      * @param array|stdClass $body Request Data
@@ -214,23 +235,10 @@ class RestHelper
     {
         //====================================================================//
         // Build EndPoint Url
-        $endPointV2 = str_replace("wsgestinbox.asmx", "wsgestinbox_V2.asmx", static::$endPoint);
+        $endPoint = str_replace("wsgestinbox.asmx", "wsgestinbox_V2.asmx", static::$endPoint);
         //====================================================================//
-        // Perform Request
-        try {
-            $response = Request::post($endPointV2."/".$path)
-                ->sends(Mime::FORM)
-                ->expects(Mime::JSON)
-                ->body(array("data" => json_encode($body)))
-                ->send();
-        } catch (ConnectionErrorException $ex) {
-            Splash::log()->err($ex->getMessage());
-
-            return null;
-        }
-        //====================================================================//
-        // Catch Errors in Response
-        return self::catchErrors($response);
+        // Execute Post Request
+        return self::post($path, $body, $endPoint);
     }
 
     //====================================================================//
@@ -244,7 +252,17 @@ class RestHelper
      */
     public static function isDebugMode() : bool
     {
-        return (static::$endPoint == self::ENDPOINTS["Preprod V1"]);
+        return (false !== strpos(static::$endPoint, "api.preprod.geolie.net"));
+    }
+
+    /**
+     * Check If Server is API V2 Mode
+     *
+     * @return bool
+     */
+    public static function isApiV2Mode() : bool
+    {
+        return (false !== strpos(static::$endPoint, "wsgestinbox_V2"));
     }
 
     //====================================================================//

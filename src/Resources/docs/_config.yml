@@ -24,7 +24,8 @@ title: Optilog Connector
 # Subtitle of the Site (Generaly DOC)
 subtitle: DOC
 # the subpath of your site, e.g. /blog
-baseurl: "/Optilog-Bundle" 
+baseurl: "/Optilog-Bundle"
+repository: SplashSync/Optilog-Bundle
 # Description of the Bundle/Module
 description:    "Splash Sync Connector for Optilog. See www.optilog-fr.com for more détails."
 # Package Code on Packagist

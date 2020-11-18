@@ -26,6 +26,8 @@ trait ObjectsListTrait
 {
     /**
      * {@inheritdoc}
+     *
+     * @note Order Listing Always uses API V1. "*" search doesn't work on API V2.
      */
     public function objectsList($filter = null, $params = null)
     {
@@ -35,7 +37,7 @@ trait ObjectsListTrait
         if (!$cachedList->hasCache()) {
             //====================================================================//
             // Get Product Lists from Api
-            $rawData = API::post("jGetStatutCommande", array(array("ID" => "*")));
+            $rawData = API::postV1("jGetStatutCommande", array(array("ID" => "*")));
             //====================================================================//
             // Request Failed
             if ((null == $rawData) || !isset($rawData->result)) {
@@ -61,7 +63,7 @@ trait ObjectsListTrait
                 'id' => $order->DestID,
                 'IntID' => $order->ID,
                 'DestID' => $order->DestID,
-                'Statut' => StatusCodes::SPLASH[$order->Statut],
+                'Statut' => StatusCodes::toSplash($order->Statut),
                 'Bordereau' => $order->Bordereau,
                 'Commentaire' => $order->Commentaire,
             );

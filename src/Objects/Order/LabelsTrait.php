@@ -30,7 +30,6 @@ trait LabelsTrait
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->Identifier("Libelle1")
             ->Name("Ligne 1 de commentaire")
-            ->isListed()
             ->isNotTested()
             ->isWriteOnly()
         ;
@@ -40,7 +39,6 @@ trait LabelsTrait
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->Identifier("Libelle2")
             ->Name("Ligne 2 de commentaire")
-            ->isListed()
             ->isNotTested()
             ->isWriteOnly()
         ;
@@ -50,7 +48,6 @@ trait LabelsTrait
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->Identifier("Libelle3")
             ->Name("Ligne 3 de commentaire")
-            ->isListed()
             ->isNotTested()
             ->isWriteOnly()
         ;
@@ -60,7 +57,6 @@ trait LabelsTrait
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->Identifier("Libelle4")
             ->Name("Ligne 4 de commentaire")
-            ->isListed()
             ->isNotTested()
             ->isWriteOnly()
         ;

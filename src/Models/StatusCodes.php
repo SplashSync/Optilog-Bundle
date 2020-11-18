@@ -67,4 +67,19 @@ class StatusCodes
         10 => "Retour",
         60 => "Litige en cours",
     );
+
+    /**
+     * Convert Raw Optilog Status Id to Splash Status
+     *
+     * @param int $status
+     *
+     * @return string
+     */
+    public static function toSplash(int $status): string
+    {
+        return isset(self::SPLASH[$status])
+            ? StatusCodes::SPLASH[$status]
+            : "Unknown"
+        ;
+    }
 }

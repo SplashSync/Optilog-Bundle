@@ -15,6 +15,7 @@
 
 namespace Splash\Connectors\Optilog\Objects\Order;
 
+use Splash\Connectors\Optilog\Models\RestHelper;
 use Splash\Connectors\Optilog\Models\StatusCodes;
 use Splash\Core\SplashCore      as Splash;
 
@@ -101,11 +102,12 @@ trait StatusTrait
 
                 break;
             case 'StatutRaw':
-                $this->out[$fieldName] = (string) $this->object->Statut;
+                $statut = $this->getOptilogStatus();
+                $this->out[$fieldName] = (string) $statut;
                 //====================================================================//
                 // If order is in  Static Status => Use Static Status
-                if (isset(StatusCodes::NAMES[$this->object->Statut])) {
-                    $this->out[$fieldName] .= " | ".StatusCodes::NAMES[$this->object->Statut];
+                if (isset(StatusCodes::NAMES[$statut])) {
+                    $this->out[$fieldName] .= " | ".StatusCodes::NAMES[$statut];
                 }
 
                 break;
@@ -154,21 +156,34 @@ trait StatusTrait
     /**
      * Read Order Status
      *
-     * @return string
-     *
-     * @SuppressWarnings(PHPMD.NPathComplexity)
+     * @return int
      */
-    private function getSplashStatus()
+    private function getOptilogStatus(): int
     {
         //====================================================================//
         // Debug => Force Order Status
         if ($this->connector->isDebugMode() && $this->getParameter($this->object->DestID, false, 'ForcedStatus')) {
-            $this->object->Statut = $this->getParameter($this->object->DestID, false, 'ForcedStatus');
+            return (int) $this->getParameter($this->object->DestID, false, 'ForcedStatus');
         }
+
+        return RestHelper::isApiV2Mode()
+            ? (int) $this->object->IdStatut
+            : (int) $this->object->Statut
+        ;
+    }
+
+    /**
+     * Read Order Status
+     *
+     * @return string
+     */
+    private function getSplashStatus()
+    {
+        $statut = $this->getOptilogStatus();
         //====================================================================//
         // If order is in  Static Status => Use Static Status
-        if (isset(StatusCodes::SPLASH[$this->object->Statut])) {
-            return StatusCodes::SPLASH[$this->object->Statut];
+        if (isset(StatusCodes::SPLASH[$statut])) {
+            return StatusCodes::SPLASH[$statut];
         }
         //====================================================================//
         // Unknown Status => No Order Status Update
@@ -189,7 +204,7 @@ trait StatusTrait
         }
         //====================================================================//
         // If Order NOT Validated => No Status Updated
-        if (0 == $this->object->Statut) {
+        if (0 == $this->getOptilogStatus()) {
             return false;
         }
 
@@ -212,7 +227,7 @@ trait StatusTrait
         }
         //====================================================================//
         // If Order NOT Validated Yet
-        if ($this->object->Statut > 0) {
+        if ($this->getOptilogStatus() > 0) {
             return false;
         }
 
@@ -228,7 +243,7 @@ trait StatusTrait
     {
         //====================================================================//
         // If Order NOT Validated Yet => Stay in ALTER Mode
-        if ($this->object->Statut <= 0) {
+        if ($this->getOptilogStatus() <= 0) {
             return false;
         }
 
@@ -244,12 +259,12 @@ trait StatusTrait
     {
         //====================================================================//
         // If Order NOT Validated Yet
-        if ($this->object->Statut <= 0) {
+        if ($this->getOptilogStatus() <= 0) {
             return false;
         }
         //====================================================================//
         // If Order Returned
-        if (in_array($this->object->Statut, array(10), true)) {
+        if (in_array($this->getOptilogStatus(), array(10), true)) {
             return false;
         }
 
@@ -264,8 +279,8 @@ trait StatusTrait
     private function isCanceledStatus(): bool
     {
         //====================================================================//
-        // If Order Cancled or Returned
-        if ($this->object->Statut <= 0) {
+        // If Order Canceled or Returned
+        if ($this->getOptilogStatus() <= 0) {
             return true;
         }
 

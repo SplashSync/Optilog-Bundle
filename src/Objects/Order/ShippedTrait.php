@@ -16,8 +16,6 @@
 namespace Splash\Connectors\Optilog\Objects\Order;
 
 use Splash\Connectors\Optilog\Models\RestHelper as API;
-use Splash\Core\SplashCore as Splash;
-use stdClass;
 
 /**
  * Access to Order Shipped Fields
@@ -25,47 +23,16 @@ use stdClass;
 trait ShippedTrait
 {
     /**
-     * @var null|stdClass
-     */
-    private $orderDetails;
-
-    /**
-     * Load Order details from API V2 if Needed
-     *
-     * @param string $objectId Object id
-     *
-     * @return bool
-     */
-    protected function loadOrderDetails(string $objectId): bool
-    {
-        $this->orderDetails = null;
-        //====================================================================//
-        // Check if Order Details is Needed
-        $fields = is_a($this->in, "ArrayObject") ? $this->in->getArrayCopy() : $this->in;
-        if (!in_array("ID@shipped", $fields, true)) {
-            return true;
-        }
-        //====================================================================//
-        // Get Order Infos from Api V2
-        $response = API::postV2("jGetStatutCommande", array(array("ID" => $objectId)));
-        if ((null == $response) || !isset($response->result) || empty($response->result)) {
-            return Splash::log()->errTrace("Unable to load Order Details from API V2.");
-        }
-        //====================================================================//
-        // Extract Order Infos from Results
-        $this->orderDetails = array_shift($response->result);
-        if ((null == $this->orderDetails) || !($this->orderDetails instanceof stdClass)) {
-            return Splash::log()->errTrace("Unable to load Order Details from API V2.");
-        }
-
-        return true;
-    }
-
-    /**
      * Build Fields using FieldFactory
      */
     protected function buildShippedFields(): void
     {
+        //====================================================================//
+        // Check if we are on API V2
+        if (!API::isApiV2Mode()) {
+            return;
+        }
+
         //====================================================================//
         // Order Line Product Identifier (SKU is Here)
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
@@ -116,12 +83,12 @@ trait ShippedTrait
         }
         //====================================================================//
         // Verify List is Not Empty
-        if (empty($this->orderDetails) || !is_array($this->orderDetails->Articles)) {
+        if (!isset($this->object->Articles) || !is_array($this->object->Articles)) {
             return;
         }
         //====================================================================//
         // Fill List with Data
-        foreach ($this->orderDetails->Articles as $index => $product) {
+        foreach ($this->object->Articles as $index => $product) {
             //====================================================================//
             // READ Fields
             switch ($fieldId) {

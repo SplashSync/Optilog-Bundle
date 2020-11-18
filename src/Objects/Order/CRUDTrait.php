@@ -44,13 +44,13 @@ trait CRUDTrait
         //====================================================================//
         // Get Order Infos from Api
         $response = API::post("jGetStatutCommande", array(array("ID" => $objectId)));
-        if ((null == $response) || !isset($response->result) || empty($response->result)) {
+        if ((null === $response) || !isset($response->result) || empty($response->result)) {
             return Splash::log()->errTrace("Unable to load Order (".$objectId.").");
         }
         //====================================================================//
         // Extract Order Infos from Results
         $order = array_shift($response->result);
-        if ((null == $order) || !($order instanceof stdClass)) {
+        if ((null === $order) || !($order instanceof stdClass)) {
             return Splash::log()->errTrace("Unable to load Order (".$objectId.").");
         }
         if (!isset($order->ID)) {
@@ -61,9 +61,6 @@ trait CRUDTrait
         /** @codingStandardsIgnoreStart */
         $order->Mode = "ALTER";
         /** @codingStandardsIgnoreEnd */
-        //====================================================================//
-        // Load Order Details
-        $this->loadOrderDetails((string) $order->ID);
 
         return $order;
     }
@@ -124,7 +121,7 @@ trait CRUDTrait
         //====================================================================//
         // Create Order Infos from Api
         $response = API::post("jSetCommandes", array("Commandes" => array($this->object)));
-        if (null == $response) {
+        if (null === $response) {
             return Splash::log()->errTrace("Unable to Create Order (".$this->object->ID.").");
         }
 
@@ -158,7 +155,7 @@ trait CRUDTrait
         //====================================================================//
         // Update Order Infos from Api
         $response = API::post("jSetCommandes", array( "Commandes" => array($this->object)));
-        if (null == $response) {
+        if (null === $response) {
             return Splash::log()->errTrace("Unable to Update Order (".$this->object->ID.").");
         }
 

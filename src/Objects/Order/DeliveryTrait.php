@@ -23,6 +23,22 @@ use Splash\Connectors\Optilog\Models\CarrierCodes;
 trait DeliveryTrait
 {
     /**
+     * @var string[]
+     */
+    private static $deliverySimpleFields = array(
+        'Contact',
+        'Adresse1',
+        'Adresse2',
+        'Adresse3',
+        'CodePostal',
+        'Ville',
+        'Pays',
+        'Telephone',
+        'Mobile',
+        'Email',
+    );
+
+    /**
      * Build Fields using FieldFactory
      */
     protected function buildDeliveryFields(): void
@@ -36,7 +52,8 @@ trait DeliveryTrait
             ->Name("Nom de l'entreprise")
             ->MicroData("http://schema.org/Organization", "legalName")
             ->Group($groupName)
-            ->isWriteOnly();
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
 
         //====================================================================//
         // Contact Full Name
@@ -46,34 +63,38 @@ trait DeliveryTrait
             ->MicroData("http://schema.org/PostalAddress", "alternateName")
             ->Group($groupName)
             ->isRequired()
-            ->isWriteOnly();
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
 
         //====================================================================//
-        // Addess
+        // Address
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->Identifier("Adresse1")
             ->Name($groupName)
             ->MicroData("http://schema.org/PostalAddress", "streetAddress")
             ->Group($groupName)
             ->isRequired()
-            ->isWriteOnly();
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
 
         //====================================================================//
-        // Addess Complement
+        // Address Complement
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->Identifier("Adresse2")
             ->Name($groupName." (2)")
             ->Group($groupName)
             ->MicroData("http://schema.org/PostalAddress", "postOfficeBoxNumber")
-            ->isWriteOnly();
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
 
         //====================================================================//
-        // Addess Complement 2
+        // Address Complement 2
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->Identifier("Adresse3")
             ->Name($groupName." (3)")
             ->Group($groupName)
-            ->isWriteOnly();
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
 
         //====================================================================//
         // Zip Code
@@ -83,7 +104,8 @@ trait DeliveryTrait
             ->MicroData("http://schema.org/PostalAddress", "postalCode")
             ->Group($groupName)
             ->isRequired()
-            ->isWriteOnly();
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
 
         //====================================================================//
         // City Name
@@ -93,7 +115,8 @@ trait DeliveryTrait
             ->MicroData("http://schema.org/PostalAddress", "addressLocality")
             ->Group($groupName)
             ->isRequired()
-            ->isWriteOnly();
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
 
         //====================================================================//
         // Country ISO Code
@@ -103,7 +126,8 @@ trait DeliveryTrait
             ->MicroData("http://schema.org/PostalAddress", "addressCountry")
             ->Group($groupName)
             ->isRequired()
-            ->isWriteOnly();
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
     }
 
     /**
@@ -120,7 +144,8 @@ trait DeliveryTrait
             ->Group($groupName)
             ->Name("Code du point relais")
             ->MicroData("http://schema.org/PostalAddress", "description")
-            ->isWriteOnly();
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
 
         //====================================================================//
         // Phone
@@ -129,7 +154,8 @@ trait DeliveryTrait
             ->Group($groupName)
             ->Name("Téléphone du contact")
             ->MicroData("http://schema.org/PostalAddress", "telephone")
-            ->isWriteOnly();
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
 
         //====================================================================//
         // Mobile Phone
@@ -138,7 +164,8 @@ trait DeliveryTrait
             ->Group($groupName)
             ->Name("Mobile du contact")
             ->MicroData("http://schema.org/Person", "telephone")
-            ->isWriteOnly();
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
 
         //====================================================================//
         // Customer Email
@@ -146,7 +173,8 @@ trait DeliveryTrait
             ->Identifier("Email")
             ->Name("Email du contact")
             ->MicroData("http://schema.org/ContactPoint", "email")
-            ->isWriteOnly();
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
     }
 
     /**
@@ -208,26 +236,56 @@ trait DeliveryTrait
     protected function setDeliverySimpleFields($fieldName, $fieldData): void
     {
         //====================================================================//
-        // WRITE Field
-        switch ($fieldName) {
-            //====================================================================//
-            // Direct Writtings
-            case 'Contact':
-            case 'Adresse1':
-            case 'Adresse2':
-            case 'Adresse3':
-            case 'CodePostal':
-            case 'Ville':
-            case 'Pays':
-            case 'Telephone':
-            case 'Mobile':
-            case 'Email':
-                $this->setSimple($fieldName, $fieldData);
-
-                break;
-            default:
-                return;
+        // Is Delivery Simple Field
+        if (!in_array($fieldName, self::$deliverySimpleFields, true)) {
+            return;
         }
+        //====================================================================//
+        // WRITE Field
+        $this->setSimple($fieldName, $fieldData);
+
         unset($this->in[$fieldName]);
+    }
+
+    /**
+     * Read requested Field
+     *
+     * @param string $key       Input List Key
+     * @param string $fieldName Field Identifier / Name
+     */
+    protected function getDeliveryFields($key, $fieldName): void
+    {
+        //====================================================================//
+        // Is Delivery Simple Field
+        if (!in_array($fieldName, array('Nom', 'CodePR'), true)) {
+            return;
+        }
+        //====================================================================//
+        // READ Fields
+        $this->out[$fieldName] = isset($this->object->Destinataire->{$fieldName})
+            ? (string) $this->object->Destinataire->{$fieldName}
+            : null;
+        unset($this->in[$key]);
+    }
+
+    /**
+     * Read requested Field
+     *
+     * @param string $key       Input List Key
+     * @param string $fieldName Field Identifier / Name
+     */
+    protected function getDeliverySimpleFields($key, $fieldName): void
+    {
+        //====================================================================//
+        // Is Delivery Simple Field
+        if (!in_array($fieldName, self::$deliverySimpleFields, true)) {
+            return;
+        }
+        //====================================================================//
+        // READ Fields
+        $this->out[$fieldName] = isset($this->object->Destinataire->{$fieldName})
+            ? (string) $this->object->Destinataire->{$fieldName}
+            : null;
+        unset($this->in[$key]);
     }
 }
