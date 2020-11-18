@@ -58,8 +58,8 @@ stages:
     script:
         # Execute Grumphp Testsuite
         - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/ci/grumphp.sh  | sh
-      # Execute PhpUnit Tests
-        - vendor/bin/phpunit
+#      # Execute PhpUnit Tests
+#        - vendor/bin/phpunit
 
     ################################################################################
     # Run After Script
