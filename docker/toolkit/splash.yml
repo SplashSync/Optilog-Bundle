@@ -21,19 +21,38 @@ splash:
         
         ########################################################################
         # Optilog Default
-        optilog:
+#        optilog:
+#            id:                 ThisIsOptilogWsId
+#            key:                ThisIsNotASecretKeyForOptilog
+#            name:               Optilog API V1
+#            connector:          optilog
+#            ########################################################################
+#            # FAKE CREDENTIALS : ASK YOURS TO YOUR MAIN OPTILOG CONTACT
+#            ########################################################################
+#            config:
+#                WsHost:         https://api.preprod.geolie.net/wsgestinbox_V2.asmx
+#                ApiUser:        splash
+#                ApiPwd:         ThisIsSecretApiPwd
+#                ApiKey:         ThisIsSecretApiKey
+#                ApiOp:          ThisIsSecretApiOp
+#                dfStock:        Divers
+#                dfGamme:        Nouveaux
+
+        ########################################################################
+        # Optilog API V2
+        optilog-v2:
             id:                 ThisIsOptilogWsId
             key:                ThisIsNotASecretKeyForOptilog
-            name:               Optilog API V1
+            name:               Optilog API V2
             connector:          optilog
             ########################################################################
             # FAKE CREDENTIALS : ASK YOURS TO YOUR MAIN OPTILOG CONTACT
             ########################################################################
-            config:  
+            config:
                 WsHost:         https://api.preprod.geolie.net/wsgestinbox_V2.asmx
-                ApiUser:        splash
-                ApiPwd:         ThisIsSecretApiPwd
-                ApiKey:         ThisIsSecretApiKey
-                ApiOp:          ThisIsSecretApiOp
-                dfStock:        Divers
-                dfGamme:        Nouveaux
+                ApiUser:        splash.test
+                ApiPwd:         54fbf20683a4b68a079dcfb348a121eb
+                ApiKey:         08e789053de980e0f1ac70a61125a17d
+                ApiOp:          TEST00016
+                dfStock:        Principal
+                dfGamme:

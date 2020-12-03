@@ -16,6 +16,8 @@
 namespace Splash\Connectors\Optilog\Objects\Order;
 
 use Splash\Connectors\Optilog\Models\RestHelper as API;
+use Splash\Connectors\Optilog\Models\StatusCodes;
+use stdClass;
 
 /**
  * Access to Order Shipped Fields
@@ -99,8 +101,11 @@ trait ShippedTrait
 
                     break;
                 case 'Quantite':
-                case 'Servie':
                     $value = isset($product->{$fieldId}) ? (int) $product->{$fieldId} : 0;
+
+                    break;
+                case 'Servie':
+                    $value = $this->getShippedQty($product);
 
                     break;
                 default:
@@ -112,5 +117,31 @@ trait ShippedTrait
         }
 
         unset($this->in[$key]);
+    }
+
+    /**
+     * Read Order Shipped Qty
+     *
+     * @param stdClass $product
+     *
+     * @return int
+     */
+    private function getShippedQty(stdClass $product): int
+    {
+        //====================================================================//
+        // Debug => Force Order Shipped Qty
+        if ($this->connector->isDebugMode() && $this->getParameter($this->object->DestID, false, 'ForcedStatus')) {
+            $optStatus = $this->getParameter($this->object->DestID, false, 'ForcedStatus');
+            switch (StatusCodes::toSplash($optStatus)) {
+                case "OrderProcessing":
+                    return 0;
+                case "OrderInTransit":
+                    return rand(1, (int) $product->{"Quantite"});
+                case "OrderDelivered":
+                    return (int) $product->{"Quantite"};
+            }
+        }
+
+        return isset($product->{"Servie"}) ? (int) $product->{"Servie"} : 0;
     }
 }

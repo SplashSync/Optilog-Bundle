@@ -86,7 +86,7 @@ trait CRUDTrait
         $product->Libelle = $this->in["Libelle"];
         $product->Poids = 0;
         //====================================================================//
-        // Setup Default Stock Loaction if Given
+        // Setup Default Stock Location if Given
         $newStock = $this->getNewStockLocation();
         if (null !== $newStock) {
             $product->Stock = $newStock;
