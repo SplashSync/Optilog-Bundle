@@ -21,7 +21,7 @@ variables:
   # Configure mysql environment variables (https://hub.docker.com/r/_/mysql/)
   MYSQL_DATABASE:         symfony
   MYSQL_ROOT_PASSWORD:    Optilog-Bundle
-  COMPOSER_MEMORY_LIMIT:  -1
+#  COMPOSER_MEMORY_LIMIT:  -1
   SYMFONY_DEPRECATIONS_HELPER:  disabled
 
 ################################################################
@@ -74,10 +74,6 @@ tests:php-7.3:
   image: registry.gitlab.com/badpixxel-projects/php-sdk:php-7.3
   <<: *core_tests
 
-#tests:php-7.2:
-#  image: registry.gitlab.com/badpixxel-projects/php-sdk:php-7.2
-#  <<: *core_tests
-
 #tests:php-8.0:
 #  image: registry.gitlab.com/badpixxel-projects/php-sdk:php-8.0
 #  allow_failure: true
@@ -86,20 +82,20 @@ tests:php-7.3:
 #################################################################
 ## Build Documentation
 #################################################################
-#pages:
-#    image:    registry.gitlab.com/badpixxel-projects/php-sdk:pages
-#    stage:    deploy
-#    tags:
-#      - Dedicated
-#    services:
-#      - docker:dind
-#    ################################################################################
-#    # Run Test Script
-#    script:
-#      # Run Composer to Build deps
-#      - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/ci/composer.sh  | bash
-#      # Build Documentation
-#      - php vendor/bin/grumphp run --tasks=build-docs
-#    artifacts:
-#        paths:
-#            - public
+pages:
+    image:    registry.gitlab.com/badpixxel-projects/php-sdk:pages
+    stage:    deploy
+    tags:
+      - Dedicated
+    services:
+      - docker:dind
+    ################################################################################
+    # Run Test Script
+    script:
+      # Run Composer to Build deps
+      - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/ci/composer.sh  | bash
+      # Build Documentation
+      - php vendor/bin/grumphp run --tasks=build-docs
+    artifacts:
+        paths:
+            - public
