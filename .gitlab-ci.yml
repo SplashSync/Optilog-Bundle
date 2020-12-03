@@ -19,9 +19,9 @@
 # Set any variables we need
 variables:
   # Configure mysql environment variables (https://hub.docker.com/r/_/mysql/)
-  MYSQL_DATABASE:         symfony
-  MYSQL_ROOT_PASSWORD:    Optilog-Bundle
-#  COMPOSER_MEMORY_LIMIT:  -1
+  MYSQL_DATABASE:               symfony
+  MYSQL_ROOT_PASSWORD:          Optilog-Bundle
+  COMPOSER_MEMORY_LIMIT:        -1
   SYMFONY_DEPRECATIONS_HELPER:  disabled
 
 ################################################################
@@ -45,7 +45,6 @@ stages:
     before_script:
         # Setup Travis
         - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/ci/configure.sh  | sh
-        - composer self-update --1;
         # Deploy Symfony Files
         - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/symfony/deploy.sh | sh
         # Setup Symfony Version & Create Database
