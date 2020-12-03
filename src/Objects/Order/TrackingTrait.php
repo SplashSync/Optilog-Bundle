@@ -142,7 +142,8 @@ trait TrackingTrait
     {
         //====================================================================//
         // Check If Received Order Carrier Name is Given
-        if (!isset($this->in["Transporteur"]) || empty($this->in["Transporteur"]) || !is_scalar($this->in["Transporteur"])) {
+        if (!isset($this->in["Transporteur"]) || empty($this->in["Transporteur"])
+            || !is_scalar($this->in["Transporteur"])) {
             return true;
         }
         //====================================================================//

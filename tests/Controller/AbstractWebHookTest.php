@@ -77,6 +77,6 @@ abstract class AbstractWebHookTest extends TestCase
         $this->assertIsString($apiKey);
         //==============================================================================
         // Setup Client
-        $this->getClient()->setServerParameter("HTTP_Clef", $apiKey);
+        $this->getTestClient()->setServerParameter("HTTP_Clef", $apiKey);
     }
 }

@@ -41,7 +41,7 @@ stages:
     services:
         - mysql:5.7
     ################################################################################
-    # Install & Configure Environnement
+    # Install & Configure Environment
     before_script:
         # Setup Travis
         - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/ci/configure.sh  | sh
@@ -66,14 +66,14 @@ stages:
     after_script:
       - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/ci/after.sh | sh
 
-#tests:php-7.4:
-#  image: registry.gitlab.com/badpixxel-projects/php-sdk:php-7.4
-#  <<: *core_tests
-#
-#tests:php-7.3:
-#  image: registry.gitlab.com/badpixxel-projects/php-sdk:php-7.3
-#  <<: *core_tests
-#
+tests:php-7.4:
+  image: registry.gitlab.com/badpixxel-projects/php-sdk:php-7.4
+  <<: *core_tests
+
+tests:php-7.3:
+  image: registry.gitlab.com/badpixxel-projects/php-sdk:php-7.3
+  <<: *core_tests
+
 #tests:php-7.2:
 #  image: registry.gitlab.com/badpixxel-projects/php-sdk:php-7.2
 #  <<: *core_tests
@@ -87,7 +87,7 @@ stages:
 ## Build Documentation
 #################################################################
 #pages:
-#    image:    registry.gitlab.com/splashsync/php-console:pages
+#    image:    registry.gitlab.com/badpixxel-projects/php-sdk:pages
 #    stage:    deploy
 #    tags:
 #      - Dedicated

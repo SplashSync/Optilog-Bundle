@@ -18,15 +18,23 @@
 #############################################        
 #   Local Config 
 parameters:
-    
+
+    mode:           "splashsync"
+
     # For Building Splash Documentation
     doc-enable:     true
-    doc-contents:   ["php-composer", "php-docker", "splash"]
+    doc-target:     '/public'
+    doc-contents:   ["php-composer", "php-docker", "splash-faq"]
     
     # For Building Splash Manifest
     yml-enable:     false
-    
+
+    # For Building Splash Module
+    mod-enable:     false
+
 #############################################        
 # Import Config. from Generic Bundle
 imports:
-    - { resource: "./vendor/splash/php-bundle/src/Resources/grumphp/grumphp.base.yml" }
+    - { resource: "./vendor/badpixxel/php-sdk/grumphp/generic.yml" }
+    - { resource: "./vendor/badpixxel/php-sdk/grumphp/extras.yml" }
+    - { resource: "./vendor/splash/console/src/Resources/grumphp/*.yml" }

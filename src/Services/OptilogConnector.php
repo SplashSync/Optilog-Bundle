@@ -107,16 +107,20 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
         $informations->phone = "01.64.13.46.50";
         //====================================================================//
         // Server Logo & Ico
-        $informations->icoraw = Splash::file()->readFileContents(dirname(dirname(__FILE__))."/Resources/public/img/Optilog-Ico.png");
+        $informations->icoraw = Splash::file()->readFileContents(
+            dirname(dirname(__FILE__))."/Resources/public/img/Optilog-Ico.png"
+        );
         $informations->logourl = null;
-        $informations->logoraw = Splash::file()->readFileContents(dirname(dirname(__FILE__))."/Resources/public/img/Optilog-Logo.png");
+        $informations->logoraw = Splash::file()->readFileContents(
+            dirname(dirname(__FILE__))."/Resources/public/img/Optilog-Logo.png"
+        );
         //====================================================================//
         // Server Informations
         $informations->servertype = "Optilog Api V2";
         $informations->serverurl = "www.optilog.fr";
         //====================================================================//
         // Module Informations
-        $informations->moduleauthor = SPLASH_AUTHOR;
+        $informations->moduleauthor = "Splash Official <www.splashsync.com>";
         $informations->moduleversion = "master";
 
         return $informations;
