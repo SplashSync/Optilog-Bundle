@@ -60,7 +60,7 @@ security:
         in_memory:
             memory:
                 users:
-                    PhpUnit: { password: PhpUnitPwd }      
+                    - PhpUnit: { password: PhpUnitPwd }
     encoders:
         Symfony\Component\Security\Core\User\UserInterface: plaintext            
         

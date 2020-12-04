@@ -13,4 +13,5 @@ services:
     Splash\Connectors\Optilog\Controller\:
         resource: '../../Controller'
         public: true
-        tags: ['controller.service_arguments']            
+        tags:
+            - { name: 'controller.service_arguments' }
