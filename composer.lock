@@ -2556,12 +2556,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/BadPixxel/Php-Sdk.git",
-                "reference": "6d47644dbc9d66bbabd32be6edbe995c8affebf7"
+                "reference": "68fce42ce982b8dd7229ce3e677706c9e84deca7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BadPixxel/Php-Sdk/zipball/6d47644dbc9d66bbabd32be6edbe995c8affebf7",
-                "reference": "6d47644dbc9d66bbabd32be6edbe995c8affebf7",
+                "url": "https://api.github.com/repos/BadPixxel/Php-Sdk/zipball/68fce42ce982b8dd7229ce3e677706c9e84deca7",
+                "reference": "68fce42ce982b8dd7229ce3e677706c9e84deca7",
                 "shasum": ""
             },
             "require": {
@@ -2576,6 +2576,7 @@
                 "phpstan/phpstan": "^0.12",
                 "phpstan/phpstan-doctrine": "^0.12",
                 "phpstan/phpstan-phpunit": "^0.12",
+                "phpstan/phpstan-strict-rules": "^0.12",
                 "phpstan/phpstan-symfony": "^0.12",
                 "phpunit/phpunit": "~7.0|~8.0|~9.0",
                 "sclable/xml-lint": "^0.3",
@@ -2616,7 +2617,7 @@
                 "issues": "https://github.com/BadPixxel/Php-Sdk/issues",
                 "source": "https://github.com/BadPixxel/Php-Sdk/tree/main"
             },
-            "time": "2020-11-27T11:51:52+00:00"
+            "time": "2020-12-03T22:57:44+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -2695,16 +2696,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "2.0.7",
+            "version": "2.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "cbee637510037f293e641857b2a6223d0ea8008d"
+                "reference": "62139b2806178adb979d76bd3437534a1a9fd490"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/cbee637510037f293e641857b2a6223d0ea8008d",
-                "reference": "cbee637510037f293e641857b2a6223d0ea8008d",
+                "url": "https://api.github.com/repos/composer/composer/zipball/62139b2806178adb979d76bd3437534a1a9fd490",
+                "reference": "62139b2806178adb979d76bd3437534a1a9fd490",
                 "shasum": ""
             },
             "require": {
@@ -2772,7 +2773,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/composer/issues",
-                "source": "https://github.com/composer/composer/tree/2.0.7"
+                "source": "https://github.com/composer/composer/tree/2.0.8"
             },
             "funding": [
                 {
@@ -2788,7 +2789,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-13T16:31:06+00:00"
+            "time": "2020-12-03T16:20:39+00:00"
         },
         {
             "name": "composer/package-versions-deprecated",
@@ -5393,6 +5394,61 @@
                 "source": "https://github.com/phpstan/phpstan-phpunit/tree/0.12.16"
             },
             "time": "2020-08-05T13:28:50+00:00"
+        },
+        {
+            "name": "phpstan/phpstan-strict-rules",
+            "version": "0.12.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan-strict-rules.git",
+                "reference": "334898a32217e4605e0f9cfa3d3fc3101bda26be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/334898a32217e4605e0f9cfa3d3fc3101bda26be",
+                "reference": "334898a32217e4605e0f9cfa3d3fc3101bda26be",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1 || ^8.0",
+                "phpstan/phpstan": "^0.12.33"
+            },
+            "require-dev": {
+                "consistence/coding-standard": "^3.0.1",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+                "ergebnis/composer-normalize": "^2.0.2",
+                "jakub-onderka/php-parallel-lint": "^1.0",
+                "phing/phing": "^2.16.0",
+                "phpstan/phpstan-phpunit": "^0.12",
+                "phpunit/phpunit": "^7.0",
+                "slevomat/coding-standard": "^4.5.2"
+            },
+            "type": "phpstan-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.12-dev"
+                },
+                "phpstan": {
+                    "includes": [
+                        "rules.neon"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PHPStan\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Extra strict and opinionated rules for PHPStan",
+            "support": {
+                "issues": "https://github.com/phpstan/phpstan-strict-rules/issues",
+                "source": "https://github.com/phpstan/phpstan-strict-rules/tree/master"
+            },
+            "time": "2020-08-30T15:42:06+00:00"
         },
         {
             "name": "phpstan/phpstan-symfony",
