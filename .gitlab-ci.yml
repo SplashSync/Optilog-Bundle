@@ -82,7 +82,7 @@ tests:php-7.3:
 ## Build Documentation
 #################################################################
 pages:
-    image:    registry.gitlab.com/badpixxel-projects/php-sdk:pages
+    image:    registry.gitlab.com/badpixxel-projects/php-sdk:jekyll
     stage:    deploy
     tags:
       - Dedicated
