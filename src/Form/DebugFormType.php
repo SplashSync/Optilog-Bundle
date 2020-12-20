@@ -20,7 +20,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * Optilog Account Debug Form
  */
-class DebugFormType extends AbstractOptilogType
+class DebugFormType extends EditFormType
 {
     /**
      * Build Optilog Edit Form
@@ -30,14 +30,7 @@ class DebugFormType extends AbstractOptilogType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addWsHostField($builder, $options);
-        $this->addApiUserField($builder, $options);
-        $this->addApiPwdField($builder, $options);
-        $this->addApiKeyField($builder, $options);
-        $this->addApiOperationField($builder, $options);
-        $this->addMinOrderCreateDateField($builder, $options);
-        $this->addLocationField($builder, $options);
-        $this->addCarriersListField($builder, $options);
+        parent::buildForm($builder, $options);
 
         $this->addRandomStocksField($builder, $options);
         $this->addForcedOrderStatusField($builder, $options);

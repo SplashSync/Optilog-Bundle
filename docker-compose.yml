@@ -23,7 +23,7 @@
 #
 # For a faster access to you container, you can add this IP to /etc/hosts
 # 
-# 172.106.0.100         docker.optilog.local
+# 172.106.0.100         toolkit.optilog.local
 #
 ################################################################################
 

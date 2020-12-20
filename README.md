@@ -16,7 +16,7 @@ This connector implements Optilog API for connecting business applications (E-Co
 
 ## Documentation
 
-For the configuration guide and reference, see: [Optilog Connector Documentation](https://splashsync.github.io/Optilog-Bundle/)
+For the configuration guide and reference, see: [Optilog Connector Documentation](https://splashsync.gitlab.io/Optilog-Bundle/)
 
 ## Contributing
 

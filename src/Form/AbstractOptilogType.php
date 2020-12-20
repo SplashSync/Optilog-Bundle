@@ -48,7 +48,7 @@ abstract class AbstractOptilogType extends AbstractType
             // Optilog Api Host Url
             ->add('WsHost', ChoiceType::class, array(
                 'label' => "var.apiurl.label",
-                //                'help_block' => "var.apiurl.desc",
+                // 'help' => "var.apiurl.desc",
                 'required' => true,
                 'translation_domain' => "OptilogBundle",
                 'choices' => API::ENDPOINTS,
@@ -75,7 +75,7 @@ abstract class AbstractOptilogType extends AbstractType
             // Optilog Api User For Authentification
             ->add('ApiUser', TextType::class, array(
                 'label' => "var.apiuser.label",
-                //                'help_block' => "var.apiuser.desc",
+                // 'help' => "var.apiuser.desc",
                 'required' => true,
                 'translation_domain' => "OptilogBundle",
             ))
@@ -101,7 +101,7 @@ abstract class AbstractOptilogType extends AbstractType
             // Optilog Api Password For Authentification
             ->add('ApiPwd', TextType::class, array(
                 'label' => "var.apipwd.label",
-                //                'help_block' => "var.apipwd.desc",
+                // 'help' => "var.apipwd.desc",
                 'required' => true,
                 'translation_domain' => "OptilogBundle",
             ))
@@ -127,7 +127,7 @@ abstract class AbstractOptilogType extends AbstractType
             // Optilog Api Key For Authentification
             ->add('ApiKey', TextType::class, array(
                 'label' => "var.apikey.label",
-                //                'help_block' => "var.apikey.desc",
+                // 'help' => "var.apikey.desc",
                 'required' => true,
                 'translation_domain' => "OptilogBundle",
             ))
@@ -153,7 +153,7 @@ abstract class AbstractOptilogType extends AbstractType
             // Optilog Api Key For Authentification
             ->add('ApiOp', TextType::class, array(
                 'label' => "var.apiop.label",
-                //                'help_block' => "var.apiop.desc",
+                // 'help' => "var.apiop.desc",
                 'required' => true,
                 'translation_domain' => "OptilogBundle",
             ))
@@ -179,7 +179,7 @@ abstract class AbstractOptilogType extends AbstractType
             // Optilog Default Stock Location
             ->add('minOrderDate', DateTimeType::class, array(
                 'label' => "var.minOrderDate.label",
-                //                'help_block' => "var.minOrderDate.desc",
+                // 'help' => "var.minOrderDate.desc",
                 'widget' => 'single_text',
                 'required' => false,
                 'translation_domain' => "OptilogBundle",
@@ -206,7 +206,7 @@ abstract class AbstractOptilogType extends AbstractType
             // Optilog Default Stock Location
             ->add('dfStock', TextType::class, array(
                 'label' => "var.dfStock.label",
-                //                'help_block' => "var.dfStock.desc",
+                // 'help' => "var.dfStock.desc",
                 'required' => false,
                 'translation_domain' => "OptilogBundle",
             ))
@@ -232,7 +232,7 @@ abstract class AbstractOptilogType extends AbstractType
             // Optilog Carriers Names => Codes For Authentification
             ->add('Carriers', KeyValueType::class, array(
                 'label' => "var.carriers.label",
-                //                'help_block' => "var.carriers.desc",
+                // 'help' => "var.carriers.desc",
                 'required' => false,
                 'key_type' => TextType::class,
                 'key_options' => array(

@@ -39,7 +39,7 @@
     "require": {
         "php":                                          "^7.1",
         "splash/php-bundle":                            "dev-master",
-        "nategood/httpful":                             "^0.2",
+        "nategood/httpful":                             "^0.2|^0.3",
         "burgov/key-value-form-bundle":                 "@stable"        
     },
     
@@ -48,10 +48,9 @@
         "splash/console":                               "dev-master",
         "badpixxel/php-sdk":                            "dev-main",
 
-        "symfony/symfony":                              "~3.4|~4.4",
+        "symfony/symfony":                              "^3.4|^4.4",
         "symfony/monolog-bundle":                       "*",
         "symfony/phpunit-bridge":                       "*",
-        "symfony/browser-kit":                          "*",
         "monolog/monolog":                              "^1.0",
 
         "doctrine/doctrine-bundle":                     "^1.6",
