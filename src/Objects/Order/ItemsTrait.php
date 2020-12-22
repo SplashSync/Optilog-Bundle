@@ -62,7 +62,6 @@ trait ItemsTrait
             ->Name("Shipped Qty")
             ->MicroData("http://schema.org/QuantitativeValue", "status")
             ->Group("Products")
-            ->isRequired()
         ;
         self::setupReadOnlyOnV2($this->fieldsFactory());
     }
