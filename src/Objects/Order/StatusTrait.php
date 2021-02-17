@@ -67,6 +67,15 @@ trait StatusTrait
             ->isLogged();
 
         //====================================================================//
+        // Is To Ship
+        $this->fieldsFactory()->create(SPL_T_BOOL)
+            ->Identifier("isToShip")
+            ->Name("Is To Ship")
+            ->MicroData("http://schema.org/OrderStatus", "OrderToShip")
+            ->isWriteOnly()
+            ->isLogged();
+
+        //====================================================================//
         // Is Canceled
         $this->fieldsFactory()->create(SPL_T_BOOL)
             ->Identifier("isCanceled")
@@ -118,6 +127,8 @@ trait StatusTrait
      *
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     protected function setStatusFields($fieldName, $fieldData): void
     {
@@ -138,6 +149,15 @@ trait StatusTrait
                 // CANCEL ORDER IF ALLOWED
                 if (!empty($fieldData) && ($this->isAllowedCancel())) {
                     $this->object->Mode = "UNVALIDATE";
+                    $this->needUpdate();
+                }
+
+                break;
+            case 'isToShip':
+                //====================================================================//
+                // SHIP ORDER IF ALLOWED
+                if (!empty($fieldData) && (3 == $this->getOptilogStatus())) {
+                    $this->object->Mode = "GO_EXP";
                     $this->needUpdate();
                 }
 

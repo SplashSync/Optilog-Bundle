@@ -49,7 +49,6 @@ trait CoreTrait
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->Identifier("Commentaire")
             ->Name("Commentaire")
-//            ->isListed()
             ->isReadOnly();
     }
 

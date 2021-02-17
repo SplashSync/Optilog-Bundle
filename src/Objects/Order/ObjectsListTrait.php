@@ -40,7 +40,7 @@ trait ObjectsListTrait
         );
         //====================================================================//
         // Request Failed
-        if ((null == $rawData) || !isset($rawData->result)) {
+        if ((null == $rawData) || !isset($rawData->result) || !is_array($rawData->result)) {
             return array( 'meta' => array('current' => 0, 'total' => 0));
         }
         //====================================================================//
