@@ -47,7 +47,7 @@ trait ObjectsListTrait
         // Compute Totals
         $response = array(
             'meta' => array(
-                'current' => count($rawData->result),
+                'current' => is_array($rawData->result) ? count($rawData->result) : 0,
                 'total' => $rawData->pagination->TotalLignes,
             ),
         );
