@@ -19,7 +19,7 @@ var:
 
     apiop:
         label:  "Identifiant de l’opération"
-        desc:   "Obtenir à partir de Géolie ou à obtenir auprès de votre contact."
+        desc:   "Ask your technical contact to get this parameter."
 
     minOrderDate:
         label:  "Min Order Create Date"
@@ -27,14 +27,22 @@ var:
 
     dfStock:
         label:  "Stock par Défaut"
-        desc:   "Obtenir à partir de Géolie ou à obtenir auprès de votre contact."
+        desc:   "Ask your technical contact to get this parameter."
+
+    useProductsRawSku:
+        label:  "Product Raw Sku Mode"
+        desc:   "In this Mode, Order Products uses Raw Sku instead of Splash Product Objects Ids."
+
+    useExtendedStatus:
+        label:  "Extended Order Statuses Mode"
+        desc:   "In this Mode, Order statuses include more details."
 
     dfGamme:
         label:  "Gamme par Défaut"
-        desc:   "Obtenir à partir de Géolie ou à obtenir auprès de votre contact."
+        desc:   "Ask your technical contact to get this parameter."
 
     carriers:
-        label:  List of Availables Carriers Names
+        label:  "List of Available Carriers Names"
         desc:   "Fill this list to map your Carriers Names with Optilog Carriers Codes."
 
 

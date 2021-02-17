@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2020 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -44,7 +44,8 @@ trait CRUDTrait
         //====================================================================//
         // Get Order Infos from Api
         $response = API::post("jGetStatutCommande", array(array("ID" => $objectId)));
-        if ((null === $response) || !isset($response->result) || empty($response->result)) {
+        if ((null === $response) || !isset($response->result)
+            || !is_array($response->result) || empty($response->result)) {
             return Splash::log()->errTrace("Unable to load Order (".$objectId.").");
         }
         //====================================================================//
@@ -109,6 +110,9 @@ trait CRUDTrait
         $fields = is_a($this->in, "ArrayObject") ? $this->in->getArrayCopy() : $this->in;
         foreach ($fields as $fieldName => $fieldData) {
             //====================================================================//
+            // Write Labels Fields
+            $this->setLabelsFields($fieldName, $fieldData);
+            //====================================================================//
             // Write Delivery Fields
             $this->setDeliveryFields($fieldName, $fieldData);
             $this->setDeliverySimpleFields($fieldName, $fieldData);
@@ -117,7 +121,6 @@ trait CRUDTrait
             // Write Items Fields
             $this->setItemsFields($fieldName, $fieldData);
         }
-
         //====================================================================//
         // Create Order Infos from Api
         $response = API::post("jSetCommandes", array("Commandes" => array($this->object)));

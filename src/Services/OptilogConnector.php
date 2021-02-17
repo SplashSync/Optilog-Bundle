@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2020 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,6 +21,7 @@ use Splash\Bundle\Models\AbstractConnector;
 use Splash\Connectors\Optilog\Form\DebugFormType;
 use Splash\Connectors\Optilog\Form\EditFormType;
 use Splash\Connectors\Optilog\Models\RestHelper as API;
+use Splash\Connectors\Optilog\Models\StatusHelper;
 use Splash\Core\SplashCore as Splash;
 
 /**
@@ -132,7 +133,6 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
     public function selfTest() : bool
     {
         $config = $this->getConfiguration();
-
         //====================================================================//
         // Verify Webservice Url is Set
         //====================================================================//
@@ -141,7 +141,6 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
 
             return false;
         }
-
         //====================================================================//
         // Verify Api Key is Set
         //====================================================================//
@@ -150,7 +149,6 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
 
             return false;
         }
-
         //====================================================================//
         // Verify Api User is Set
         //====================================================================//
@@ -159,7 +157,6 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
 
             return false;
         }
-
         //====================================================================//
         // Verify Api Password is Set
         //====================================================================//
@@ -168,7 +165,9 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
 
             return false;
         }
-
+        //====================================================================//
+        // Configure Order Status Helper
+        StatusHelper::init($this->getParameter("useExtendedStatus", false));
         //====================================================================//
         // Configure Rest API
         return API::configure(
@@ -297,5 +296,15 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
     public function isDebugMode() : bool
     {
         return API::isDebugMode();
+    }
+
+    /**
+     * Check If Server is Raw Products Skus Mode
+     *
+     * @return bool
+     */
+    public function isProductsRawSkuMode() : bool
+    {
+        return $this->getParameter("useProductsRawSku", false);
     }
 }

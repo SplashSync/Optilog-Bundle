@@ -37,10 +37,11 @@
     
     
     "require": {
-        "php":                                          "^7.1",
+        "php":                                          "^7.2",
+        "ext-json":                                     "*",
         "splash/php-bundle":                            "dev-master",
         "nategood/httpful":                             "^0.2|^0.3",
-        "burgov/key-value-form-bundle":                 "@stable"        
+        "burgov/key-value-form-bundle":                 "@stable"
     },
     
     "require-dev": {

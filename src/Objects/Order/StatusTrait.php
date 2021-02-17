@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2020 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,7 +16,7 @@
 namespace Splash\Connectors\Optilog\Objects\Order;
 
 use Splash\Connectors\Optilog\Models\RestHelper;
-use Splash\Connectors\Optilog\Models\StatusCodes;
+use Splash\Connectors\Optilog\Models\StatusHelper;
 use Splash\Core\SplashCore      as Splash;
 
 /**
@@ -40,7 +40,7 @@ trait StatusTrait
             ->Name("Order status")
             ->Description("Status of the order")
             ->MicroData("http://schema.org/Order", "orderStatus")
-            ->addChoices(StatusCodes::SPLASH)
+            ->addChoices(StatusHelper::getAllNames())
             ->isListed()
             ->isReadOnly();
 
@@ -103,12 +103,7 @@ trait StatusTrait
                 break;
             case 'StatutRaw':
                 $statut = $this->getOptilogStatus();
-                $this->out[$fieldName] = (string) $statut;
-                //====================================================================//
-                // If order is in  Static Status => Use Static Status
-                if (isset(StatusCodes::NAMES[$statut])) {
-                    $this->out[$fieldName] .= " | ".StatusCodes::NAMES[$statut];
-                }
+                $this->out[$fieldName] = (string) $statut." | ".StatusHelper::getName($statut);
 
                 break;
             default:
@@ -179,15 +174,7 @@ trait StatusTrait
      */
     private function getSplashStatus()
     {
-        $statut = $this->getOptilogStatus();
-        //====================================================================//
-        // If order is in  Static Status => Use Static Status
-        if (isset(StatusCodes::SPLASH[$statut])) {
-            return StatusCodes::SPLASH[$statut];
-        }
-        //====================================================================//
-        // Unknown Status => No Order Status Update
-        return "";
+        return (string) StatusHelper::toSplash($this->getOptilogStatus());
     }
 
     /**

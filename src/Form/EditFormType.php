@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2020 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -27,16 +27,20 @@ class EditFormType extends AbstractOptilogType
      *
      * @param FormBuilderInterface $builder
      * @param array                $options
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addWsHostField($builder, $options);
-        $this->addApiUserField($builder, $options);
-        $this->addApiPwdField($builder, $options);
-        $this->addApiKeyField($builder, $options);
-        $this->addApiOperationField($builder, $options);
-        $this->addMinOrderCreateDateField($builder, $options);
-        $this->addLocationField($builder, $options);
-        $this->addCarriersListField($builder, $options);
+        $this->addWsHostField($builder);
+        $this->addApiUserField($builder);
+        $this->addApiPwdField($builder);
+        $this->addApiKeyField($builder);
+        $this->addApiOperationField($builder);
+        $this->addMinOrderCreateDateField($builder);
+        $this->addProductSkuField($builder);
+        $this->addExtendedStatusField($builder);
+        $this->addLocationField($builder);
+        $this->addCarriersListField($builder);
     }
 }

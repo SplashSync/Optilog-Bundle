@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2020 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,8 +15,10 @@
 
 namespace Splash\Connectors\Optilog\Objects\Order;
 
+use Splash\Connectors\Optilog\Models\ArticlesHelper;
 use Splash\Core\SplashCore      as Splash;
 use Splash\Models\Objects\ListsTrait;
+use stdClass;
 
 /**
  * Access to Orders Items Fields
@@ -31,14 +33,37 @@ trait ItemsTrait
     protected function buildItemsFields(): void
     {
         //====================================================================//
-        // Order Line Product Identifier (SKU is Here)
+        // Order Line Unique ID
+        $this->fieldsFactory()->create(SPL_T_VARCHAR)
+            ->identifier("IDunique")
+            ->inList("lines")
+            ->name("Line ID")
+            ->microData("http://schema.org/partOfInvoice", "identifier")
+            ->group("Products")
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
+
+        //====================================================================//
+        // Order Line Product Identifier (Encoded SKU is Here)
         $this->fieldsFactory()->create((string) self::objects()->encode("Product", SPL_T_ID))
-            ->Identifier("ID")
-            ->InList("lines")
-            ->Name("Product SKU")
-            ->MicroData("http://schema.org/Product", "productID")
-            ->Group("Products")
-            ->isRequired()
+            ->identifier("ID")
+            ->inList("lines")
+            ->name("Product ID")
+            ->microData("http://schema.org/Product", "productID")
+            ->group("Products")
+            ->isRequired(!$this->isProductRawSkuMode())
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
+
+        //====================================================================//
+        // Order Line Product SKU (RAW SKU is Here)
+        $this->fieldsFactory()->create(SPL_T_VARCHAR)
+            ->identifier("SKU")
+            ->inList("lines")
+            ->name("Product SKU")
+            ->microData("http://schema.org/Product", "sku")
+            ->group("Products")
+            ->isRequired($this->isProductRawSkuMode())
         ;
         self::setupReadOnlyOnV2($this->fieldsFactory());
 
@@ -61,6 +86,54 @@ trait ItemsTrait
             ->InList("lines")
             ->Name("Shipped Qty")
             ->MicroData("http://schema.org/QuantitativeValue", "status")
+            ->Group("Products")
+        ;
+        self::setupWriteOnlyOnV2($this->fieldsFactory());
+    }
+    /**
+     * Build Fields using FieldFactory
+     */
+    protected function buildItemsInfosFields(): void
+    {
+        //====================================================================//
+        // Order Line Info 1 - Generally EAN13
+        $this->fieldsFactory()->create(SPL_T_VARCHAR)
+            ->Identifier("Info1")
+            ->InList("lines")
+            ->Name("Info 1 (EAN13)")
+            ->MicroData("http://schema.org/Product", "gint13")
+            ->Group("Products")
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
+
+        //====================================================================//
+        // Order Line Info 2
+        $this->fieldsFactory()->create(SPL_T_VARCHAR)
+            ->Identifier("Info2")
+            ->InList("lines")
+            ->Name("Info 2 (Code)")
+            ->MicroData("http://schema.org/Product", "additionalProperty")
+            ->Group("Products")
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
+
+        //====================================================================//
+        // Order Line Info 3 - Generally Label
+        $this->fieldsFactory()->create(SPL_T_VARCHAR)
+            ->Identifier("Info3")
+            ->InList("lines")
+            ->Name("Info 3 (Label)")
+            ->MicroData("http://schema.org/partOfInvoice", "description")
+            ->Group("Products")
+        ;
+        self::setupReadOnlyOnV2($this->fieldsFactory());
+
+        //====================================================================//
+        // Order Line Info 4 - Generally Label
+        $this->fieldsFactory()->create(SPL_T_VARCHAR)
+            ->Identifier("Info4")
+            ->InList("lines")
+            ->Name("Info 4")
             ->Group("Products")
         ;
         self::setupReadOnlyOnV2($this->fieldsFactory());
@@ -91,34 +164,31 @@ trait ItemsTrait
         $this->object->Articles = array();
         //====================================================================//
         // Verify Lines List & Update if Needed
-        foreach ($fieldData as $product) {
+        foreach ($fieldData as $itemData) {
             //====================================================================//
-            // Safety Checks
-            if (!self::validateItem($product)) {
+            // Validate Inputs & Convert to Article Array
+            $article = ArticlesHelper::toArticle($itemData);
+            if (!$article) {
                 continue;
             }
             //====================================================================//
-            // Decode Product Id
-            $productId = self::objects()->id($product["ID"]);
-            if (!$productId) {
-                Splash::log()->warTrace("Invalid order Items SKU received");
+            // Raw Product SKu Mode => Do NOT Merge Lines
+            if (isset($itemData["SKU"]) && !empty($itemData["SKU"])) {
+                $this->object->Articles[] = $article;
 
                 continue;
             }
             //====================================================================//
             // Search for This Items in Products List
-            $articleIndex = $this->searchItem($productId);
+            $articleIndex = $this->searchItem($article["ID"]);
             if (null !== $articleIndex) {
-                $this->object->Articles[$articleIndex]["Quantite"] += (int) $product["Quantite"];
+                $this->object->Articles[$articleIndex]["Quantite"] += (int) $itemData["Quantite"];
 
                 continue;
             }
             //====================================================================//
             // Add Product Line to List
-            $this->object->Articles[] = array(
-                "ID" => $productId,
-                "Quantite" => (int) $product["Quantite"],
-            );
+            $this->object->Articles[] = $article;
         }
 
         unset($this->in[$fieldName]);
@@ -145,23 +215,12 @@ trait ItemsTrait
         }
         //====================================================================//
         // Fill List with Data
-        foreach ($this->object->Articles as $index => $product) {
+        foreach ($this->object->Articles as $index => $article) {
             //====================================================================//
             // READ Fields
-            switch ($fieldId) {
-                //====================================================================//
-                // Order Line Direct Reading Data
-                case 'ID':
-                    $value = self::objects()->encode("Product", $product->{$fieldId});
-
-                    break;
-                case 'Quantite':
-                case 'Servie':
-                    $value = isset($product->{$fieldId}) ? (int) $product->{$fieldId} : 0;
-
-                    break;
-                default:
-                    return;
+            $value = $this->getItemFieldData($article, $fieldId);
+            if (null === $value) {
+                return;
             }
             //====================================================================//
             // Insert Data in List
@@ -172,32 +231,7 @@ trait ItemsTrait
     }
 
     /**
-     * Validate Order Item Data
-     *
-     * @param array $product Order Item data
-     *
-     * @return bool
-     */
-    private static function validateItem(array $product): bool
-    {
-        //====================================================================//
-        // Safety Checks
-        if (!isset($product["ID"]) || !isset($product["Quantite"])) {
-            Splash::log()->deb("Incomplete Order Items Line received");
-
-            return false;
-        }
-        if (empty($product["ID"]) || empty($product["Quantite"])) {
-            Splash::log()->deb("Incomplete Order Items Line received");
-
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Serach for Order Item in Articles
+     * Search for Order Item in Articles
      *
      * @param string $productId Product SKU
      *
@@ -221,5 +255,44 @@ trait ItemsTrait
         }
 
         return null;
+    }
+
+    /**
+     * Read Order Line Item Field Data
+     *
+     * @param stdClass $itemData Order Line ItemData
+     * @param string   $fieldId  Field Identifier / Name
+     *
+     * @return null|int|string
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     */
+    private function getItemFieldData(stdClass $itemData, string $fieldId)
+    {
+        //====================================================================//
+        // READ Fields
+        switch ($fieldId) {
+            //====================================================================//
+            // Order Line Direct Reading Data
+            case 'ID':
+                return (!$this->isProductRawSkuMode() && !empty($itemData->ID))
+                    ? (string) self::objects()->encode("Product", $itemData->ID)
+                    : "";
+            case 'SKU':
+                return ($this->isProductRawSkuMode() && !empty($itemData->ID))
+                    ? $itemData->ID
+                    : "";
+            case 'Quantite':
+            case 'Servie':
+                return isset($itemData->{$fieldId}) ? (int) $itemData->{$fieldId} : 0;
+            case 'IDunique':
+            case 'Info1':
+            case 'Info2':
+            case 'Info3':
+            case 'Info4':
+                return isset($itemData->{$fieldId}) ? (string) $itemData->{$fieldId} : "";
+            default:
+                return null;
+        }
     }
 }

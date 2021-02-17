@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2020 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -35,7 +35,7 @@ class Order extends AbstractStandaloneObject // implements TrackingInterface
 
     // Optilog Core Traits
     use Core\DocumentsTrait;
-    use Core\ApiV2FieldsTrait;
+    use Core\ConfigurationTrait;
 
     // Optilog Order Traits
     use Order\ObjectsListTrait;
@@ -51,6 +51,7 @@ class Order extends AbstractStandaloneObject // implements TrackingInterface
     use Order\PdfTrait;
     use Order\LabelsTrait;
     use Order\ShippedTrait;
+    use Order\ParcelsTrait;
 
     //====================================================================//
     // Object Definition Parameters
@@ -88,11 +89,9 @@ class Order extends AbstractStandaloneObject // implements TrackingInterface
     public function __construct(OptilogConnector $parentConnector)
     {
         $this->connector = $parentConnector;
-
         //====================================================================//
         // Connector SelfTest
         $parentConnector->selfTest();
-
         //====================================================================//
         //  Load Translation File
         Splash::translator()->load('local');
