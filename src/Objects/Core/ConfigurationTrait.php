@@ -64,17 +64,4 @@ trait ConfigurationTrait
             : $fieldFactory->isWriteOnly()
         ;
     }
-
-    /**
-     * Setup Field for Current API Version
-     *
-     * @param FieldsFactory $fieldFactory Spalsh Fields Factory
-     */
-    protected static function setupWriteOnlyOnV2($fieldFactory): void
-    {
-        RestHelper::isApiV2Mode()
-            ? $fieldFactory->isWriteOnly()->setPreferWrite()
-            : $fieldFactory->isReadOnly()
-        ;
-    }
 }

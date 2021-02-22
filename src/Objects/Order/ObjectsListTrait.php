@@ -16,8 +16,10 @@
 namespace   Splash\Connectors\Optilog\Objects\Order;
 
 use Splash\Bundle\Helpers\Objects\CachedListHelper;
+use Splash\Client\Splash;
 use Splash\Connectors\Optilog\Models\RestHelper as API;
 use Splash\Connectors\Optilog\Models\StatusHelper;
+use Splash\Connectors\Optilog\Objects\Core\PaginationTrait;
 use stdClass;
 
 /**
@@ -25,6 +27,8 @@ use stdClass;
  */
 trait ObjectsListTrait
 {
+    use PaginationTrait;
+
     /**
      * {@inheritdoc}
      *
@@ -34,26 +38,25 @@ trait ObjectsListTrait
     {
         //====================================================================//
         // Load Product Lists from Cache
-        $rawData = API::postV2(
+        $rawResponse = API::post(
             "jGetStatutCommande",
-            self::toParameters((string) $filter, (array) $params)
+            self::toPageParameters((string) $filter, (array) $params)
         );
-        //====================================================================//
-        // Request Failed
-        if ((null == $rawData) || !isset($rawData->result) || !is_array($rawData->result)) {
-            return array( 'meta' => array('current' => 0, 'total' => 0));
-        }
         //====================================================================//
         // Compute Totals
         $response = array(
-            'meta' => array(
-                'current' => is_array($rawData->result) ? count($rawData->result) : 0,
-                'total' => $rawData->pagination->TotalLignes,
-            ),
+            'meta' => self::toPageMetadata($rawResponse),
         );
         //====================================================================//
+        // Request Failed
+        if ((null == $rawResponse) || !isset($rawResponse->result) || !is_array($rawResponse->result)) {
+            Splash::log()->www("Error response", $rawResponse);
+
+            return $response;
+        }
+        //====================================================================//
         // Parse Data in response
-        foreach ($rawData->result as $order) {
+        foreach ($rawResponse->result as $order) {
             $response[] = self::toOrderItem($order);
         }
 
@@ -113,23 +116,6 @@ trait ObjectsListTrait
     }
 
     /**
-     * Prepare List Query Parameters
-     *
-     * @param string $filter
-     * @param array  $params
-     *
-     * @return array
-     */
-    public function toParameters(string $filter, array $params): array
-    {
-        return array(array(
-            "ID" => (string) $filter ?: "*",
-            "Offset" => (isset($params["offset"]) && !empty($params["offset"])) ? (string) $params["offset"] : 0,
-            "Fetch" => (isset($params["max"]) && !empty($params["max"])) ? (string) $params["max"] : 25,
-        ));
-    }
-
-    /**
      * Parse Order Item to List Array
      *
      * @param stdClass $orderItem
@@ -143,7 +129,9 @@ trait ObjectsListTrait
             'id' => $orderItem->DestID,
             'IntID' => $orderItem->ID,
             'DestID' => $orderItem->DestID,
-            'Statut' => StatusHelper::toSplash($orderItem->IdStatut),
+            'Statut' => StatusHelper::toSplash(
+                isset($orderItem->IdStatut) ? $orderItem->IdStatut : $orderItem->Statut
+            ),
         );
         /** @codingStandardsIgnoreEnd */
     }

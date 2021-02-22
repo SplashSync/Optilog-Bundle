@@ -15,14 +15,17 @@
 
 namespace   Splash\Connectors\Optilog\Objects\Product;
 
-use Splash\Bundle\Helpers\Objects\CachedListHelper;
+use Splash\Client\Splash;
 use Splash\Connectors\Optilog\Models\RestHelper as API;
+use Splash\Connectors\Optilog\Objects\Core\PaginationTrait;
 
 /**
  * Optilog Products Objects List Functions
  */
 trait ObjectsListTrait
 {
+    use PaginationTrait;
+
     /**
      * {@inheritdoc}
      *
@@ -31,32 +34,26 @@ trait ObjectsListTrait
     public function objectsList($filter = null, $params = null)
     {
         //====================================================================//
-        // Check if Product Lists is Available in Cache
-        $cachedList = new CachedListHelper($this->getWebserviceId(), "products.list");
-        if (!$cachedList->hasCache()) {
-            //====================================================================//
-            // Get Product Lists from Api
-            $rawData = API::post("jGetStocks", array(array("ID" => "*")));
-            //====================================================================//
-            // Request Failed
-            if ((null == $rawData) || !isset($rawData->result)) {
-                return array( 'meta' => array('current' => 0, 'total' => 0));
-            }
-            //====================================================================//
-            // Store Product Lists in Cache
-            $cachedList->setContents($rawData->result);
-        }
-        //====================================================================//
-        // Load Product Lists from Cache
-        $listData = $cachedList->getPagedContents($filter, $params);
+        // Get Lists from Api
+        $rawResponse = API::post(
+            "jGetStocks",
+            self::toPageParameters((string) $filter, (array) $params)
+        );
         //====================================================================//
         // Compute Totals
         $response = array(
-            'meta' => array('current' => count($listData), 'total' => $cachedList->getFilteredTotal()),
+            'meta' => self::toPageMetadata($rawResponse),
         );
         //====================================================================//
+        // Request Failed
+        if ((null == $rawResponse) || !isset($rawResponse->result) || !is_array($rawResponse->result)) {
+            Splash::log()->www("Error response", $rawResponse);
+
+            return $response;
+        }
+        //====================================================================//
         // Parse Data in response
-        foreach ($listData as $product) {
+        foreach ($rawResponse->result as $product) {
             /** @codingStandardsIgnoreStart */
             $response[] = array(
                 'id' => $product->ID,

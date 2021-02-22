@@ -36,6 +36,16 @@ trait LabelsTrait
         ;
 
         //====================================================================//
+        // Order Expected Delivery Date
+        $this->fieldsFactory()->create(SPL_T_DATE)
+            ->Identifier("DIL")
+            ->Name("Delivery Date")
+            ->isNotTested()
+            ->isWriteOnly()
+            ->microData("http://schema.org/ParcelDelivery", "expectedArrivalUntil")
+        ;
+
+        //====================================================================//
         // Label 1
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->Identifier("Libelle1")

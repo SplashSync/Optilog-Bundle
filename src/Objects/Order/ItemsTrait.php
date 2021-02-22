@@ -16,6 +16,7 @@
 namespace Splash\Connectors\Optilog\Objects\Order;
 
 use Splash\Connectors\Optilog\Models\ArticlesHelper;
+use Splash\Connectors\Optilog\Models\RestHelper as API;
 use Splash\Core\SplashCore      as Splash;
 use Splash\Models\Objects\ListsTrait;
 use stdClass;
@@ -80,6 +81,12 @@ trait ItemsTrait
         self::setupReadOnlyOnV2($this->fieldsFactory());
 
         //====================================================================//
+        // Check if we are on API V2
+        if (!API::isApiV2Mode()) {
+            return;
+        }
+
+        //====================================================================//
         // Order Line Served Quantity
         $this->fieldsFactory()->create(SPL_T_INT)
             ->Identifier("Servie")
@@ -87,8 +94,8 @@ trait ItemsTrait
             ->Name("Shipped Qty")
             ->MicroData("http://schema.org/QuantitativeValue", "status")
             ->Group("Products")
+            ->isReadOnly()
         ;
-        self::setupWriteOnlyOnV2($this->fieldsFactory());
     }
     /**
      * Build Fields using FieldFactory
