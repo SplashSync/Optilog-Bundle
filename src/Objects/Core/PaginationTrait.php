@@ -55,7 +55,7 @@ trait PaginationTrait
         }
         //====================================================================//
         // Request has NO Pagination Infos
-        if (!isset($rawResponse->pagination)) {
+        if (!isset($rawResponse->pagination->nbLignes) || !isset($rawResponse->pagination->nbTotal)) {
             return array(
                 'current' => count($rawResponse->result),
                 'total' => count($rawResponse->result),

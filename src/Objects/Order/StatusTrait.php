@@ -72,8 +72,7 @@ trait StatusTrait
             ->Identifier("isToShip")
             ->Name("Is To Ship")
             ->MicroData("http://schema.org/OrderStatus", "OrderToShip")
-            ->isWriteOnly()
-            ->isLogged();
+            ->isWriteOnly();
 
         //====================================================================//
         // Is Canceled
