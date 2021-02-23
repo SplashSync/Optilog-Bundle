@@ -10,9 +10,9 @@
     {% if connector.connect %}
         {% set wsUrl = url("splash_connector_action", {"connectorName": "optilog", "webserviceId": connector.webserviceId}) %}
     <li>
-        <h4 class="font-lg text-info">
-            <span class="label label-info">
-                <i class="fa fa-external-link"></i>
+        <h4 class="font-lg">
+            <span class="badge badge-info">
+                <i class="fa fa-external-link fas fa-external-link-alt"></i>
                 &nbsp;Url
             </span>
             <a href="{{ wsUrl }}" target="_blank">
@@ -28,7 +28,7 @@
     
     <li>
         <h4 class="font-lg {% if result %}text-success{% else %}text-danger{% endif %}">
-            <span class="label {% if result %}label-success{% else %}label-danger{% endif %}">
+            <span class="badge {% if result %}badge-success{% else %}badge-danger{% endif %}">
                 <i class="fa {% if result %}fa-check{% else %}fa-times{% endif %}"></i>
                 &nbsp;{% if result %}Ok{% else %}Ko{% endif %}
             </span>
