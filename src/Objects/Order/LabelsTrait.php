@@ -26,26 +26,6 @@ trait LabelsTrait
     protected function buildLabelsFields(): void
     {
         //====================================================================//
-        // ID Operation
-        $this->fieldsFactory()->create(SPL_T_VARCHAR)
-            ->Identifier("Operation")
-            ->Name("ID Operation")
-            ->isNotTested()
-            ->isWriteOnly()
-            ->microData("http://schema.org/Order", "disambiguatingDescription")
-        ;
-
-        //====================================================================//
-        // Order Expected Delivery Date
-        $this->fieldsFactory()->create(SPL_T_DATE)
-            ->Identifier("DIL")
-            ->Name("Delivery Date")
-            ->isNotTested()
-            ->isWriteOnly()
-            ->microData("http://schema.org/ParcelDelivery", "expectedArrivalUntil")
-        ;
-
-        //====================================================================//
         // Label 1
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->Identifier("Libelle1")
@@ -94,12 +74,6 @@ trait LabelsTrait
         //====================================================================//
         // WRITE Field
         switch ($fieldName) {
-            case 'Operation':
-                if (!empty($fieldData)) {
-                    $this->setSimple($fieldName, $fieldData);
-                }
-
-                break;
             case 'Libelle1':
             case 'Libelle2':
             case 'Libelle3':

@@ -206,7 +206,7 @@ trait DeliveryTrait
                 // Detect Carrier Code
                 $carrierCode = isset($this->in['Transporteur'])
                     ? $this->getCarrierCode((string) $this->in['Transporteur'])
-                    : $this->object->Transporteur;
+                    : (isset($this->object->Transporteur) ? $this->object->Transporteur : null);
                 //====================================================================//
                 // Relay Carrier => Push to CodePR
                 if ($carrierCode && CarrierCodes::isRelayCarrier($carrierCode)) {

@@ -110,6 +110,9 @@ trait CRUDTrait
         $fields = is_a($this->in, "ArrayObject") ? $this->in->getArrayCopy() : $this->in;
         foreach ($fields as $fieldName => $fieldData) {
             //====================================================================//
+            // Write Meta Fields (Operation & DIL)
+            $this->setMetaFields($fieldName, $fieldData);
+            //====================================================================//
             // Write Labels Fields
             $this->setLabelsFields($fieldName, $fieldData);
             //====================================================================//

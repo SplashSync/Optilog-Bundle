@@ -15,6 +15,9 @@
 
 namespace Splash\Connectors\Optilog\Objects\Order;
 
+use DateTime;
+use Splash\Client\Splash;
+
 /**
  * Access to Order Core Fields
  */
@@ -23,7 +26,7 @@ trait CoreTrait
     /**
      * Build Core Fields using FieldFactory
      */
-    private function buildCoreFields(): void
+    protected function buildCoreFields(): void
     {
         //====================================================================//
         // Internal Reference
@@ -50,6 +53,27 @@ trait CoreTrait
             ->Identifier("Commentaire")
             ->Name("Commentaire")
             ->isReadOnly();
+
+        //====================================================================//
+        // ID Operation
+        $this->fieldsFactory()->create(SPL_T_VARCHAR)
+            ->Identifier("Operation")
+            ->Name("ID Operation")
+            ->isNotTested()
+            ->isWriteOnly()
+            ->microData("http://schema.org/Order", "disambiguatingDescription")
+        ;
+
+        //====================================================================//
+        // Order Expected Delivery Date
+        $this->fieldsFactory()->create(SPL_T_DATE)
+            ->Identifier("DIL")
+            ->Name("Delivery Date")
+            ->isNotTested()
+            ->isWriteOnly()
+            ->microData("http://schema.org/ParcelDelivery", "expectedArrivalUntil")
+            ->setPreferNone()
+        ;
     }
 
     /**
@@ -58,7 +82,7 @@ trait CoreTrait
      * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
      */
-    private function getCoreFields($key, $fieldName): void
+    protected function getCoreFields($key, $fieldName): void
     {
         //====================================================================//
         // READ Fields
@@ -85,7 +109,7 @@ trait CoreTrait
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
      */
-    private function setCoreFields($fieldName, $fieldData): void
+    protected function setCoreFields($fieldName, $fieldData): void
     {
         //====================================================================//
         // WRITE Field
@@ -103,5 +127,63 @@ trait CoreTrait
                 return;
         }
         unset($this->in[$fieldName]);
+    }
+
+    /**
+     * Write Given Fields
+     *
+     * @param string $fieldName Field Identifier / Name
+     * @param mixed  $fieldData Field Data
+     */
+    protected function setMetaFields(string $fieldName, $fieldData): void
+    {
+        //====================================================================//
+        // WRITE Field
+        switch ($fieldName) {
+            case 'Operation':
+                if (!empty($fieldData)) {
+                    $this->setSimple($fieldName, $fieldData);
+                }
+
+                break;
+            case 'DIL':
+                if (!empty($fieldData)) {
+                    //====================================================================//
+                    // Convert DIL to Optilog Format
+                    $orderDil = self::toOptilogDIL($fieldData);
+                    if ($orderDil) {
+                        $this->setSimple($fieldName, $orderDil);
+                    }
+                }
+
+                break;
+            default:
+                return;
+        }
+        unset($this->in[$fieldName]);
+    }
+
+    /**
+     * Convert Splash Date to Optilog DIL Date
+     *
+     * @param mixed $fieldData Field Data
+     *
+     * @return null|string
+     */
+    private static function toOptilogDIL($fieldData): ?string
+    {
+        if (!empty($fieldData)) {
+            try {
+                $datetime = new DateTime($fieldData);
+
+                return $datetime->format("d/m/Y");
+            } catch (\Exception $exc) {
+                Splash::log()->err("Malformed DIL Received ");
+
+                return null;
+            }
+        }
+
+        return null;
     }
 }
