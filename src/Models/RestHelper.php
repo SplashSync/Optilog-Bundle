@@ -33,7 +33,7 @@ class RestHelper
     /**
      * @var int
      */
-    const TIMEOUT = 10;
+    const TIMEOUT = 30;
 
     /**
      * @var array

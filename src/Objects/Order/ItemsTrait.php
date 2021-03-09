@@ -61,8 +61,8 @@ trait ItemsTrait
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->identifier("SKU")
             ->inList("lines")
-            ->name("Product SKU")
-            ->microData("http://schema.org/Product", "sku")
+            ->name("Product SKU/EAN13")
+            ->microData("http://schema.org/Product", "gint13")
             ->group("Products")
             ->isRequired($this->isProductRawSkuMode())
         ;
@@ -107,8 +107,8 @@ trait ItemsTrait
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->Identifier("Info1")
             ->InList("lines")
-            ->Name("Info 1 (EAN13)")
-            ->MicroData("http://schema.org/Product", "gint13")
+            ->Name("Info 1 (SKU)")
+            ->MicroData("http://schema.org/Product", "sku")
             ->Group("Products")
         ;
         self::setupReadOnlyOnV2($this->fieldsFactory());
