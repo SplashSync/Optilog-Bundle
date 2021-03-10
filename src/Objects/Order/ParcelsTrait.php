@@ -103,7 +103,7 @@ trait ParcelsTrait
         //====================================================================//
         // PARCEL - Contents Lines SKUs
         $this->fieldsFactory()->create(SPL_T_INLINE)
-            ->identifier("SKU")
+            ->identifier("ID")
             ->name("Contents SKUs")
             ->inList(self::$parcelsList)
             ->isReadOnly()
@@ -183,7 +183,7 @@ trait ParcelsTrait
             //====================================================================//
             // Order Parcels Direct Reading Data
             case 'id':
-                return "Parcels-".$index;
+                return $this->object->ID.".P.".$index;
             case 'IdStatut':
                 return isset($itemData->IdStatut)
                     ? (string) StatusHelper::toSplash($itemData->IdStatut)
@@ -195,7 +195,7 @@ trait ParcelsTrait
             case 'SSCC':
                 return isset($itemData->{$fieldId}) ? (string) $itemData->{$fieldId} : "";
             case 'IDunique':
-            case 'SKU':
+            case 'ID':
             case 'Servie':
                 return self::extractContentValue($itemData, $fieldId);
             default:
