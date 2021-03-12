@@ -141,6 +141,12 @@ class CarrierCodes
         "TNT_JD" => "TNT National TNT Relais colis ",
 
         //====================================================================//
+        // UPS
+        "UPS_STD" => "UPS Standard",
+        "UPS_ACCPT" => "UPS Acces Point Eco",
+        "UPS_EXP" => "UPS Express",
+
+        //====================================================================//
         // Dropshiping
         "DROP" => "Dropshipping",
 
