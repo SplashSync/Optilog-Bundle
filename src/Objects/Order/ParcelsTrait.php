@@ -168,7 +168,8 @@ trait ParcelsTrait
     /**
      * Read Order Line Item Field Data
      *
-     * @param stdClass $itemData Order Line ItemData
+     * @param stdClass $itemData Parcel ItemData
+     * @param string   $index    Parcel Index
      * @param string   $fieldId  Field Identifier / Name
      *
      * @return null|float|string
@@ -183,7 +184,7 @@ trait ParcelsTrait
             //====================================================================//
             // Order Parcels Direct Reading Data
             case 'id':
-                return $this->object->ID.".P.".$index;
+                return self::buidParcelId($this->object->DestID, $itemData, $index);
             case 'IdStatut':
                 return isset($itemData->IdStatut)
                     ? (string) StatusHelper::toSplash($itemData->IdStatut)
@@ -204,9 +205,36 @@ trait ParcelsTrait
     }
 
     /**
+     * Build Parcel Id Depending on Contents
+     *
+     * - IF only ONE Product, use IDunique as Parcel Name
+     * - IF more than ONE, generate ID based on Order Id
+     *
+     * @param string   $orderId  OrderId | DestID
+     * @param stdClass $itemData Optilog Parcel ItemData
+     * @param string   $index    Parcel Index (zero based)
+     *
+     * @return string
+     */
+    private static function buidParcelId(string $orderId, stdClass $itemData, string $index): string
+    {
+        //====================================================================//
+        // If Parcel has an Unique Content
+        if (isset($itemData->Contenu) && is_array($itemData->Contenu) && (1 == count($itemData->Contenu))) {
+            //====================================================================//
+            // Content has an unique ID
+            if (isset($itemData->Contenu[0]->IDunique) && !empty($itemData->Contenu[0]->IDunique)) {
+                return $itemData->Contenu[0]->IDunique;
+            }
+        }
+
+        return $orderId.".P.".$index;
+    }
+
+    /**
      * Extract Line Item Contents Data
      *
-     * @param stdClass $itemData Order Line ItemData
+     * @param stdClass $itemData Optilog Parcel ItemData
      * @param string   $fieldId  Field Identifier / Name
      *
      * @return string
