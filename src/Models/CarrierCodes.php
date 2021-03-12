@@ -170,6 +170,7 @@ class CarrierCodes
         "SOCOL_6H",
         "MR_24R",
         "TNT_JD",
+        "UPS_ACCPT",
     );
 
     /**
