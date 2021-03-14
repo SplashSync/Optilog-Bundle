@@ -259,7 +259,7 @@ abstract class AbstractOptilogType extends AbstractType
                 'value_type' => ChoiceType::class,
                 'value_options' => array(
                     'label' => "Code Optilog",
-                    'choices' => array_flip(CarrierCodes::CODES),
+                    'choices' => CarrierCodes::getCarrierChoices(),
                 ),
                 'translation_domain' => "OptilogBundle",
             ))

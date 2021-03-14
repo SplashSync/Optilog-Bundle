@@ -184,6 +184,25 @@ class CarrierCodes
     );
 
     /**
+     * Return Carriers Codes Choices
+     *
+     * @return array
+     */
+    public static function getCarrierChoices(): array
+    {
+        static $carrierChoices;
+
+        if (!isset($carrierChoices)) {
+            $carrierChoices = array();
+            foreach (self::CODES as $code => $label) {
+                $carrierChoices[sprintf('[%s] %s', $code, $label)] = $code;
+            }
+        }
+
+        return $carrierChoices;
+    }
+
+    /**
      * Detection des Codes Transporteurs avec Livraison en Point Relais
      *
      * @param string $carrierCode
