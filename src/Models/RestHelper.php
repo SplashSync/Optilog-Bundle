@@ -287,7 +287,8 @@ class RestHelper
         // Decode Optilog Response
         $body = self::decodeBody($response->body);
         if (null === $body) {
-            Splash::log()->err("Received an empty response");
+            Splash::log()->err("Unable to decode response");
+            Splash::log()->www("Raw Response", $response->body);
 
             return null;
         }
