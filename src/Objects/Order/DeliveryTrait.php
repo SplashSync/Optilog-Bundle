@@ -191,7 +191,7 @@ trait DeliveryTrait
             //====================================================================//
             // Company | Contact Name
             case 'Nom':
-                if (empty($fieldData) && !empty(trim($this->in['Contact']))) {
+                if (empty(trim($fieldData)) && !empty(trim($this->in['Contact']))) {
                     $this->setSimple($fieldName, $this->in['Contact']);
 
                     break;
