@@ -288,7 +288,7 @@ class RestHelper
         $body = self::decodeBody($response->body);
         if (null === $body) {
             Splash::log()->err("Unable to decode response");
-            Splash::log()->www("Raw Response", $response->body);
+            Splash::log()->www("Full Response", $response);
 
             return null;
         }
