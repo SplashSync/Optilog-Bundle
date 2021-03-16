@@ -55,6 +55,7 @@ class RestHelper
         array("La commande", "est en cours d'expédition !"),
         array("La commande", "est déjà en attente de validation"),
         array("La commande", "ne peut plus être modifiée car annulée !"),
+        array("Commande", "déjà créée pour le destinataire"),
     );
 
     /**
@@ -84,6 +85,7 @@ class RestHelper
         $template = Request::init()
             ->sends(Mime::FORM)
             ->expects(Mime::JSON)
+            ->autoParse(true)
             ->addHeaders(array(
                 "Clef" => $apiKey,
                 "UserName" => $apiUser,
@@ -291,6 +293,11 @@ class RestHelper
             Splash::log()->www("Full Response", $response);
 
             return null;
+        }
+        //====================================================================//
+        // Detect Disabled Auto-parse
+        if (!$response->request->auto_parse) {
+            Splash::log()->err("Auto-parse is disabled. This should never happen.");
         }
         //====================================================================//
         // Check Response Message
