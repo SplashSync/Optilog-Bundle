@@ -241,7 +241,7 @@ trait CRUDTrait
         }
         //====================================================================//
         // Check If Order Status is Above 1
-        if ($this->object->Statut > 1) {
+        if ($this->getOptilogStatus() > 1) {
             return false;
         }
 
