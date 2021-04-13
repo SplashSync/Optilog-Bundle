@@ -15,6 +15,7 @@
 
 namespace Splash\Connectors\Optilog\Objects\Order;
 
+use Splash\Client\Splash;
 use Splash\Connectors\Optilog\Models\RestHelper as API;
 use Splash\Connectors\Optilog\Models\StatusHelper;
 use stdClass;
@@ -277,6 +278,7 @@ trait ParcelsTrait
         //====================================================================//
         // Walk Contents
         foreach ($itemData->Contenu as $contenu) {
+            // TODO - This Should be on $contenu->Details->Serials, Logsys notified
             $values[] = implode(" | ", $contenu->Details->Serials ?? array());
         }
 
