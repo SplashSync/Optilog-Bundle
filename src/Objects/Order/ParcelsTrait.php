@@ -15,7 +15,6 @@
 
 namespace Splash\Connectors\Optilog\Objects\Order;
 
-use Splash\Client\Splash;
 use Splash\Connectors\Optilog\Models\RestHelper as API;
 use Splash\Connectors\Optilog\Models\StatusHelper;
 use stdClass;
