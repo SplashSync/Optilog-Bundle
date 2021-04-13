@@ -98,7 +98,6 @@ trait ParcelsTrait
         $this->fieldsFactory()->create(SPL_T_INLINE)
             ->identifier("ID")
             ->name("Contents SKUs")
-            ->microdata("https://schema.org/ParcelDelivery", "itemSerials")
             ->inList(self::$parcelsList)
             ->isReadOnly()
         ;
@@ -107,6 +106,7 @@ trait ParcelsTrait
         $this->fieldsFactory()->create(SPL_T_INLINE)
             ->identifier("Serial")
             ->name("Contents Serials")
+            ->microdata("https://schema.org/ParcelDelivery", "itemSerials")
             ->inList(self::$parcelsList)
             ->isReadOnly()
         ;
