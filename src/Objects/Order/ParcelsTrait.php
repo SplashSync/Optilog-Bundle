@@ -39,7 +39,6 @@ trait ParcelsTrait
         if (!API::isApiV2Mode()) {
             return;
         }
-
         //====================================================================//
         // PARCEL - Identifier
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
@@ -49,7 +48,6 @@ trait ParcelsTrait
             ->microdata("https://schema.org/ParcelDelivery", "identifier")
             ->isReadOnly()
         ;
-
         //====================================================================//
         // PARCEL - Status
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
@@ -59,7 +57,6 @@ trait ParcelsTrait
             ->microdata("https://schema.org/ParcelDelivery", "deliveryStatus")
             ->isReadOnly()
         ;
-
         //====================================================================//
         // PARCEL - Tracking Number
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
@@ -69,7 +66,6 @@ trait ParcelsTrait
             ->microdata("https://schema.org/ParcelDelivery", "trackingNumber")
             ->isReadOnly()
         ;
-
         //====================================================================//
         // PARCEL - Tracking Url
         $this->fieldsFactory()->create(SPL_T_URL)
@@ -79,7 +75,6 @@ trait ParcelsTrait
             ->microdata("https://schema.org/ParcelDelivery", "trackingUrl")
             ->isReadOnly()
         ;
-
         //====================================================================//
         // PARCEL - Weight
         $this->fieldsFactory()->create(SPL_T_DOUBLE)
@@ -89,7 +84,6 @@ trait ParcelsTrait
             ->microdata("https://schema.org/ParcelDelivery", "weight")
             ->isReadOnly()
         ;
-
         //====================================================================//
         // PARCEL - Contents Lines Unique IDs
         $this->fieldsFactory()->create(SPL_T_INLINE)
@@ -99,7 +93,6 @@ trait ParcelsTrait
             ->microdata("https://schema.org/ParcelDelivery", "itemShipped")
             ->isReadOnly()
         ;
-
         //====================================================================//
         // PARCEL - Contents Lines SKUs
         $this->fieldsFactory()->create(SPL_T_INLINE)
@@ -108,7 +101,14 @@ trait ParcelsTrait
             ->inList(self::$parcelsList)
             ->isReadOnly()
         ;
-
+        //====================================================================//
+        // PARCEL - Contents Lines SKUs
+        $this->fieldsFactory()->create(SPL_T_INLINE)
+            ->identifier("Serial")
+            ->name("Contents Serials")
+            ->inList(self::$parcelsList)
+            ->isReadOnly()
+        ;
         //====================================================================//
         // PARCEL - Contents Lines Quantity
         $this->fieldsFactory()->create(SPL_T_INLINE)
@@ -117,7 +117,6 @@ trait ParcelsTrait
             ->inList(self::$parcelsList)
             ->isReadOnly()
         ;
-
         //====================================================================//
         // PARCEL - Serial Shipping Container Code
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
@@ -140,7 +139,7 @@ trait ParcelsTrait
     {
         //====================================================================//
         // Check if List field & Init List Array
-        $fieldId = self::lists()->InitOutput($this->out, self::$parcelsList, $fieldName);
+        $fieldId = self::lists()->initOutput($this->out, self::$parcelsList, $fieldName);
         if (!$fieldId) {
             return;
         }
@@ -153,13 +152,13 @@ trait ParcelsTrait
         //====================================================================//
         // Fill List with Data
         foreach ($parcels as $index => $parcel) {
-            $value = $this->getParcelFieldData($parcel, (string) $index, $fieldId);
+            $value = $this->getParcelFieldData($parcel, $fieldId);
             if (null === $value) {
                 return;
             }
             //====================================================================//
             // Insert Data in List
-            self::lists()->Insert($this->out, self::$parcelsList, $fieldName, $index, $value);
+            self::lists()->insert($this->out, self::$parcelsList, $fieldName, $index, $value);
         }
 
         unset($this->in[$key]);
@@ -169,14 +168,13 @@ trait ParcelsTrait
      * Read Order Line Item Field Data
      *
      * @param stdClass $itemData Parcel ItemData
-     * @param string   $index    Parcel Index
      * @param string   $fieldId  Field Identifier / Name
      *
      * @return null|float|string
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    private function getParcelFieldData(stdClass $itemData, string $index, string $fieldId)
+    private function getParcelFieldData(stdClass $itemData, string $fieldId)
     {
         //====================================================================//
         // READ Fields
@@ -184,7 +182,7 @@ trait ParcelsTrait
             //====================================================================//
             // Order Parcels Direct Reading Data
             case 'id':
-                return self::buidParcelId($this->object->DestID, $itemData, $index);
+                return self::buildParcelId($this->object->DestID, $itemData);
             case 'IdStatut':
                 return isset($itemData->IdStatut)
                     ? (string) StatusHelper::toSplash($itemData->IdStatut)
@@ -199,6 +197,8 @@ trait ParcelsTrait
             case 'ID':
             case 'Servie':
                 return self::extractContentValue($itemData, $fieldId);
+            case 'Serial':
+                return self::extractSerialsValue($itemData);
             default:
                 return null;
         }
@@ -208,15 +208,14 @@ trait ParcelsTrait
      * Build Parcel Id Depending on Contents
      *
      * - IF only ONE Product, use IDunique as Parcel Name
-     * - IF more than ONE, generate ID based on Order Id
+     * - IF more than ONE, generate an Unique ID based on Order Id & Contents
      *
      * @param string   $orderId  OrderId | DestID
      * @param stdClass $itemData Optilog Parcel ItemData
-     * @param string   $index    Parcel Index (zero based)
      *
      * @return string
      */
-    private static function buidParcelId(string $orderId, stdClass $itemData, string $index): string
+    private static function buildParcelId(string $orderId, stdClass $itemData): string
     {
         //====================================================================//
         // If Parcel has an Unique Content
@@ -227,8 +226,16 @@ trait ParcelsTrait
                 return $itemData->Contenu[0]->IDunique;
             }
         }
+        //====================================================================//
+        // Compute Parcel Checksum
+        $checkSum = strtoupper(md5(serialize(array(
+            $itemData->Bordereau ?? "",
+            self::extractContentValue($itemData, "ID"),
+            self::extractContentValue($itemData, "IDunique"),
+            self::extractSerialsValue($itemData),
+        ))));
 
-        return $orderId.".P.".$index;
+        return $orderId.".P.".$checkSum;
     }
 
     /**
@@ -247,6 +254,30 @@ trait ParcelsTrait
             foreach ($itemData->Contenu as $contenu) {
                 $values[] = isset($contenu->{$fieldId}) ? (string) $contenu->{$fieldId} : "";
             }
+        }
+
+        return (string) json_encode($values);
+    }
+
+    /**
+     * Extract Line Item Serials Data
+     *
+     * @param stdClass $itemData Optilog Parcel ItemData
+     *
+     * @return string
+     */
+    private static function extractSerialsValue(stdClass $itemData): string
+    {
+        $values = array();
+        //====================================================================//
+        // No Contents Defined
+        if (!isset($itemData->Contenu) || !is_array($itemData->Contenu)) {
+            return (string) json_encode($values);
+        }
+        //====================================================================//
+        // Walk Contents
+        foreach ($itemData->Contenu as $contenu) {
+            $values[] = implode(" | ", $contenu->Details->Serials ?? array());
         }
 
         return (string) json_encode($values);
