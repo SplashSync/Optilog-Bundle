@@ -155,9 +155,11 @@ trait StatusTrait
             case 'isToShip':
                 //====================================================================//
                 // SHIP ORDER IF ALLOWED
-                if (!empty($fieldData) && (3 == $this->getOptilogStatus())) {
-                    $this->object->Mode = "GO_EXP";
-                    $this->needUpdate();
+                if (!empty($fieldData)) {
+                    if (in_array($this->getOptilogStatus(), array(-4, 3), true)) {
+                        $this->object->Mode = "EXP_GO";
+                        $this->needUpdate();
+                    }
                 }
 
                 break;
