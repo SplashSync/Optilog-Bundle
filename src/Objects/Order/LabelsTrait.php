@@ -34,7 +34,6 @@ trait LabelsTrait
             ->isWriteOnly()
             ->microData("http://schema.org/ParcelDelivery", "alternateName")
         ;
-
         //====================================================================//
         // Label 2
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
@@ -43,7 +42,6 @@ trait LabelsTrait
             ->isNotTested()
             ->isWriteOnly()
         ;
-
         //====================================================================//
         // Label 3
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
@@ -52,12 +50,19 @@ trait LabelsTrait
             ->isNotTested()
             ->isWriteOnly()
         ;
-
         //====================================================================//
         // Label 4
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->Identifier("Libelle4")
             ->Name("Ligne 4 de commentaire")
+            ->isNotTested()
+            ->isWriteOnly()
+        ;
+        //====================================================================//
+        // Label 5
+        $this->fieldsFactory()->create(SPL_T_VARCHAR)
+            ->Identifier("Libelle5")
+            ->Name("Ligne 5 de commentaire")
             ->isNotTested()
             ->isWriteOnly()
         ;
@@ -78,6 +83,7 @@ trait LabelsTrait
             case 'Libelle2':
             case 'Libelle3':
             case 'Libelle4':
+            case 'Libelle5':
                 $this->setSimple($fieldName, $fieldData);
 
                 break;

@@ -76,15 +76,6 @@ trait ParcelsTrait
             ->isReadOnly()
         ;
         //====================================================================//
-        // PARCEL - Weight
-        $this->fieldsFactory()->create(SPL_T_DOUBLE)
-            ->identifier("Poids")
-            ->name("Weight (kg)")
-            ->inList(self::$parcelsList)
-            ->microdata("https://schema.org/ParcelDelivery", "weight")
-            ->isReadOnly()
-        ;
-        //====================================================================//
         // PARCEL - Contents Lines Unique IDs
         $this->fieldsFactory()->create(SPL_T_INLINE)
             ->identifier("IDunique")
@@ -126,6 +117,54 @@ trait ParcelsTrait
             ->description("Serial Shipping Container Code")
             ->inList(self::$parcelsList)
             ->microdata("https://schema.org/ParcelDelivery", "disambiguatingDescription")
+            ->isReadOnly()
+        ;
+    }
+
+    /**
+     * Build Fields using FieldFactory
+     */
+    protected function buildParcelsDimFields(): void
+    {
+        //====================================================================//
+        // Check if we are on API V2
+        if (!API::isApiV2Mode()) {
+            return;
+        }
+        //====================================================================//
+        // PARCEL - Weight
+        $this->fieldsFactory()->create(SPL_T_DOUBLE)
+            ->identifier("Poids")
+            ->name("Weight (kg)")
+            ->inList(self::$parcelsList)
+            ->microdata("https://schema.org/ParcelDelivery", "weight")
+            ->isReadOnly()
+        ;
+        //====================================================================//
+        // PARCEL - Height
+        $this->fieldsFactory()->create(SPL_T_DOUBLE)
+            ->identifier("Hauteur")
+            ->name("Hauteur (m)")
+            ->inList(self::$parcelsList)
+            ->microdata("https://schema.org/ParcelDelivery", "height")
+            ->isReadOnly()
+        ;
+        //====================================================================//
+        // PARCEL - Width
+        $this->fieldsFactory()->create(SPL_T_DOUBLE)
+            ->identifier("Largeur")
+            ->name("Largeur (m)")
+            ->inList(self::$parcelsList)
+            ->microdata("https://schema.org/ParcelDelivery", "width")
+            ->isReadOnly()
+        ;
+        //====================================================================//
+        // PARCEL - Length
+        $this->fieldsFactory()->create(SPL_T_DOUBLE)
+            ->identifier("Longueur")
+            ->name("Longueur (m)")
+            ->inList(self::$parcelsList)
+            ->microdata("https://schema.org/ParcelDelivery", "length")
             ->isReadOnly()
         ;
     }
@@ -190,6 +229,10 @@ trait ParcelsTrait
                     : "";
             case 'Poids':
                 return isset($itemData->{$fieldId}) ? (float) $itemData->{$fieldId} : 0.0;
+            case 'Hauteur':
+            case 'Largeur':
+            case 'Longueur':
+                return isset($itemData->{$fieldId}) ? (float) ($itemData->{$fieldId} / 100) : 0.0;
             case 'Bordereau':
             case 'URL':
             case 'SSCC':
