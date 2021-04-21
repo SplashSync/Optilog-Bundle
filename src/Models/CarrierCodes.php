@@ -109,6 +109,7 @@ class CarrierCodes
         // LA POSTE
         "ASENDIA" => "LA POSTE Asendia ",
         "MAX_2C" => "LA POSTE Lettre MAX",
+        "LETT_LS" => "LA POSTE Lettre Simple",
         "LETS50" => "LA POSTE Lettre Suivie 50g ",
         "LETS100" => "LA POSTE Lettre Suivie 100g ",
         "LETS150" => "LA POSTE Lettre Suivie 150g",
