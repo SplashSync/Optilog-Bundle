@@ -35,6 +35,10 @@ class StatusHelper
      * @var array
      */
     private static $names = array(
+        -6 => "En attente Exp.",
+        -5 => "Rejetée",
+        -4 => "A Confirmer",
+        -3 => "Anomalie",
         -1 => "Rejetée",
         0 => "En attente de validation",
         1 => "En saisie / Acceptée",
