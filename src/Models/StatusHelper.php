@@ -58,6 +58,7 @@ class StatusHelper
      * @var array
      */
     private static $standardCodes = array(
+        -6 => Status::PROCESSING,       // En attente pour expédition
         -5 => Status::CANCELED,         // Rejetée
         -4 => Status::PROCESSING,       // En attente de confirmation de mise en expédition
         -3 => Status::PROBLEM,          // Anomalie
