@@ -229,7 +229,7 @@ trait CRUDTrait
         if ("ALTER" != $this->object->Mode) {
             //====================================================================//
             // Check If Mode is UNVALIDATE & Status is Draft or Canceled
-            if (("UNVALIDATE" == $this->object->Mode) && ($this->object->Statut <= 0)) {
+            if (("UNVALIDATE" == $this->object->Mode) && ($this->getOptilogStatus() <= 0)) {
                 return false;
             }
 
