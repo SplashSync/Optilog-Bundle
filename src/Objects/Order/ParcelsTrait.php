@@ -30,6 +30,11 @@ trait ParcelsTrait
     private static $parcelsList = "parcels";
 
     /**
+     * @var string[]
+     */
+    private static $parcelsUniqueIds = array();
+
+    /**
      * Build Fields using FieldFactory
      */
     protected function buildParcelsFields(): void
@@ -186,6 +191,7 @@ trait ParcelsTrait
         //====================================================================//
         // Verify Parcels List is Not Empty
         $parcels = array();
+        self::$parcelsUniqueIds = array();
         if (isset($this->object->Colis->Parcels) && is_array($this->object->Colis->Parcels)) {
             $parcels = $this->object->Colis->Parcels;
         }
@@ -267,7 +273,13 @@ trait ParcelsTrait
             //====================================================================//
             // Content has an unique ID
             if (isset($itemData->Contenu[0]->IDunique) && !empty($itemData->Contenu[0]->IDunique)) {
-                return $itemData->Contenu[0]->IDunique;
+                //====================================================================//
+                // Ensure unique ID is not Already Used
+                if (!in_array($itemData->Contenu[0]->IDunique, self::$parcelsUniqueIds, true)) {
+                    self::$parcelsUniqueIds[] = $itemData->Contenu[0]->IDunique;
+
+                    return $itemData->Contenu[0]->IDunique;
+                }
             }
         }
         //====================================================================//
