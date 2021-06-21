@@ -145,7 +145,8 @@ class CarrierCodes
         // UPS
         "UPS_STD" => "UPS Standard",
         "UPS_ACCPT" => "UPS Acces Point Eco",
-        "UPS_EXP" => "UPS Express",
+        "UPS_EXP" => "UPS Express (?? Obsolète ??) ",
+        "UPS_WWSVR" => "Express Saver / WorldWide Saver",
 
         //====================================================================//
         // Dropshiping
