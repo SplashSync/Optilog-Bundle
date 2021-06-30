@@ -15,6 +15,7 @@
 
 namespace Splash\Connectors\Optilog\Test\Controller;
 
+use Exception;
 use Splash\Connectors\Optilog\Services\OptilogConnector;
 
 /**
@@ -27,6 +28,8 @@ class S01WebHookCoreTest extends AbstractWebHookTest
 
     /**
      * Test WebHook For Ping
+     *
+     * @throws Exception
      *
      * @return void
      */
@@ -58,6 +61,8 @@ class S01WebHookCoreTest extends AbstractWebHookTest
     /**
      * Test WebHook For Connect
      *
+     * @throws Exception
+     *
      * @return void
      */
     public function testWebhookConnect(): void
@@ -84,6 +89,8 @@ class S01WebHookCoreTest extends AbstractWebHookTest
 
     /**
      * Test WebHook with Errors
+     *
+     * @throws Exception
      *
      * @return void
      */

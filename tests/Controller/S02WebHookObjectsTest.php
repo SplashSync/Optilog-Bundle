@@ -15,6 +15,7 @@
 
 namespace Splash\Connectors\Optilog\Test\Controller;
 
+use Exception;
 use Splash\Connectors\Optilog\Services\OptilogConnector;
 
 /**
@@ -31,6 +32,8 @@ class S02WebHookObjectsTest extends AbstractWebHookTest
      * @param string $objectType
      * @param string $action
      * @param string $objectId
+     *
+     * @throws Exception
      *
      * @return void
      */
@@ -49,7 +52,7 @@ class S02WebHookObjectsTest extends AbstractWebHookTest
 
         //====================================================================//
         // Verify Response
-        $this->assertIsLastCommited($action, $objectType, $objectId);
+        $this->assertIsLastCommitted($action, $objectType, $objectId);
     }
 
     /**

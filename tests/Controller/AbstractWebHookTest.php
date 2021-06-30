@@ -16,12 +16,12 @@
 namespace Splash\Connectors\Optilog\Test\Controller;
 
 use Splash\Connectors\Optilog\Services\OptilogConnector;
-use Splash\Tests\Tools\TestCase;
+use Splash\Tests\Tools\AbstractBaseCase;
 
 /**
  * Base Class for WebHooks Tests of Optilog Connector
  */
-abstract class AbstractWebHookTest extends TestCase
+abstract class AbstractWebHookTest extends AbstractBaseCase
 {
     /**
      * Verify WebHook is Ok Response
