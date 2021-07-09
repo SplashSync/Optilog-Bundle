@@ -152,7 +152,7 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
         //====================================================================//
         // Verify Api User is Set
         //====================================================================//
-        if (!isset($config["ApiUser"]) || empty($config["ApiUser"])) {
+        if (empty($config["ApiUser"])) {
             Splash::log()->err("Api User is Invalid");
 
             return false;
@@ -160,7 +160,7 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
         //====================================================================//
         // Verify Api Password is Set
         //====================================================================//
-        if (!isset($config["ApiPwd"]) || empty($config["ApiPwd"])) {
+        if (empty($config["ApiPwd"])) {
             Splash::log()->err("Api Pwd is Invalid");
 
             return false;
