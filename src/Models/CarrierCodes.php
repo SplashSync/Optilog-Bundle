@@ -136,10 +136,12 @@ class CarrierCodes
         //====================================================================//
         // TNT
         "TNT_10" => "TNT National TNT 10H Express",
-        "TNT_12" => "TNT National TNT 12H Express ",
-        "TNT_J" => "TNT National TNT Express ",
+        "TNT_12" => "TNT National TNT 12H Express",
+        "TNT_J" => "TNT National TNT Express",
         "TNT_JZ" => "TNT National TNT Livraison à domicile",
-        "TNT_JD" => "TNT National TNT Relais colis ",
+        "TNT_JD" => "TNT National TNT Relais colis",
+        "TNT_15N" => "TNT International Global Express",
+        "TNT_48N" => "TNT International Economy Express",
 
         //====================================================================//
         // UPS
