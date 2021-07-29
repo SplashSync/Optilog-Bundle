@@ -115,7 +115,7 @@ trait LocationTrait
                 }
                 //====================================================================//
                 // New Value => Erase Gamme (Setuped by Optilog)
-                if (!empty($fieldData && ($fieldData != $this->object->Stock))) {
+                if ($fieldData != $this->object->Stock) {
                     unset($this->object->Gamme);
                 }
                 //====================================================================//
