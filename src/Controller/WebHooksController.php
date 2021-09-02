@@ -375,7 +375,7 @@ class WebHooksController extends Controller
             return null;
         }
 
-        return $event["Mode"];
+        return (string) $event["Mode"];
     }
 
     /**
