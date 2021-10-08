@@ -15,7 +15,6 @@
 
 namespace Splash\Connectors\Optilog\Objects;
 
-//use Splash\Bundle\Interfaces\Objects\TrackingInterface;
 use Splash\Bundle\Models\AbstractStandaloneObject;
 use Splash\Client\Splash;
 use Splash\Connectors\Optilog\Services\OptilogConnector;
@@ -25,8 +24,10 @@ use Splash\Models\Objects\SimpleFieldsTrait;
 
 /**
  * Optilog Implementation of Customers Orders
+ *
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
-class Order extends AbstractStandaloneObject // implements TrackingInterface
+class Order extends AbstractStandaloneObject
 {
     // Splash Php Core Traits
     use IntelParserTrait;
@@ -72,6 +73,24 @@ class Order extends AbstractStandaloneObject // implements TrackingInterface
      * {@inheritdoc}
      */
     protected static $ICO = "fa fa-shopping-cart";
+
+    //====================================================================//
+    // Object Synchronization Recommended Configuration
+    //====================================================================//
+
+    /**
+     * Enable Import Of New Local Objects
+     *
+     * @var bool
+     */
+    protected static $ENABLE_PULL_CREATED = false;
+
+    /**
+     * Enable Delete Of Remotes Objects when Deleted Locally
+     *
+     * @var bool
+     */
+    protected static $ENABLE_PULL_DELETED = false;
 
     //====================================================================//
     // General Class Variables
