@@ -44,9 +44,14 @@ trait CRUDTrait
         //====================================================================//
         // Get Order Infos from Api
         $response = API::post("jGetStatutCommande", array(array("ID" => $objectId)));
-        if ((null === $response) || !isset($response->result)
-            || !is_array($response->result) || empty($response->result)) {
-            return Splash::log()->errTrace("Unable to load Order (".$objectId.").");
+        if (empty($response->result) || !is_array($response->result)) {
+            //====================================================================//
+            // Order was Already Deleted from API
+            if ($this->isDeleteRequest()) {
+                return $this->initDeleted($objectId);
+            }
+
+            return Splash::log()->errTrace("Unable to load Order  (".$objectId.").");
         }
         //====================================================================//
         // Extract Order Infos from Results
@@ -147,7 +152,7 @@ trait CRUDTrait
      *
      * @param bool $needed Is This Update Needed
      *
-     * @return false|string Object Id of False if Failed to Update
+     * @return false|string Object ID of False if Failed to Update
      */
     public function update(bool $needed)
     {
@@ -221,6 +226,13 @@ trait CRUDTrait
         // Check If Rejected Order
         if ($this->isRejectedId($this->object->DestID)) {
             Splash::log()->war("Rejected Order Detected... Update Skipped");
+
+            return false;
+        }
+        //====================================================================//
+        // Check If Order Already Deleted
+        if ("DELETED" == $this->object->ID) {
+            Splash::log()->war("Order Already Deleted");
 
             return false;
         }

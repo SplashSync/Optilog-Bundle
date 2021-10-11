@@ -59,4 +59,37 @@ trait RejectedTrait
 
         return $this->object;
     }
+
+    /**
+     * Check if Order Delete was Requested
+     *
+     * @return bool
+     */
+    protected function isDeleteRequest(): bool
+    {
+        return $this->in['isToDelete'] ?: false;
+    }
+
+    /**
+     * Init Order Object as Deleted
+     *
+     * @param string $objectId
+     *
+     * @return stdClass
+     */
+    protected function initDeleted(string $objectId): stdClass
+    {
+        /** @codingStandardsIgnoreStart */
+        $this->object = new stdClass();
+        $this->object->ID = "DELETED";
+        $this->object->Mode = "DELETED";
+        $this->object->DestID = $objectId;
+        $this->object->Statut = -5;
+        $this->object->Transporteur = "";
+        /** @codingStandardsIgnoreEnd */
+
+        $this->in["Transporteur"] = self::$rejectedId;
+
+        return $this->object;
+    }
 }

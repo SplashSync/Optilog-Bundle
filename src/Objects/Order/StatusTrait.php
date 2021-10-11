@@ -51,7 +51,8 @@ trait StatusTrait
             ->Name("Order status Raw")
             ->Description("Raw Optilog Status of the order")
             ->MicroData("http://schema.org/Order", "orderStatusCode")
-            ->isReadOnly();
+            ->isReadOnly()
+        ;
 
         //====================================================================//
         // ORDER STATUS FLAGS
@@ -64,16 +65,16 @@ trait StatusTrait
             ->Name("Is Valid")
             ->MicroData("http://schema.org/OrderStatus", "OrderProcessing")
             ->setPreferWrite()
-            ->isLogged();
-
+            ->isLogged()
+        ;
         //====================================================================//
         // Is To Ship
         $this->fieldsFactory()->create(SPL_T_BOOL)
             ->Identifier("isToShip")
             ->Name("Is To Ship")
             ->MicroData("http://schema.org/OrderStatus", "OrderToShip")
-            ->isWriteOnly();
-
+            ->isWriteOnly()
+        ;
         //====================================================================//
         // Is Canceled
         $this->fieldsFactory()->create(SPL_T_BOOL)
@@ -81,7 +82,16 @@ trait StatusTrait
             ->Name("Is Canceled")
             ->MicroData("http://schema.org/OrderStatus", "OrderCancelled")
             ->setPreferWrite()
-            ->isLogged();
+            ->isLogged()
+        ;
+        //====================================================================//
+        // Is To Delete
+        $this->fieldsFactory()->create(SPL_T_BOOL)
+            ->Identifier("isToDelete")
+            ->Name("Is To Delete")
+            ->MicroData("http://schema.org/OrderStatus", "OrderToDelete")
+            ->isWriteOnly()
+        ;
     }
 
     /**
@@ -90,7 +100,7 @@ trait StatusTrait
      * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
      */
-    protected function getStatusFields($key, $fieldName): void
+    protected function getStatusFields(string $key, string $fieldName): void
     {
         //====================================================================//
         // READ Fields
@@ -129,7 +139,7 @@ trait StatusTrait
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    protected function setStatusFields($fieldName, $fieldData): void
+    protected function setStatusFields(string $fieldName, $fieldData): void
     {
         //====================================================================//
         // WRITE Field
@@ -160,6 +170,13 @@ trait StatusTrait
                         $this->object->Mode = "EXP_GO";
                         $this->needUpdate();
                     }
+                }
+
+                break;
+            case 'isToDelete':
+                if (!empty($fieldData)) {
+                    $this->object->Mode = "DELETE";
+                    $this->needUpdate();
                 }
 
                 break;
@@ -243,7 +260,7 @@ trait StatusTrait
     }
 
     /**
-     * Check if Order Status Cancelation is Allowed
+     * Check if Order Status Cancellation is Allowed
      *
      * @return bool
      */
