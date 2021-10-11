@@ -67,7 +67,7 @@ trait RejectedTrait
      */
     protected function isDeleteRequest(): bool
     {
-        return $this->in['isToDelete'] ?: false;
+        return (bool) $this->in['isToDelete'] ?? false;
     }
 
     /**
