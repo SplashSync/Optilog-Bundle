@@ -312,6 +312,7 @@ class RestHelper
         // Check Response Status
         if (1 != $body->statut && self::isAnError($body->statutText)) {
             Splash::log()->err($body->statutText);
+            self::collectErrorDetails($body);
 
             return null;
         }
@@ -320,7 +321,7 @@ class RestHelper
     }
 
     /**
-     * Analyze Optilog Api Error Message to Filter Kown Errors
+     * Analyze Optilog Api Error Message to Filter Known Errors
      *
      * @param string $message
      *
@@ -344,7 +345,7 @@ class RestHelper
     }
 
     /**
-     * Check if Error Message is Kown None Error Message
+     * Check if Error Message is Known None Error Message
      *
      * @param string $message
      * @param array  $known
@@ -366,7 +367,7 @@ class RestHelper
     }
 
     /**
-     * Decode Optilog Api Reponse to Std Object
+     * Decode Optilog Api Response to Std Object
      *
      * @param Response|SimpleXMLElement|stdClass $responseBody
      *
@@ -387,5 +388,31 @@ class RestHelper
         }
 
         return null;
+    }
+
+    /**
+     * Decode Optilog Api Error Details
+     *
+     * @param stdClass $responseBody
+     *
+     * @return void
+     */
+    private static function collectErrorDetails(stdClass $responseBody): void
+    {
+        //====================================================================//
+        // Look for Error Details
+        if (!isset($responseBody->result->Errors) || !is_iterable($responseBody->result->Errors)) {
+            return;
+        }
+        //====================================================================//
+        // Collect Error Details
+        foreach ($responseBody->result->Errors as $errorDetails) {
+            Splash::log()->err(sprintf(
+                '[DETAILS][%s] %s => %s',
+                $errorDetails->ID ?: "ID",
+                $errorDetails->Mode ?: "Mode",
+                $errorDetails->Errors ?: "Error Details Text",
+            ));
+        }
     }
 }
