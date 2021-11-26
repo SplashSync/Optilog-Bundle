@@ -8,3 +8,4 @@
 /.idea/
 /public/
 /.php-cs-fixer.cache
+/bin/console
