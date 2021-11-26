@@ -54,6 +54,7 @@
         "monolog/monolog":                              "^1.0",
 
         "doctrine/doctrine-bundle":                     "^1.6",
-        "doctrine/orm":                                 "^2.5"
+        "doctrine/orm":                                 "^2.6",
+        "doctrine/common":                              "^2.13"
     }
 }
