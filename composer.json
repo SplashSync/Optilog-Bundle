@@ -37,7 +37,7 @@
     
     
     "require": {
-        "php":                                          "^7.3",
+        "php":                                          "^7.3|^8.0",
         "ext-json":                                     "*",
         "splash/php-bundle":                            "dev-master",
         "nategood/httpful":                             "^0.2|^0.3",
@@ -45,7 +45,6 @@
     },
     
     "require-dev": {
-
         "splash/console":                               "dev-master",
         "badpixxel/php-sdk":                            "dev-main",
 
