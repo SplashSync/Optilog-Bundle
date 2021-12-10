@@ -16,11 +16,11 @@
 namespace   Splash\Connectors\Optilog\Objects\Order;
 
 use Splash\Connectors\Optilog\Models\CarrierCodes;
-use Splash\Connectors\Optilog\Models\RestHelper;
+use Splash\Connectors\Optilog\Models\RestHelper as API;
 use Splash\Core\SplashCore      as Splash;
 
 /**
- * Opilog Orders Tracking Fields Access
+ * Optilog Orders Tracking Fields Access
  */
 trait TrackingTrait
 {
@@ -36,44 +36,57 @@ trait TrackingTrait
     {
         //====================================================================//
         // Order Shipping Method
-        $this->fieldsFactory()->Create(SPL_T_VARCHAR)
-            ->Identifier("Transporteur")
-            ->Name("Code Transporteur")
+        $this->fieldsFactory()->create(SPL_T_VARCHAR)
+            ->identifier("Transporteur")
+            ->name("Code Transporteur")
             ->description(
-                "Les associataions entre codes Code Optilog et "
+                "Les associations entre codes Code Optilog et "
                 ."Codes Transporteur Splash sont disponible dans la configuration du Connecteur."
             )
-            ->MicroData("http://schema.org/ParcelDelivery", "identifier")
+            ->microData("http://schema.org/ParcelDelivery", "identifier")
             ->group("Tracking")
             ->addChoices($this->getUserCarrierNames())
-            ->isWriteOnly();
-
+            ->setPreferWrite()
+            ->isWriteOnly(!API::isApiV2Mode())
+        ;
+        //====================================================================//
+        // Order Shipping Method Name
+        if (API::isApiV2Mode()) {
+            $this->fieldsFactory()->create(SPL_T_VARCHAR)
+                ->identifier("TransportID")
+                ->name("Nom Transporteur")
+                ->description("Nom du Transporteur pour cette commande")
+                ->microData("http://schema.org/ParcelDelivery", "name")
+                ->group("Tracking")
+                ->isReadOnly()
+            ;
+        }
         //====================================================================//
         // Order Tracking Number
-        $this->fieldsFactory()->Create(SPL_T_VARCHAR)
-            ->Identifier("Bordereau")
-            ->Name("Tracking Number")
-            ->MicroData("http://schema.org/ParcelDelivery", "trackingNumber")
+        $this->fieldsFactory()->create(SPL_T_VARCHAR)
+            ->identifier("Bordereau")
+            ->name("Tracking Number")
+            ->microData("http://schema.org/ParcelDelivery", "trackingNumber")
             ->group("Tracking")
-//            ->isListed()
-            ->isReadOnly();
-
+            ->isReadOnly()
+        ;
         //====================================================================//
         // Order Tracking Url
-        $this->fieldsFactory()->Create(SPL_T_URL)
-            ->Identifier("URL")
-            ->Name("Tracking Url")
-            ->MicroData("http://schema.org/ParcelDelivery", "trackingUrl")
+        $this->fieldsFactory()->create(SPL_T_URL)
+            ->identifier("URL")
+            ->name("Tracking Url")
+            ->microData("http://schema.org/ParcelDelivery", "trackingUrl")
             ->group("Tracking")
-            ->isReadOnly();
-
+            ->isReadOnly()
+        ;
         //====================================================================//
         // Order Total Price TTC
         $this->fieldsFactory()->create(SPL_T_DOUBLE)
-            ->Identifier("total")
-            ->Name("Total (Tax incl.)")
-            ->MicroData("http://schema.org/Invoice", "totalPaymentDueTaxIncluded")
-            ->isWriteOnly();
+            ->identifier("total")
+            ->name("Total (Tax incl.)")
+            ->microData("http://schema.org/Invoice", "totalPaymentDueTaxIncluded")
+            ->isWriteOnly()
+        ;
     }
 
     /**
@@ -82,11 +95,19 @@ trait TrackingTrait
      * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
      */
-    protected function getTrackingFields($key, $fieldName): void
+    protected function getTrackingFields(string $key, string $fieldName): void
     {
         //====================================================================//
         // READ Fields
         switch ($fieldName) {
+            case 'Transporteur':
+                $this->out[$fieldName] = $this->object->Transport->Code ?? null;
+
+                break;
+            case 'TransportID':
+                $this->out[$fieldName] = $this->object->Transport->ID ?? null;
+
+                break;
             case 'Bordereau':
             case 'URL':
                 $this->getFirstParcelFromV2();
@@ -105,7 +126,7 @@ trait TrackingTrait
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
      */
-    protected function setTrackingFields($fieldName, $fieldData): void
+    protected function setTrackingFields(string $fieldName, $fieldData): void
     {
         //====================================================================//
         // WRITE Field
@@ -268,7 +289,7 @@ trait TrackingTrait
     }
 
     /**
-     * API V2: Fetch Informations from First Shipped Parcel
+     * API V2: Fetch Information from First Shipped Parcel
      *
      * @return void
      */
@@ -276,7 +297,7 @@ trait TrackingTrait
     {
         //====================================================================//
         // Safety Check - We are on API V2
-        if (!RestHelper::isApiV2Mode()) {
+        if (!API::isApiV2Mode()) {
             return;
         }
         //====================================================================//
