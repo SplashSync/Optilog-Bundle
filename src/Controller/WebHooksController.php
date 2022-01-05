@@ -200,13 +200,13 @@ class WebHooksController extends Controller
         //==============================================================================
         // Safety Check => Only POST Method is Allowed
         if (!$request->isMethod('POST')) {
-            throw new BadRequestHttpException('Malformatted or missing data');
+            throw new BadRequestHttpException('Malformed or missing data');
         }
         //==============================================================================
         // Safety Check => Data are here
         $eventData = $request->request->get("Event");
         if (empty($eventData) || !is_scalar($eventData)) {
-            return self::buildResponse(false, 'Malformatted or Missing Data');
+            return self::buildResponse(false, 'Malformed or Missing Data');
         }
         //==============================================================================
         // Unsecured Ping => Return Ok
