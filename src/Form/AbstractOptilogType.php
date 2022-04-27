@@ -269,6 +269,41 @@ abstract class AbstractOptilogType extends AbstractType
     }
 
     /**
+     * Add Origin Filters Field to FormBuilder
+     *
+     * @param FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addOriginFilterField(FormBuilderInterface $builder): self
+    {
+        $choices = array(
+            "var.origin.default" => "pass",
+            "var.origin.rejected" => "REJECTED",
+        );
+
+        $builder
+            ->add('OrderOrigins', KeyValueType::class, array(
+                'label' => "var.origin.label",
+                'help' => "var.origin.desc",
+                'required' => false,
+                'key_type' => TextType::class,
+                'key_options' => array(
+                    'label' => "Origin",
+                ),
+                'value_type' => ChoiceType::class,
+                'value_options' => array(
+                    'label' => "Action",
+                    'choices' => $choices,
+                ),
+                'translation_domain' => "OptilogBundle",
+            ))
+        ;
+
+        return $this;
+    }
+
+    /**
      * Add List of SKUs for Random Stocks to FormBuilder
      *
      * @param FormBuilderInterface $builder

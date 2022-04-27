@@ -31,44 +31,54 @@ trait CoreTrait
         //====================================================================//
         // Internal Reference
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
-            ->Identifier("IntID")
-            ->Name("Internal ID")
+            ->identifier("IntID")
+            ->name("Internal ID")
             ->isListed()
             ->isNotTested()
-            ->isReadOnly();
-
+            ->isReadOnly()
+        ;
         //====================================================================//
         // Internal Reference
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
-            ->Identifier("DestID")
-            ->Name("Reference")
+            ->identifier("DestID")
+            ->name("Reference")
             ->isListed()
-            ->MicroData("http://schema.org/Order", "orderNumber")
+            ->microData("http://schema.org/Order", "orderNumber")
             ->isRequired()
-            ->isNotTested();
-
+            ->isNotTested()
+        ;
         //====================================================================//
         // Comment
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
-            ->Identifier("Commentaire")
-            ->Name("Commentaire")
-            ->isReadOnly();
-
+            ->identifier("Commentaire")
+            ->name("Commentaire")
+            ->isReadOnly()
+        ;
         //====================================================================//
         // ID Operation
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
-            ->Identifier("Operation")
-            ->Name("ID Operation")
+            ->identifier("Operation")
+            ->name("ID Operation")
             ->isNotTested()
             ->isWriteOnly()
             ->microData("http://schema.org/Order", "disambiguatingDescription")
         ;
-
+        //====================================================================//
+        // Order Origin
+        $this->fieldsFactory()->create(SPL_T_VARCHAR)
+            ->identifier("Origin")
+            ->name("Order Origin")
+            ->description("Order Source Website. Used to filter Orders")
+            ->isNotTested()
+            ->isWriteOnly()
+            ->microData("http://splashync.com/schemas", "SourceNodeName")
+            ->setPreferNone()
+        ;
         //====================================================================//
         // Order Expected Delivery Date
         $this->fieldsFactory()->create(SPL_T_DATE)
-            ->Identifier("DIL")
-            ->Name("Delivery Date")
+            ->identifier("DIL")
+            ->name("Delivery Date")
             ->isNotTested()
             ->isWriteOnly()
             ->microData("http://schema.org/ParcelDelivery", "expectedArrivalUntil")
@@ -82,7 +92,7 @@ trait CoreTrait
      * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
      */
-    protected function getCoreFields($key, $fieldName): void
+    protected function getCoreFields(string $key, string $fieldName): void
     {
         //====================================================================//
         // READ Fields
@@ -109,7 +119,7 @@ trait CoreTrait
      * @param string $fieldName Field Identifier / Name
      * @param mixed  $fieldData Field Data
      */
-    protected function setCoreFields($fieldName, $fieldData): void
+    protected function setCoreFields(string $fieldName, $fieldData): void
     {
         //====================================================================//
         // WRITE Field
@@ -121,6 +131,10 @@ trait CoreTrait
                     break;
                 }
                 $this->setSimple($fieldName, $fieldData);
+
+                break;
+            case 'Origin':
+                // NOTHING TO DO
 
                 break;
             default:
@@ -161,6 +175,37 @@ trait CoreTrait
                 return;
         }
         unset($this->in[$fieldName]);
+    }
+
+    /**
+     * Check if this Order is Allowed Writing on Optilog
+     *
+     * @return bool
+     */
+    protected function isAllowedOrigin(): bool
+    {
+        //====================================================================//
+        // Check if Origins are Selected
+        $knownOrigins = $this->connector->getParameter("OrderOrigins");
+        if (!is_array($knownOrigins) || empty($knownOrigins)) {
+            return true;
+        }
+        //====================================================================//
+        // Check If Received Order Origin Name
+        if (empty($this->in["Origin"]) || !is_scalar($this->in["Origin"])) {
+            return true;
+        }
+        //====================================================================//
+        // Identify Origin by Name
+        if (isset($knownOrigins[trim((string) $this->in["Origin"])])) {
+            if ("REJECTED" == $knownOrigins[trim((string) $this->in["Origin"])]) {
+                Splash::log()->war("Rejected Origin Detected...");
+
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

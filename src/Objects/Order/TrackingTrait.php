@@ -155,7 +155,7 @@ trait TrackingTrait
     }
 
     /**
-     * Check if this Order is Allowed Writting on Optilog
+     * Check if this Order is Allowed Writing on Optilog
      *
      * @return bool
      */

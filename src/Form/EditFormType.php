@@ -42,5 +42,6 @@ class EditFormType extends AbstractOptilogType
         $this->addExtendedStatusField($builder);
         $this->addLocationField($builder);
         $this->addCarriersListField($builder);
+        $this->addOriginFilterField($builder);
     }
 }

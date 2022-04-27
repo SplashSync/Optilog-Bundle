@@ -95,7 +95,7 @@ trait CRUDTrait
         //====================================================================//
         // Check if Order is Allowed for Creation
         // NOT ALLOWED => Set in Error
-        if (!$this->isAllowedDate() || !$this->isAllowedCarrier()) {
+        if (!$this->isAllowedDate() || !$this->isAllowedCarrier() || !$this->isAllowedOrigin()) {
             $this->logFilteredOrder();
 
             return $this->initRejected();

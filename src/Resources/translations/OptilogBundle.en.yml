@@ -25,6 +25,12 @@ var:
         label:  "Min Order Create Date"
         desc:   "Mini Order Creation Date, previous orders are not exported to Optilog."
 
+    origin:
+        label:      "Known Order Origins"
+        desc:       "Fill this list to filter orders by origin."
+        default:    "Default - Send this to Optilog."
+        rejected:   "REJECTED - Must not be send."
+
     dfStock:
         label:  "Stock par Défaut"
         desc:   "Ask your technical contact to get this parameter."
