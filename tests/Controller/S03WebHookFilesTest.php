@@ -23,7 +23,7 @@ use Splash\Tests\Tools\Traits\SettingsTrait;
 /**
  * Test of Optilog Connector WebHook Files Features
  */
-class S03WebHookFilesTest extends AbstractWebHookTest
+class S03WebHookFilesTest extends AbstractTestCase
 {
     use SettingsTrait;
 

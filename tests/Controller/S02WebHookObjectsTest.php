@@ -21,7 +21,7 @@ use Splash\Connectors\Optilog\Services\OptilogConnector;
 /**
  * Test of Optilog Connector WebHook Objects Features
  */
-class S02WebHookObjectsTest extends AbstractWebHookTest
+class S02WebHookObjectsTest extends AbstractTestCase
 {
     /**
      * Test WebHook Member Updates

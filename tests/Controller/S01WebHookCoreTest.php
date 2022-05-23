@@ -21,7 +21,7 @@ use Splash\Connectors\Optilog\Services\OptilogConnector;
 /**
  * Test of Optilog Connector WebHook Core Features
  */
-class S01WebHookCoreTest extends AbstractWebHookTest
+class S01WebHookCoreTest extends AbstractTestCase
 {
     const PING = 'HelloWorld';
     const CONNECT = 'HelloWorldSecure';

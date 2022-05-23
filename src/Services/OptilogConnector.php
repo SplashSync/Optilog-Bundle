@@ -18,6 +18,7 @@ namespace Splash\Connectors\Optilog\Services;
 use ArrayObject;
 use Splash\Bundle\Interfaces\Connectors\TrackingInterface;
 use Splash\Bundle\Models\AbstractConnector;
+use Splash\Connectors\Optilog\Controller as Controllers;
 use Splash\Connectors\Optilog\Form\DebugFormType;
 use Splash\Connectors\Optilog\Form\EditFormType;
 use Splash\Connectors\Optilog\Models\RestHelper as API;
@@ -271,7 +272,7 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
     public function getPublicActions() : array
     {
         return array(
-            "index" => "OptilogBundle:WebHooks:index",
+            "index" => Controllers\WebHooksController::class."::indexAction",
         );
     }
 

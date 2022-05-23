@@ -59,6 +59,7 @@
 
     "scripts": {
         "auto-scripts": [
+            "rm vendor/splash/phpcore/Tests/Tools/TestCase.php",
             "php tests/console cache:clear",
             "cd var/cache/dev && ln -sf testsKernelDevDebugContainer.xml testContainer.xml"
         ],
