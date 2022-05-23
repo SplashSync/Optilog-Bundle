@@ -9,3 +9,4 @@
 /public/
 /.php-cs-fixer.cache
 /bin/console
+/.phpunit.result.cache
