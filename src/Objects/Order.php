@@ -21,11 +21,10 @@ use Splash\Connectors\Optilog\Services\OptilogConnector;
 use Splash\Models\Objects\IntelParserTrait;
 use Splash\Models\Objects\ObjectsTrait;
 use Splash\Models\Objects\SimpleFieldsTrait;
+use stdClass;
 
 /**
  * Optilog Implementation of Customers Orders
- *
- * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class Order extends AbstractStandaloneObject
 {
@@ -62,17 +61,17 @@ class Order extends AbstractStandaloneObject
     /**
      * {@inheritdoc}
      */
-    protected static $NAME = "Customer Order";
+    protected static string $name = "Customer Order";
 
     /**
      * {@inheritdoc}
      */
-    protected static $DESCRIPTION = "Optilog Order Object";
+    protected static string $description = "Optilog Order Object";
 
     /**
      * {@inheritdoc}
      */
-    protected static $ICO = "fa fa-shopping-cart";
+    protected static string $ico = "fa fa-shopping-cart";
 
     //====================================================================//
     // Object Synchronization Recommended Configuration
@@ -83,23 +82,28 @@ class Order extends AbstractStandaloneObject
      *
      * @var bool
      */
-    protected static $ENABLE_PULL_CREATED = false;
+    protected static bool $enablePullCreated = false;
 
     /**
      * Enable Delete Of Remotes Objects when Deleted Locally
      *
      * @var bool
      */
-    protected static $ENABLE_PULL_DELETED = false;
+    protected static bool $enablePullDeleted = false;
 
     //====================================================================//
     // General Class Variables
     //====================================================================//
 
     /**
+     * @phpstan-var stdClass
+     */
+    protected object $object;
+
+    /**
      * @var OptilogConnector
      */
-    protected $connector;
+    protected OptilogConnector $connector;
 
     /**
      * Class Constructor

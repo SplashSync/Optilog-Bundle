@@ -34,37 +34,34 @@ trait ShippedTrait
         if (!API::isApiV2Mode()) {
             return;
         }
-
         //====================================================================//
         // Order Line Product Identifier (SKU is Here)
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
-            ->Identifier("ID")
-            ->InList("shipped")
-            ->Name("Product SKU")
-            ->MicroData("http://schema.org/OrderItem", "orderItemNumber")
-            ->Group("Expéditions")
+            ->identifier("ID")
+            ->inList("shipped")
+            ->name("Product SKU")
+            ->microData("http://schema.org/OrderItem", "orderItemNumber")
+            ->group("Expéditions")
             ->isReadOnly()
         ;
-
         //====================================================================//
         // Order Line Quantity
         $this->fieldsFactory()->create(SPL_T_INT)
-            ->Identifier("Quantite")
-            ->InList("shipped")
-            ->Name("Ordered Qty")
-            ->MicroData("http://schema.org/OrderItem", "orderQuantity")
-            ->Group("Expéditions")
+            ->identifier("Quantite")
+            ->inList("shipped")
+            ->name("Ordered Qty")
+            ->microData("http://schema.org/OrderItem", "orderQuantity")
+            ->group("Expéditions")
             ->isReadOnly()
         ;
-
         //====================================================================//
         // Order Line Quantity
         $this->fieldsFactory()->create(SPL_T_INT)
-            ->Identifier("Servie")
-            ->InList("shipped")
-            ->Name("Shipped Qty")
-            ->MicroData("http://schema.org/OrderItem", "orderItemStatus")
-            ->Group("Expéditions")
+            ->identifier("Servie")
+            ->inList("shipped")
+            ->name("Shipped Qty")
+            ->microData("http://schema.org/OrderItem", "orderItemStatus")
+            ->group("Expéditions")
             ->isReadOnly()
         ;
     }
@@ -75,11 +72,11 @@ trait ShippedTrait
      * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
      */
-    protected function getShippedFields($key, $fieldName): void
+    protected function getShippedFields(string $key, string $fieldName): void
     {
         //====================================================================//
         // Check if List field & Init List Array
-        $fieldId = self::lists()->InitOutput($this->out, "shipped", $fieldName);
+        $fieldId = self::lists()->initOutput($this->out, "shipped", $fieldName);
         if (!$fieldId) {
             return;
         }
@@ -113,7 +110,7 @@ trait ShippedTrait
             }
             //====================================================================//
             // Insert Data in List
-            self::lists()->Insert($this->out, "shipped", $fieldName, $index, $value);
+            self::lists()->insert($this->out, "shipped", $fieldName, $index, $value);
         }
 
         unset($this->in[$key]);
@@ -131,14 +128,17 @@ trait ShippedTrait
         //====================================================================//
         // Debug => Force Order Shipped Qty
         if ($this->connector->isDebugMode() && $this->getParameter($this->object->DestID, false, 'ForcedStatus')) {
-            $optStatus = $this->getParameter($this->object->DestID, false, 'ForcedStatus');
-            switch (StatusHelper::toSplash($optStatus)) {
-                case "OrderProcessing":
-                    return 0;
-                case "OrderInTransit":
-                    return rand(1, (int) $product->{"Quantite"});
-                case "OrderDelivered":
-                    return (int) $product->{"Quantite"};
+            /** @var false|int|string $forcedStatus */
+            $forcedStatus = $this->getParameter($this->object->DestID, false, 'ForcedStatus');
+            if ($forcedStatus) {
+                switch (StatusHelper::toSplash((int) $forcedStatus)) {
+                    case "OrderProcessing":
+                        return 0;
+                    case "OrderInTransit":
+                        return rand(1, (int) $product->{"Quantite"});
+                    case "OrderDelivered":
+                        return (int) $product->{"Quantite"};
+                }
             }
         }
 

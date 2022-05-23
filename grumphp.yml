@@ -20,7 +20,8 @@
 parameters:
 
     mode:           "splashsync"
-
+    # Php Stan
+    stan-config:    "%core_dir%/phpstan/sf.%mode%.neon"
     # For Building Splash Documentation
     doc-enable:     true
     doc-target:     '/public'

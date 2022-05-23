@@ -29,9 +29,9 @@ trait CRUDTrait
      *
      * @param string $objectId Object id
      *
-     * @return false|stdClass
+     * @return null|stdClass
      */
-    public function load($objectId)
+    public function load(string $objectId): ?stdClass
     {
         //====================================================================//
         // Stack Trace
@@ -51,16 +51,16 @@ trait CRUDTrait
                 return $this->initDeleted($objectId);
             }
 
-            return Splash::log()->errTrace("Unable to load Order  (".$objectId.").");
+            return Splash::log()->errNull("Unable to load Order  (".$objectId.").");
         }
         //====================================================================//
         // Extract Order Infos from Results
         $order = array_shift($response->result);
-        if ((null === $order) || !($order instanceof stdClass)) {
-            return Splash::log()->errTrace("Unable to load Order (".$objectId.").");
+        if (!($order instanceof stdClass)) {
+            return Splash::log()->errNull("Unable to load Order (".$objectId.").");
         }
         if (!isset($order->ID)) {
-            return Splash::log()->errTrace("Unable to load Order (".$objectId.").");
+            return Splash::log()->errNull("Unable to load Order (".$objectId.").");
         }
         //====================================================================//
         // Prepare Product Data for Update
@@ -74,9 +74,9 @@ trait CRUDTrait
     /**
      * Create Request Object
      *
-     * @return false|stdClass New Object
+     * @return null|stdClass New Object
      */
-    public function create()
+    public function create(): ?stdClass
     {
         //====================================================================//
         // Stack Trace
@@ -85,12 +85,16 @@ trait CRUDTrait
         //====================================================================//
         // Check Order Unique Number is given
         if (empty($this->in["DestID"])) {
-            return Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "DestID");
+            Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "DestID");
+
+            return null;
         }
         //====================================================================//
         // Check Optilog Operation Number is Given
         if (empty($this->getParameter('ApiOp'))) {
-            return Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "Identifiant de l’opération");
+            Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "Identifiant de l’opération");
+
+            return null;
         }
         //====================================================================//
         // Check if Order is Allowed for Creation
@@ -112,28 +116,33 @@ trait CRUDTrait
 
         //====================================================================//
         // Write Minimal Object Data
-        $fields = is_a($this->in, "ArrayObject") ? $this->in->getArrayCopy() : $this->in;
+        /** @var array<string, null|string|array> $fields */
+        $fields = $this->in;
         foreach ($fields as $fieldName => $fieldData) {
-            //====================================================================//
-            // Write Meta Fields (Operation & DIL)
-            $this->setMetaFields($fieldName, $fieldData);
-            //====================================================================//
-            // Write Labels Fields
-            $this->setLabelsFields($fieldName, $fieldData);
-            //====================================================================//
-            // Write Delivery Fields
-            $this->setDeliveryFields($fieldName, $fieldData);
-            $this->setDeliverySimpleFields($fieldName, $fieldData);
-            $this->setTrackingFields($fieldName, $fieldData);
-            //====================================================================//
-            // Write Items Fields
-            $this->setItemsFields($fieldName, $fieldData);
+            if (is_scalar($fieldData)) {
+                //====================================================================//
+                // Write Meta Fields (Operation & DIL)
+                $this->setMetaFields($fieldName, $fieldData);
+                //====================================================================//
+                // Write Labels Fields
+                $this->setLabelsFields($fieldName, $fieldData);
+                //====================================================================//
+                // Write Delivery Fields
+                $this->setDeliveryFields($fieldName, $fieldData);
+                $this->setDeliverySimpleFields($fieldName, $fieldData);
+                $this->setTrackingFields($fieldName, $fieldData);
+            }
+            if (is_array($fieldData)) {
+                //====================================================================//
+                // Write Items Fields
+                $this->setItemsFields($fieldName, $fieldData);
+            }
         }
         //====================================================================//
         // Create Order Infos from Api
         $response = API::post("jSetCommandes", array("Commandes" => array($this->object)));
         if (null === $response) {
-            return Splash::log()->errTrace("Unable to Create Order (".$this->object->ID.").");
+            return Splash::log()->errNull("Unable to Create Order (".$this->object->ID.").");
         }
 
         //====================================================================//
@@ -152,9 +161,9 @@ trait CRUDTrait
      *
      * @param bool $needed Is This Update Needed
      *
-     * @return false|string Object ID of False if Failed to Update
+     * @return null|string Object ID of NULL if Failed to Update
      */
-    public function update(bool $needed)
+    public function update(bool $needed): ?string
     {
         //====================================================================//
         // Stack Trace
@@ -168,25 +177,21 @@ trait CRUDTrait
         // Update Order Infos from Api
         $response = API::post("jSetCommandes", array( "Commandes" => array($this->object)));
         if (null === $response) {
-            return Splash::log()->errTrace("Unable to Update Order (".$this->object->ID.").");
+            return Splash::log()->errNull("Unable to Update Order (".$this->object->ID.").");
         }
 
         return $this->getObjectIdentifier();
     }
 
     /**
-     * Delete requested Object
-     *
-     * @param null|string $objectId Object Id
-     *
-     * @return bool
+     * {@inheritdoc}
      */
-    public function delete($objectId = null)
+    public function delete(string $objectId): bool
     {
         //====================================================================//
         // Stack Trace
         Splash::log()->trace();
-        if (is_null($objectId)) {
+        if (empty($objectId)) {
             return true;
         }
         //====================================================================//
@@ -206,13 +211,9 @@ trait CRUDTrait
     /**
      * {@inheritdoc}
      */
-    public function getObjectIdentifier()
+    public function getObjectIdentifier(): ?string
     {
-        if (!isset($this->object->DestID)) {
-            return false;
-        }
-
-        return $this->object->DestID;
+        return $this->object->DestID ?? null;
     }
 
     /**
@@ -220,7 +221,7 @@ trait CRUDTrait
      *
      * @return bool
      */
-    protected function isAllowedUpdate(): ?bool
+    protected function isAllowedUpdate(): bool
     {
         //====================================================================//
         // Check If Rejected Order

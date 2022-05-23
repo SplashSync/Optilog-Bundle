@@ -41,14 +41,14 @@ trait DatesFilterTrait
     }
 
     /**
-     * Check if this Order is Allowed Writting on Optilog
+     * Check if this Order is Allowed Writing on Optilog
      *
      * @return bool
      */
-    protected function isAllowedDate(): ?bool
+    protected function isAllowedDate(): bool
     {
         //====================================================================//
-        // Check If Min Order Date was Setuped
+        // Check If Min Order Date was Set up
         $minOrderDate = $this->connector->getParameter("minOrderDate");
         if (!($minOrderDate instanceof DateTime)) {
             return true;
@@ -62,12 +62,12 @@ trait DatesFilterTrait
         // Convert Received Order date to Datetime
         $receivedOrderDate = new DateTime((string) $this->in["createdAt"]);
         //====================================================================//
-        // Check if Received date is After Setuped Date
+        // Check if Received date is After Set up Date
         return ($receivedOrderDate > $minOrderDate);
     }
 
     /**
-     * Mark Order as Filtred & Return Details in Log
+     * Mark Order as Filtered & Return Details in Log
      *
      * @return false
      */
@@ -75,17 +75,16 @@ trait DatesFilterTrait
     {
         Splash::log()->war("This Order is Filtered by Optilog Connector.");
         //====================================================================//
-        // Check If Min Order Date was Setuped
+        // Check If Min Order Date was Set up
         $minOrderDate = $this->connector->getParameter("minOrderDate");
         if ($minOrderDate instanceof DateTime) {
-            Splash::log()->war("Mininum Order Date: ".$minOrderDate->format(SPL_T_DATETIMECAST));
+            Splash::log()->war("Minimum Order Date: ".$minOrderDate->format(SPL_T_DATETIMECAST));
         }
         //====================================================================//
         // Check If Received Order Date is Given
         if (isset($this->in["createdAt"]) && is_scalar($this->in["createdAt"])) {
-            return false;
+            Splash::log()->war("Received Order Date: ".$this->in["createdAt"]);
         }
-        Splash::log()->war("Received Order Date: ".$this->in["createdAt"]);
 
         return false;
     }

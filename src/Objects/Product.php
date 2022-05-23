@@ -21,11 +21,10 @@ use Splash\Connectors\Optilog\Services\OptilogConnector;
 use Splash\Models\Objects\IntelParserTrait;
 use Splash\Models\Objects\PricesTrait;
 use Splash\Models\Objects\SimpleFieldsTrait;
+use stdClass;
 
 /**
  * Optilog Implementation of Product
- *
- * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class Product extends AbstractStandaloneObject
 {
@@ -55,22 +54,22 @@ class Product extends AbstractStandaloneObject
     /**
      * {@inheritdoc}
      */
-    protected static $DISABLED = false;
+    protected static bool $disabled = false;
 
     /**
      * {@inheritdoc}
      */
-    protected static $NAME = "Product";
+    protected static string $name = "Product";
 
     /**
      * {@inheritdoc}
      */
-    protected static $DESCRIPTION = "Optilog Product";
+    protected static string $description = "Optilog Product";
 
     /**
      * {@inheritdoc}
      */
-    protected static $ICO = "fa fa-product-hunt";
+    protected static string $ico = "fa fa-product-hunt";
 
     //====================================================================//
     // Object Synchronization Recommended Configuration
@@ -81,23 +80,29 @@ class Product extends AbstractStandaloneObject
      *
      * @var bool
      */
-    protected static $ENABLE_PULL_CREATED = false;
+    protected static bool $enablePushCreated = false;
 
     /**
      * Enable Delete Of Remotes Objects when Deleted Locally
      *
      * @var bool
      */
-    protected static $ENABLE_PULL_DELETED = false;
+    protected static bool $enablePullDeleted = false;
 
     //====================================================================//
     // General Class Variables
     //====================================================================//
 
     /**
+     * @phpstan-var stdClass
+     */
+    protected object $object;
+
+
+    /**
      * @var OptilogConnector
      */
-    protected $connector;
+    protected OptilogConnector $connector;
 
     /**
      * Class Constructor

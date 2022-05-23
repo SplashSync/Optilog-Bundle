@@ -37,9 +37,9 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
     /**
      * Objects Type Class Map
      *
-     * @var array
+     * @var array<string, class-string>
      */
-    protected static $objectsMap = array(
+    protected static array $objectsMap = array(
         "Product" => "Splash\\Connectors\\Optilog\\Objects\\Product",
         "Order" => "Splash\\Connectors\\Optilog\\Objects\\Order",
     );
@@ -47,9 +47,9 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
     /**
      * Widgets Type Class Map
      *
-     * @var array
+     * @var array<string, class-string>
      */
-    protected static $widgetsMap = array(
+    protected static array $widgetsMap = array(
         "SelfTest" => "Splash\\Connectors\\Optilog\\Widgets\\SelfTest",
     );
 
@@ -59,7 +59,7 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
     public function ping() : bool
     {
         //====================================================================//
-        // Safety Check => Verify Selftest Pass
+        // Safety Check => Verify Self-test Pass
         if (!$this->selfTest()) {
             return false;
         }
@@ -74,7 +74,7 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
     public function connect() : bool
     {
         //====================================================================//
-        // Safety Check => Verify Selftest Pass
+        // Safety Check => Verify Self-test Pass
         if (!$this->selfTest()) {
             return false;
         }
@@ -144,7 +144,7 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
         //====================================================================//
         // Verify Api Key is Set
         //====================================================================//
-        if (!isset($config["ApiKey"]) || empty($config["ApiKey"])) {
+        if (empty($config["ApiKey"])) {
             Splash::log()->err("Api Key is Invalid");
 
             return false;
@@ -167,7 +167,7 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
         }
         //====================================================================//
         // Configure Order Status Helper
-        StatusHelper::init($this->getParameter("useExtendedStatus", false));
+        StatusHelper::init($this->isExtendedStatusMode());
         //====================================================================//
         // Configure Rest API
         return API::configure(
@@ -185,17 +185,17 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
     /**
      * {@inheritdoc}
      */
-    public function getFile(string $filePath, string $fileMd5)
+    public function getFile(string $filePath, string $fileMd5): ?array
     {
         //====================================================================//
-        // Safety Check => Verify Selftest Pass
+        // Safety Check => Verify Self-test Pass
         if (!$this->selfTest()) {
-            return false;
+            return null;
         }
 
         Splash::log()->err("There are No Files Reading for Optilog Up To Now!");
 
-        return false;
+        return null;
     }
 
     //====================================================================//
@@ -203,7 +203,7 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
     //====================================================================//
 
     /**
-     * Get Connector Profile Informations
+     * Get Connector Profile Information
      *
      * @return array
      */
@@ -260,7 +260,7 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
     /**
      * {@inheritdoc}
      */
-    public function getMasterAction()
+    public function getMasterAction(): ?string
     {
         return null;
     }
@@ -305,6 +305,18 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
      */
     public function isProductsRawSkuMode() : bool
     {
+        /** @phpstan-ignore-next-line  */
         return $this->getParameter("useProductsRawSku", false);
+    }
+
+    /**
+     * Check If Server is Extended Status Mode
+     *
+     * @return bool
+     */
+    private function isExtendedStatusMode() : bool
+    {
+        /** @phpstan-ignore-next-line  */
+        return $this->getParameter("useExtendedStatus", false);
     }
 }

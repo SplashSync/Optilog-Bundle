@@ -34,7 +34,7 @@ trait ObjectsListTrait
      *
      * @note Order Listing NOW Always uses API V2.
      */
-    public function objectsList($filter = null, $params = null)
+    public function objectsList(string $filter = null, array $params = array()): array
     {
         //====================================================================//
         // Load Product Lists from Cache

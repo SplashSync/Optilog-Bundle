@@ -30,22 +30,21 @@ trait ImagesTrait
         //====================================================================//
         // Product Images List
         $this->fieldsFactory()->create(SPL_T_IMG)
-            ->Identifier("image")
-            ->InList("images")
-            ->Name("Images")
-            ->Group($groupName)
-            ->MicroData("http://schema.org/Product", "image")
+            ->identifier("image")
+            ->inList("images")
+            ->name("Images")
+            ->group($groupName)
+            ->microData("http://schema.org/Product", "image")
             ->isWriteOnly()
         ;
-
         //====================================================================//
         // Product Images => Is Visible Image
         $this->fieldsFactory()->create(SPL_T_BOOL)
-            ->Identifier("visible")
-            ->InList("images")
-            ->Name("Visible")
-            ->MicroData("http://schema.org/Product", "isVisibleImage")
-            ->Group($groupName)
+            ->identifier("visible")
+            ->inList("images")
+            ->name("Visible")
+            ->microData("http://schema.org/Product", "isVisibleImage")
+            ->group($groupName)
             ->isWriteOnly()
             ->isNotTested()
         ;
@@ -55,16 +54,11 @@ trait ImagesTrait
      * Write Given Fields
      *
      * @param string $fieldName Field Identifier / Name
-     * @param mixed  $fieldData Field Data
+     * @param array[]  $fieldData Field Data
      */
-    protected function setImagesFields($fieldName, $fieldData): void
+    protected function setImagesFields(string $fieldName, array $fieldData): void
     {
         if ("images" !== $fieldName) {
-            return;
-        }
-        //====================================================================//
-        // Safety Check
-        if (!is_array($fieldData) && !is_a($fieldData, "ArrayObject")) {
             return;
         }
         //====================================================================//
@@ -72,7 +66,7 @@ trait ImagesTrait
         foreach ($fieldData as $inValue) {
             //====================================================================//
             // Check Image Array is here
-            if (!isset($inValue["image"]) || empty($inValue["image"])) {
+            if (empty($inValue["image"])) {
                 continue;
             }
             //====================================================================//

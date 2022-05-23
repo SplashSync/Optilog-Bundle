@@ -16,8 +16,8 @@
 namespace Splash\Connectors\Optilog\Test\Controller;
 
 use Splash\Connectors\Optilog\Services\OptilogConnector;
-use Splash\Tests\Tools\Fields\Oofile;
-use Splash\Tests\Tools\Fields\Ooimage;
+use Splash\Tests\Tools\Fields\OoFile;
+use Splash\Tests\Tools\Fields\OoImage;
 use Splash\Tests\Tools\Traits\SettingsTrait;
 
 /**
@@ -88,20 +88,20 @@ class S03WebHookFilesTest extends AbstractWebHookTest
         //====================================================================//
         // Generate Files Events
         for ($i = 0; $i < 5; $i++) {
-            $hooks[] = self::buildFileEvent(Oofile::fake($this->settings), true, true);
-            $hooks[] = self::buildFileEvent(Oofile::fake($this->settings), false, true);
-            $hooks[] = self::buildFileEvent(Oofile::fake($this->settings), true, false);
-            $hooks[] = self::buildFileEvent(Oofile::fake($this->settings), true, true);
-            $hooks[] = self::buildFileEvent(Oofile::fake($this->settings), false, false);
+            $hooks[] = self::buildFileEvent(OoFile::fake($this->settings), true, true);
+            $hooks[] = self::buildFileEvent(OoFile::fake($this->settings), false, true);
+            $hooks[] = self::buildFileEvent(OoFile::fake($this->settings), true, false);
+            $hooks[] = self::buildFileEvent(OoFile::fake($this->settings), true, true);
+            $hooks[] = self::buildFileEvent(OoFile::fake($this->settings), false, false);
         }
         //====================================================================//
         // Generate Images Events
         for ($i = 0; $i < 5; $i++) {
-            $hooks[] = self::buildFileEvent(Ooimage::fake($this->settings), true, true);
-            $hooks[] = self::buildFileEvent(Ooimage::fake($this->settings), false, true);
-            $hooks[] = self::buildFileEvent(Ooimage::fake($this->settings), true, false);
-            $hooks[] = self::buildFileEvent(Ooimage::fake($this->settings), true, true);
-            $hooks[] = self::buildFileEvent(Ooimage::fake($this->settings), false, false);
+            $hooks[] = self::buildFileEvent(OoImage::fake($this->settings), true, true);
+            $hooks[] = self::buildFileEvent(OoImage::fake($this->settings), false, true);
+            $hooks[] = self::buildFileEvent(OoImage::fake($this->settings), true, false);
+            $hooks[] = self::buildFileEvent(OoImage::fake($this->settings), true, true);
+            $hooks[] = self::buildFileEvent(OoImage::fake($this->settings), false, false);
         }
 
         return $hooks;

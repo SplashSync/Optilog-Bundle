@@ -37,23 +37,36 @@
     
     
     "require": {
-        "php":                                          "^7.3|^8.0",
+        "php":                                          "^8.0",
         "ext-json":                                     "*",
-        "splash/php-bundle":                            "~1.0",
+        "splash/php-bundle":                            "dev-master",
         "nategood/httpful":                             "^0.2|^0.3",
         "burgov/key-value-form-bundle":                 "@stable"
     },
     
     "require-dev": {
+        "badpixxel/php-sdk":                            "~2.0",
         "splash/console":                               "dev-master",
-        "badpixxel/php-sdk":                            "~1.0",
 
         "symfony/symfony":                              "^3.4|^4.4",
         "symfony/monolog-bundle":                       "*",
         "symfony/phpunit-bridge":                       "*",
         "monolog/monolog":                              "^1.0",
 
-        "doctrine/doctrine-bundle":                     "^2.5",
+        "doctrine/doctrine-bundle":                     "^2.6",
         "doctrine/orm":                                 "^2.6"
+    },
+
+    "scripts": {
+        "auto-scripts": [
+            "php tests/console cache:clear",
+            "cd var/cache/dev && ln -sf testsKernelDevDebugContainer.xml testContainer.xml"
+        ],
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ]
     }
 }

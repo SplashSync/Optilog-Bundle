@@ -27,7 +27,7 @@ trait TrackingTrait
     /**
      * @var null|float
      */
-    private $totalPrice;
+    private ?float $totalPrice = null;
 
     /**
      * Build Fields using FieldFactory
@@ -124,9 +124,9 @@ trait TrackingTrait
      * Write Given Fields
      *
      * @param string $fieldName Field Identifier / Name
-     * @param mixed  $fieldData Field Data
+     * @param string|null $fieldData Field Data
      */
-    protected function setTrackingFields(string $fieldName, $fieldData): void
+    protected function setTrackingFields(string $fieldName, ?string $fieldData): void
     {
         //====================================================================//
         // WRITE Field
@@ -159,7 +159,7 @@ trait TrackingTrait
      *
      * @return bool
      */
-    protected function isAllowedCarrier(): ?bool
+    protected function isAllowedCarrier(): bool
     {
         //====================================================================//
         // Check If Received Order Carrier Name is Given
@@ -311,9 +311,9 @@ trait TrackingTrait
         $firstParcel = &$this->object->Colis->Parcels[0];
 
         /** @codingStandardsIgnoreStart @phpstan-ignore-next-line */
-        $this->object->Bordereau = isset($firstParcel->Bordereau) ? $firstParcel->Bordereau : "";
+        $this->object->Bordereau = $firstParcel->Bordereau ?? "";
         /** @phpstan-ignore-next-line */
-        $this->object->URL = isset($firstParcel->URL) ? $firstParcel->URL : "";
+        $this->object->URL = $firstParcel->URL ?? "";
         /** @codingStandardsIgnoreEnd */
     }
 }

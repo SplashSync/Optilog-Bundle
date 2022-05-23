@@ -22,7 +22,7 @@ use Splash\Models\Objects\ListsTrait;
 use stdClass;
 
 /**
- * Access to Orders Items Fields
+ * Access to Order Items Fields
  */
 trait ItemsTrait
 {
@@ -105,54 +105,91 @@ trait ItemsTrait
         //====================================================================//
         // Order Line Info 1 - Generally EAN13
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
-            ->Identifier("Info1")
-            ->InList("lines")
-            ->Name("Info 1 (EAN)")
-            ->MicroData("http://schema.org/Product", "gint13")
-            ->Group("Products")
+            ->identifier("Info1")
+            ->inList("lines")
+            ->name("Info 1 (EAN)")
+            ->microData("http://schema.org/Product", "gint13")
+            ->group("Products")
         ;
         self::setupReadOnlyOnV2($this->fieldsFactory());
 
         //====================================================================//
         // Order Line Info 2
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
-            ->Identifier("Info2")
-            ->InList("lines")
-            ->Name("Info 2 (Code)")
-            ->MicroData("http://schema.org/Product", "additionalProperty")
-            ->Group("Products")
+            ->identifier("Info2")
+            ->inList("lines")
+            ->name("Info 2 (Code)")
+            ->microData("http://schema.org/Product", "additionalProperty")
+            ->group("Products")
         ;
         self::setupReadOnlyOnV2($this->fieldsFactory());
 
         //====================================================================//
         // Order Line Info 3 - Generally Label
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
-            ->Identifier("Info3")
-            ->InList("lines")
-            ->Name("Info 3 (Label)")
-            ->MicroData("http://schema.org/partOfInvoice", "description")
-            ->Group("Products")
+            ->identifier("Info3")
+            ->inList("lines")
+            ->name("Info 3 (Label)")
+            ->microData("http://schema.org/partOfInvoice", "description")
+            ->group("Products")
         ;
         self::setupReadOnlyOnV2($this->fieldsFactory());
 
         //====================================================================//
         // Order Line Info 4 - Generally Label
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
-            ->Identifier("Info4")
-            ->InList("lines")
-            ->Name("Info 4")
-            ->Group("Products")
+            ->identifier("Info4")
+            ->inList("lines")
+            ->name("Info 4")
+            ->group("Products")
         ;
         self::setupReadOnlyOnV2($this->fieldsFactory());
+    }
+
+
+    /**
+     * Read requested Field
+     *
+     * @param string $key       Input List Key
+     * @param string $fieldName Field Identifier / Name
+     */
+    protected function getItemsFields(string $key, string $fieldName): void
+    {
+        //====================================================================//
+        // Check if List field & Init List Array
+        $fieldId = self::lists()->initOutput($this->out, "lines", $fieldName);
+        if (!$fieldId) {
+            return;
+        }
+        //====================================================================//
+        // Verify List is Not Empty
+        if (!isset($this->object->Articles) || !is_array($this->object->Articles)) {
+            return;
+        }
+        //====================================================================//
+        // Fill List with Data
+        foreach ($this->object->Articles as $index => $article) {
+            //====================================================================//
+            // READ Fields
+            $value = $this->getItemFieldData($article, $fieldId);
+            if (null === $value) {
+                return;
+            }
+            //====================================================================//
+            // Insert Data in List
+            self::lists()->insert($this->out, "lines", $fieldName, $index, $value);
+        }
+
+        unset($this->in[$key]);
     }
 
     /**
      * Write Given Fields
      *
      * @param string $fieldName Field Identifier / Name
-     * @param mixed  $fieldData Field Data
+     * @param array[]  $fieldData Field Data
      */
-    protected function setItemsFields($fieldName, $fieldData): void
+    protected function setItemsFields(string $fieldName, array $fieldData): void
     {
         //====================================================================//
         // Safety Check
@@ -199,42 +236,6 @@ trait ItemsTrait
         }
 
         unset($this->in[$fieldName]);
-    }
-
-    /**
-     * Read requested Field
-     *
-     * @param string $key       Input List Key
-     * @param string $fieldName Field Identifier / Name
-     */
-    protected function getItemsFields($key, $fieldName): void
-    {
-        //====================================================================//
-        // Check if List field & Init List Array
-        $fieldId = self::lists()->InitOutput($this->out, "lines", $fieldName);
-        if (!$fieldId) {
-            return;
-        }
-        //====================================================================//
-        // Verify List is Not Empty
-        if (!isset($this->object->Articles) || !is_array($this->object->Articles)) {
-            return;
-        }
-        //====================================================================//
-        // Fill List with Data
-        foreach ($this->object->Articles as $index => $article) {
-            //====================================================================//
-            // READ Fields
-            $value = $this->getItemFieldData($article, $fieldId);
-            if (null === $value) {
-                return;
-            }
-            //====================================================================//
-            // Insert Data in List
-            self::lists()->Insert($this->out, "lines", $fieldName, $index, $value);
-        }
-
-        unset($this->in[$key]);
     }
 
     /**

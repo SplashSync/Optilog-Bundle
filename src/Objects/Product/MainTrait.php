@@ -36,47 +36,47 @@ trait MainTrait
         //====================================================================//
         // Weight
         $this->fieldsFactory()->create(SPL_T_DOUBLE)
-            ->Identifier("Poids")
-            ->Name("Poids d’une unité")
+            ->identifier("Poids")
+            ->name("Poids d’une unité")
             ->description("Poids d’une unité en grammes (Kg >> g)")
-            ->Group($groupName)
-            ->MicroData("http://schema.org/Product", "weight")
+            ->group($groupName)
+            ->microData("http://schema.org/Product", "weight")
             ->setPreferNone()
-            ->isWriteOnly();
-
+            ->isWriteOnly()
+        ;
         //====================================================================//
         // Height
         $this->fieldsFactory()->create(SPL_T_DOUBLE)
-            ->Identifier("Hauteur")
-            ->Name("Hauteur")
+            ->identifier("Hauteur")
+            ->name("Hauteur")
             ->description("Hauteur en mm (M >> mm)")
-            ->Group($groupName)
-            ->MicroData("http://schema.org/Product", "height")
+            ->group($groupName)
+            ->microData("http://schema.org/Product", "height")
             ->setPreferNone()
-            ->isWriteOnly();
-
+            ->isWriteOnly()
+        ;
         //====================================================================//
         // Depth
         $this->fieldsFactory()->create(SPL_T_DOUBLE)
-            ->Identifier("Longueur")
-            ->Name("Longueur")
+            ->identifier("Longueur")
+            ->name("Longueur")
             ->description("Longueur en mm (M >> mm)")
-            ->Group($groupName)
-            ->MicroData("http://schema.org/Product", "depth")
+            ->group($groupName)
+            ->microData("http://schema.org/Product", "depth")
             ->setPreferNone()
-            ->isWriteOnly();
-
+            ->isWriteOnly()
+        ;
         //====================================================================//
         // Width
         $this->fieldsFactory()->create(SPL_T_DOUBLE)
-            ->Identifier("Largeur")
-            ->Name("Largeur")
+            ->identifier("Largeur")
+            ->name("Largeur")
             ->description("Largeur en mm (M >> mm)")
-            ->Group($groupName)
-            ->MicroData("http://schema.org/Product", "width")
+            ->group($groupName)
+            ->microData("http://schema.org/Product", "width")
             ->setPreferNone()
-            ->isWriteOnly();
-
+            ->isWriteOnly()
+        ;
         //====================================================================//
         // PRODUCT BARCODES
         //====================================================================//
@@ -84,20 +84,21 @@ trait MainTrait
         //====================================================================//
         // EAN
         $this->fieldsFactory()->create(SPL_T_INT)
-            ->Identifier("EAN")
-            ->Name("EAN Code")
+            ->identifier("EAN")
+            ->name("EAN Code")
             ->description("Code EAN du produit unitaire")
-            ->MicroData("http://schema.org/Product", "gtin13")
-            ->isWriteOnly();
+            ->microData("http://schema.org/Product", "gtin13")
+            ->isWriteOnly()
+        ;
     }
 
     /**
      * Write Given Fields
      *
      * @param string $fieldName Field Identifier / Name
-     * @param mixed  $fieldData Field Data
+     * @param null|int|float|string  $fieldData Field Data
      */
-    protected function setMainFields($fieldName, $fieldData): void
+    protected function setMainFields(string $fieldName, null|int|float|string $fieldData): void
     {
         //====================================================================//
         // WRITE Field
@@ -106,32 +107,32 @@ trait MainTrait
             // PRODUCT SPECIFICATIONS
             //====================================================================//
             case 'Poids':
-                // On N'envoi pas de Valeurs Nulles
+                // On n'envoie pas de valeurs nulles
                 if (empty($fieldData)) {
                     unset($this->object->{$fieldName});
 
                     break;
                 }
-                $this->setSimpleFloat($fieldName, UNITS::convertWeight($fieldData, UNITS::MASS_GRAM));
+                $this->setSimpleFloat($fieldName, UNITS::convertWeight((float) $fieldData, UNITS::MASS_GRAM));
 
                 break;
             case 'Hauteur':
             case 'Longueur':
             case 'Largeur':
-                // On N'envoi pas de Valeurs Nulles
+                // On n'envoie pas de valeurs nulles
                 if (empty($fieldData)) {
                     unset($this->object->{$fieldName});
 
                     break;
                 }
-                $this->setSimpleFloat($fieldName, UNITS::convertLength($fieldData, UNITS::LENGTH_MM));
+                $this->setSimpleFloat($fieldName, UNITS::convertLength((float) $fieldData, UNITS::LENGTH_MM));
 
                 break;
             //====================================================================//
             // PRODUCT BARCODES
             //====================================================================//
             case 'EAN':
-                // On N'envoi pas de Valeurs Nulles
+                // On n'envoie pas de valeurs nulles
                 if (empty($fieldData)) {
                     unset($this->object->{$fieldName});
 

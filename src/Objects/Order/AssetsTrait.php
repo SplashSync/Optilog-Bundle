@@ -32,8 +32,8 @@ trait AssetsTrait
             ->name("Asset Name")
             ->microData("http://schema.org/DigitalDocument", "name")
             ->inList("assets")
-            ->isWriteOnly();
-
+            ->isWriteOnly()
+        ;
         //====================================================================//
         // Order Asset Files Streams
         $this->fieldsFactory()->create(SPL_T_STREAM)
@@ -41,20 +41,21 @@ trait AssetsTrait
             ->name("Asset File")
             ->microData("http://schema.org/DigitalDocument", "description")
             ->inList("assets")
-            ->isWriteOnly();
+            ->isWriteOnly()
+        ;
     }
 
     /**
      * Write Given Fields
      *
      * @param string $fieldName Field Identifier / Name
-     * @param mixed  $fieldData Field Data
+     * @param array<string, array>  $fieldData Field Data
      */
-    protected function setAssetsFields($fieldName, $fieldData): void
+    protected function setAssetsFields(string $fieldName, array $fieldData): void
     {
         //====================================================================//
         // Safety Check
-        if (("assets" !== $fieldName) || !is_array($fieldData)) {
+        if (("assets" !== $fieldName)) {
             return;
         }
         //====================================================================//
@@ -73,11 +74,11 @@ trait AssetsTrait
     /**
      * Validate Received Item data
      *
-     * @param mixed $itemData Item Data
+     * @param array $itemData Item Data
      *
      * @return null|array
      */
-    private static function validateAsset($itemData): ?array
+    private static function validateAsset(array $itemData): ?array
     {
         //====================================================================//
         // File Infos are Required
@@ -86,7 +87,7 @@ trait AssetsTrait
         }
         //====================================================================//
         // Detect file name
-        if (!isset($itemData["name"]) || empty($itemData["name"])) {
+        if (empty($itemData["name"])) {
             $itemData["name"] = $itemData["file"]["name"] ?: $itemData["file"]["filename"];
         }
 

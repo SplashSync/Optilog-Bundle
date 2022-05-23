@@ -25,7 +25,7 @@ trait CoreTrait
      *
      * @var null|string
      */
-    protected $oldSKU;
+    protected ?string $oldSKU = null;
 
     /**
      * Build Core Fields using FieldFactory
@@ -35,46 +35,47 @@ trait CoreTrait
         //====================================================================//
         // Reference
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
-            ->Identifier("sku")
-            ->Name("Reference")
+            ->identifier("sku")
+            ->name("Reference")
             ->isListed()
-            ->MicroData("http://schema.org/Product", "model")
+            ->microData("http://schema.org/Product", "model")
             ->isRequired()
-            ->isNotTested();
-
+            ->isNotTested()
+        ;
         //====================================================================//
         // Name
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
-            ->Identifier("Libelle")
-            ->Name("Product Name with Options")
-            ->MicroData("http://schema.org/Product", "name")
+            ->identifier("Libelle")
+            ->name("Product Name with Options")
+            ->microData("http://schema.org/Product", "name")
             ->isListed()
-            ->isRequired();
-
+            ->isRequired()
+        ;
         //====================================================================//
         // Description (For Standards Only)
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
-            ->Identifier("Description")
-            ->Name("Product Name with Options")
-            ->MicroData("http://schema.org/Product", "description")
+            ->identifier("Description")
+            ->name("Product Name with Options")
+            ->microData("http://schema.org/Product", "description")
             ->isReadOnly()
-            ->setPreferNone();
-
+            ->setPreferNone()
+        ;
         //====================================================================//
         // Référence Fournisseur
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
-            ->Identifier("IdFournisseur")
-            ->Name("Manufacturer Part Number")
-            ->MicroData("http://schema.org/Product", "mpn")
-            ->isWriteOnly();
-
+            ->identifier("IdFournisseur")
+            ->name("Manufacturer Part Number")
+            ->microData("http://schema.org/Product", "mpn")
+            ->isWriteOnly()
+        ;
         //====================================================================//
         // Active => Product Is available_for_order
         $this->fieldsFactory()->create(SPL_T_BOOL)
-            ->Identifier("IsActif")
-            ->Name("Etat de l’article")
-            ->MicroData("http://schema.org/Product", "offered")
-            ->isListed();
+            ->identifier("IsActif")
+            ->name("Etat de l’article")
+            ->microData("http://schema.org/Product", "offered")
+            ->isListed()
+        ;
     }
 
     /**
@@ -83,7 +84,7 @@ trait CoreTrait
      * @param string $key       Input List Key
      * @param string $fieldName Field Identifier / Name
      */
-    private function getCoreFields($key, $fieldName): void
+    private function getCoreFields(string $key, string $fieldName): void
     {
         //====================================================================//
         // READ Fields
@@ -118,9 +119,9 @@ trait CoreTrait
      * Write Given Fields
      *
      * @param string $fieldName Field Identifier / Name
-     * @param mixed  $fieldData Field Data
+     * @param bool|string|null $fieldData Field Data
      */
-    private function setCoreFields($fieldName, $fieldData): void
+    private function setCoreFields(string $fieldName, bool|string|null $fieldData): void
     {
         //====================================================================//
         // WRITE Field
@@ -129,7 +130,7 @@ trait CoreTrait
             // MAIN INFORMATIONS
             //====================================================================//
             case 'sku':
-                $newSku = trim($fieldData);
+                $newSku = trim((string) $fieldData);
                 if ($this->object->ID == $newSku) {
                     break;
                 }

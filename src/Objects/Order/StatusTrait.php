@@ -195,8 +195,12 @@ trait StatusTrait
     {
         //====================================================================//
         // Debug => Force Order Status
-        if ($this->connector->isDebugMode() && $this->getParameter($this->object->DestID, false, 'ForcedStatus')) {
-            return (int) $this->getParameter($this->object->DestID, false, 'ForcedStatus');
+        if ($this->connector->isDebugMode()) {
+            /** @var false|int|string $forcedStatus */
+            $forcedStatus = $this->getParameter($this->object->DestID, false, 'ForcedStatus');
+            if ($forcedStatus) {
+                return (int) $forcedStatus;
+            }
         }
 
         return RestHelper::isApiV2Mode()

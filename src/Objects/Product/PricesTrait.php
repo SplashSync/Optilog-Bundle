@@ -28,29 +28,30 @@ trait PricesTrait
         //====================================================================//
         // Product Selling Price
         $this->fieldsFactory()->create(SPL_T_PRICE)
-            ->Identifier("PV")
-            ->Name("Prix de vente")
-            ->MicroData("http://schema.org/Product", "price")
+            ->identifier("PV")
+            ->name("Prix de vente")
+            ->microData("http://schema.org/Product", "price")
             ->setPreferNone()
-            ->isWriteOnly();
-
+            ->isWriteOnly()
+        ;
         //====================================================================//
         // WholeSale Price
         $this->fieldsFactory()->create(SPL_T_PRICE)
-            ->Identifier("PA")
-            ->Name("Prix d’achat")
-            ->MicroData("http://schema.org/Product", "wholesalePrice")
+            ->identifier("PA")
+            ->name("Prix d’achat")
+            ->microData("http://schema.org/Product", "wholesalePrice")
             ->setPreferNone()
-            ->isWriteOnly();
+            ->isWriteOnly()
+        ;
     }
 
     /**
      * Write Given Fields
      *
      * @param string $fieldName Field Identifier / Name
-     * @param mixed  $fieldData Field Data
+     * @param array  $fieldData Field Data
      */
-    protected function setPricesFields($fieldName, $fieldData): void
+    protected function setPricesFields(string $fieldName, array $fieldData): void
     {
         //====================================================================//
         // WRITE Field
@@ -61,7 +62,7 @@ trait PricesTrait
             case 'PV':
             case 'PA':
                 $newPrice = self::prices()->taxExcluded($fieldData);
-                // On N'envoi pas de Valeurs Nulles
+                // On n'envoie pas de Valeurs Nulles
                 if (empty($newPrice)) {
                     unset($this->object->{$fieldName});
 

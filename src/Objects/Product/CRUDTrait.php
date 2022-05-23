@@ -29,9 +29,9 @@ trait CRUDTrait
      *
      * @param string $objectId Object id
      *
-     * @return false|stdClass
+     * @return null|stdClass
      */
-    public function load($objectId)
+    public function load(string $objectId): ?stdClass
     {
         //====================================================================//
         // Stack Trace
@@ -40,16 +40,16 @@ trait CRUDTrait
         // Get Product Infos from Api
         $response = API::post("jGetStocks", array(array("ID" => $objectId)));
         if ((null == $response) || !isset($response->result) || empty($response->result)) {
-            return Splash::log()->errTrace("Unable to load Product (".$objectId.").");
+            return Splash::log()->errNull("Unable to load Product (".$objectId.").");
         }
         //====================================================================//
         // Extract Product Infos from Results
         $product = array_shift($response->result);
-        if ((null == $product) || !($product instanceof stdClass)) {
-            return Splash::log()->errTrace("Unable to load Product (".$objectId.").");
+        if (!($product instanceof stdClass)) {
+            return Splash::log()->errNull("Unable to load Product (".$objectId.").");
         }
         if (!isset($product->ID)) {
-            return Splash::log()->errTrace("Unable to load Product (".$objectId.").");
+            return Splash::log()->errNull("Unable to load Product (".$objectId.").");
         }
 
         return $product;
@@ -58,9 +58,9 @@ trait CRUDTrait
     /**
      * Create Request Object
      *
-     * @return false|stdClass New Object
+     * @return null|stdClass New Object
      */
-    public function create()
+    public function create(): ?stdClass
     {
         //====================================================================//
         // Stack Trace
@@ -68,13 +68,17 @@ trait CRUDTrait
 
         //====================================================================//
         // Check Product SKU is given
-        if (empty($this->in["sku"])) {
-            return Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "sku");
+        if (empty($this->in["sku"]) || !is_string($this->in["sku"])) {
+            Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "sku");
+
+            return null;
         }
         //====================================================================//
         // Check Product Name is given
         if (empty($this->in["Libelle"])) {
-            return Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "Libelle");
+            Splash::log()->err("ErrLocalFieldMissing", __CLASS__, __FUNCTION__, "Libelle");
+
+            return null;
         }
 
         //====================================================================//
@@ -97,7 +101,7 @@ trait CRUDTrait
         // Create Product Infos from Api
         $response = API::post("jSetArticles", array( $product ));
         if (null == $response) {
-            return Splash::log()->errTrace("Unable to Create Product (".$this->in["sku"].").");
+            return Splash::log()->errNull("Unable to Create Product (".$this->in["sku"].").");
         }
 
         return $this->load($product->ID);
@@ -108,9 +112,9 @@ trait CRUDTrait
      *
      * @param bool $needed Is This Update Needed
      *
-     * @return false|string Object Id of False if Failed to Update
+     * @return null|string Object ID of False if Failed to Update
      */
-    public function update(bool $needed)
+    public function update(bool $needed): ?string
     {
         //====================================================================//
         // Stack Trace
@@ -137,7 +141,7 @@ trait CRUDTrait
         // Update Product Infos from Api
         $response = API::post("jSetArticles", array( $this->object ));
         if (null == $response) {
-            return Splash::log()->errTrace("Unable to Update Product (".$this->object->ID.").");
+            return Splash::log()->errNull("Unable to Update Product (".$this->object->ID.").");
         }
         //====================================================================//
         // Update Id if Changed
@@ -153,18 +157,14 @@ trait CRUDTrait
     }
 
     /**
-     * Delete requested Object
-     *
-     * @param null|string $objectId Object Id
-     *
-     * @return bool
+     * {@inheritdoc}
      */
-    public function delete($objectId = null)
+    public function delete(string $objectId): bool
     {
         //====================================================================//
         // Stack Trace
         Splash::log()->trace();
-        if (is_null($objectId)) {
+        if (empty($objectId)) {
             return true;
         }
         //====================================================================//
@@ -184,7 +184,7 @@ trait CRUDTrait
     /**
      * {@inheritdoc}
      */
-    public function getObjectIdentifier()
+    public function getObjectIdentifier(): ?string
     {
         //====================================================================//
         // If Product SKU Changed
@@ -192,10 +192,6 @@ trait CRUDTrait
             return $this->oldSKU;
         }
 
-        if (!isset($this->object->ID)) {
-            return false;
-        }
-
-        return $this->object->ID;
+        return $this->object->ID ?? null;
     }
 }

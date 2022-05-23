@@ -147,9 +147,9 @@ trait CoreTrait
      * Write Given Fields
      *
      * @param string $fieldName Field Identifier / Name
-     * @param mixed  $fieldData Field Data
+     * @param null|string  $fieldData Field Data
      */
-    protected function setMetaFields(string $fieldName, $fieldData): void
+    protected function setMetaFields(string $fieldName, ?string $fieldData): void
     {
         //====================================================================//
         // WRITE Field
@@ -211,11 +211,11 @@ trait CoreTrait
     /**
      * Convert Splash Date to Optilog DIL Date
      *
-     * @param mixed $fieldData Field Data
+     * @param null|string $fieldData Field Data
      *
      * @return null|string
      */
-    private static function toOptilogDIL($fieldData): ?string
+    private static function toOptilogDIL(?string $fieldData): ?string
     {
         if (!empty($fieldData)) {
             try {

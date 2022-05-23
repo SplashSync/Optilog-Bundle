@@ -26,7 +26,7 @@ use stdClass;
 /**
  * Optilog Specific Helper
  *
- * Support for Managing Soap Transactions with Optolig Webservices...
+ * Support for Managing Soap Transactions with Optilog Webservices...
  */
 class RestHelper
 {
@@ -63,7 +63,7 @@ class RestHelper
      *
      * @var string
      */
-    private static $endPoint;
+    private static string $endPoint;
 
     /**
      * Configure Optilog Soap API
@@ -79,7 +79,7 @@ class RestHelper
     {
         //====================================================================//
         // Configure API Endpoint
-        static::$endPoint = $apiUrl;
+        self::$endPoint = $apiUrl;
         //====================================================================//
         // Configure API Template Request
         $template = Request::init()
@@ -116,7 +116,7 @@ class RestHelper
         }
         //====================================================================//
         // User Log message
-        Splash::log()->msg("Hello World Succeeded on ".static::$endPoint);
+        Splash::log()->msg("Hello World Succeeded on ".self::$endPoint);
 
         return true;
     }
@@ -138,7 +138,7 @@ class RestHelper
         }
         //====================================================================//
         // User Log message
-        Splash::log()->msg("Hello World Secured Succeeded on ".static::$endPoint);
+        Splash::log()->msg("Hello World Secured Succeeded on ".self::$endPoint);
 
         return true;
     }
@@ -147,7 +147,7 @@ class RestHelper
      * Optilog API GET Request
      *
      * @param string $path API REST Path
-     * @param array  $body Request Data
+     * @param array|null $body Request Data
      *
      * @return null|stdClass
      */
@@ -155,7 +155,7 @@ class RestHelper
     {
         //====================================================================//
         // Prepare Uri
-        $uri = static::$endPoint."/".$path;
+        $uri = self::$endPoint."/".$path;
         if (!empty($body)) {
             $uri .= "?".http_build_query($body);
         }
@@ -188,7 +188,7 @@ class RestHelper
     {
         //====================================================================//
         // Detect Endpoint Overrides
-        $endPoint = $endPoint ?? static::$endPoint;
+        $endPoint = $endPoint ?? self::$endPoint;
         //====================================================================//
         // Perform Request
         try {
@@ -219,7 +219,7 @@ class RestHelper
     {
         //====================================================================//
         // Build EndPoint Url
-        $endPoint = str_replace("wsgestinbox_V2.asmx", "wsgestinbox.asmx", static::$endPoint);
+        $endPoint = str_replace("wsgestinbox_V2.asmx", "wsgestinbox.asmx", self::$endPoint);
         //====================================================================//
         // Execute Post Request
         return self::post($path, $body, $endPoint);
@@ -237,7 +237,7 @@ class RestHelper
     {
         //====================================================================//
         // Build EndPoint Url
-        $endPoint = str_replace("wsgestinbox.asmx", "wsgestinbox_V2.asmx", static::$endPoint);
+        $endPoint = str_replace("wsgestinbox.asmx", "wsgestinbox_V2.asmx", self::$endPoint);
         //====================================================================//
         // Execute Post Request
         return self::post($path, $body, $endPoint);
@@ -254,7 +254,7 @@ class RestHelper
      */
     public static function isDebugMode() : bool
     {
-        return (false !== strpos(static::$endPoint, "api.preprod.geolie.net"));
+        return (false !== strpos(self::$endPoint, "api.preprod.geolie.net"));
     }
 
     /**
@@ -264,7 +264,7 @@ class RestHelper
      */
     public static function isApiV2Mode() : bool
     {
-        return (false !== strpos(static::$endPoint, "wsgestinbox_V2"));
+        return (false !== strpos(self::$endPoint, "wsgestinbox_V2"));
     }
 
     //====================================================================//
@@ -376,10 +376,12 @@ class RestHelper
     private static function decodeBody($responseBody): ?stdClass
     {
         if ($responseBody instanceof SimpleXMLElement) {
+            /** @phpstan-ignore-next-line  */
             return json_decode($responseBody->__toString());
         }
 
         if (isset($responseBody->d)) {
+            /** @phpstan-ignore-next-line  */
             return json_decode($responseBody->d);
         }
 

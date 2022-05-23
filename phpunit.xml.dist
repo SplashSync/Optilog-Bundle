@@ -21,6 +21,9 @@
             <directory>vendor/splash/php-bundle/tests/*</directory>
             <directory>tests/Controller</directory>
         </testsuite>
+        <testsuite name="Local">
+            <directory>tests/Controller</directory>
+        </testsuite>
     </testsuites>
 
     <filter>

@@ -24,9 +24,9 @@ use Splash\Connectors\Optilog\Models\RestHelper;
 trait ConfigurationTrait
 {
     /**
-     * @var bool
+     * @var null|bool
      */
-    private $isProductsRawSkus;
+    private ?bool $isProductsRawSkus;
 
     /**
      * Check API Version (V1/V2)
