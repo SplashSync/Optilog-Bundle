@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -75,6 +75,8 @@ trait CRUDTrait
      * Create Request Object
      *
      * @return null|stdClass New Object
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public function create(): ?stdClass
     {
@@ -116,7 +118,7 @@ trait CRUDTrait
 
         //====================================================================//
         // Write Minimal Object Data
-        /** @var array<string, null|string|array> $fields */
+        /** @var array<string, null|array|string> $fields */
         $fields = $this->in;
         foreach ($fields as $fieldName => $fieldData) {
             if (is_scalar($fieldData)) {

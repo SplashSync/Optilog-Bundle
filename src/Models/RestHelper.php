@@ -3,7 +3,7 @@
 /*
  *  This file is part of SplashSync Project.
  *
- *  Copyright (C) 2015-2021 Splash Sync  <www.splashsync.com>
+ *  Copyright (C) Splash Sync  <www.splashsync.com>
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -146,8 +146,8 @@ class RestHelper
     /**
      * Optilog API GET Request
      *
-     * @param string $path API REST Path
-     * @param array|null $body Request Data
+     * @param string     $path API REST Path
+     * @param null|array $body Request Data
      *
      * @return null|stdClass
      */
