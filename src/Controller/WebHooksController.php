@@ -172,7 +172,7 @@ class WebHooksController extends Controller
             //==============================================================================
             // Respond to Incomplete Requests
             if (empty($fileEvent)) {
-                return self::buildFileResponse(false);
+                return self::buildFileResponse(null);
             }
             //==============================================================================
             // Try Reading of File on Local System
@@ -449,11 +449,11 @@ class WebHooksController extends Controller
     /**
      * Prepare REST Json File Response.
      *
-     * @param array|bool $file
+     * @param null|array $file
      *
      * @return JsonResponse
      */
-    private static function buildFileResponse($file): JsonResponse
+    private static function buildFileResponse(?array $file): JsonResponse
     {
         $response = array(
             'statut' => is_array($file) ? 1 : 0,
