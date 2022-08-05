@@ -61,7 +61,9 @@ class CarrierCodes
         "COL_9V" => "COLISSIMO EXPERT FRANCE",
         "COL_CA" => "COLISSIMO ACCESS EUROPE",
         "COL_CB" => "COLISSIMO EXPERT EUROPE",
-        "COL_CP" => "COLISSIMO EXPERT INTER",
+        "COL_CP" => "OBSOLETE COLISSIMO EXPERT INTER",
+        "COL_CM" => "COLISSIMO EUROPE MON COMMERCANT",
+        "COL_CI" => "COLISSIMO EUROPE BUREAU DE POSTE",
         "COL_9W" => "COLISSIMO EXPERT OUTRE-MER",
 
         //====================================================================//
