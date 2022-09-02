@@ -15,7 +15,7 @@
 
 namespace Splash\Connectors\Optilog\Models;
 
-use Httpful\Exception\ConnectionErrorException;
+use Exception;
 use Httpful\Mime;
 use Httpful\Request;
 use Httpful\Response;
@@ -165,7 +165,7 @@ class RestHelper
             $response = Request::get($uri)
                 ->sendsType(Mime::PLAIN)
                 ->send();
-        } catch (ConnectionErrorException $ex) {
+        } catch (Exception $ex) {
             Splash::log()->err($ex->getMessage());
 
             return null;
@@ -197,7 +197,7 @@ class RestHelper
                 ->expects(Mime::JSON)
                 ->body(array("data" => json_encode($body)))
                 ->send();
-        } catch (ConnectionErrorException $ex) {
+        } catch (Exception $ex) {
             Splash::log()->err($ex->getMessage());
 
             return null;
