@@ -55,23 +55,4 @@ splash:
                 ApiKey:         08e789053de980e0f1ac70a61125a17d
                 ApiOp:          TEST00016
                 dfStock:        Principal
-                dfGamme:
-
-        ########################################################################
-        # Optilog API ReCommerce
-        optilog-re:
-            id:                 ThisIsOptilogReWsId
-            key:                ThisIsNotASecretKeyForOptilogRe
-            name:               Optilog ReCommerce
-            connector:          optilog
-            ########################################################################
-            # FAKE CREDENTIALS : ASK YOURS TO YOUR MAIN OPTILOG CONTACT
-            ########################################################################
-            config:
-                WsHost:         https://api.preprod.geolie.net/wsgestinbox_V2.asmx
-                ApiUser:        splash_test_REC
-                ApiPwd:         a92a8bb72089478f692e165337cd07ab
-                ApiKey:         d6d269952320c4fb5e50f278c94a098c
-                ApiOp:          B2C
-                dfStock:        Mobile
-                dfGamme:
+                dfGamme:        Nouveaux

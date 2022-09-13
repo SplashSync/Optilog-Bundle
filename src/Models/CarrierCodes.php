@@ -173,6 +173,7 @@ class CarrierCodes
      */
     const RELAY = array(
         "CHR_BB_REL",
+        "SOCOL_6M",
         "SOCOL_6H",
         "MR_24R",
         "TNT_JD",
