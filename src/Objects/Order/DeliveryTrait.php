@@ -46,23 +46,25 @@ trait DeliveryTrait
         $groupName = "Livraison";
 
         //====================================================================//
-        // Company Name
+        // Contact Full Name
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->identifier("Nom")
-            ->name("Nom de l'entreprise")
-            ->microData("http://schema.org/Organization", "legalName")
+            ->name("Nom du destinataire")
+            ->description("Nom du destinataire. Ex: Jean Dupont")
+            ->microData("http://schema.org/PostalAddress", "alternateName")
             ->group($groupName)
+            ->isRequired()
         ;
         self::setupReadOnlyOnV2($this->fieldsFactory());
 
         //====================================================================//
-        // Contact Full Name
+        // Company Name
         $this->fieldsFactory()->create(SPL_T_VARCHAR)
             ->identifier("Contact")
-            ->name("Nom du destinataire")
-            ->microData("http://schema.org/PostalAddress", "alternateName")
+            ->name("Contact de livraison")
+            ->description("Contact de livraison / Nom de l'entreprise. Si non fourni, « Nom » sera repris.")
+            ->microData("http://schema.org/Organization", "legalName")
             ->group($groupName)
-            ->isRequired()
         ;
         self::setupReadOnlyOnV2($this->fieldsFactory());
 
