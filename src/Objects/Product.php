@@ -80,7 +80,7 @@ class Product extends AbstractStandaloneObject
      *
      * @var bool
      */
-    protected static bool $enablePushCreated = false;
+    protected static bool $enablePullCreated = false;
 
     /**
      * Enable Delete Of Remotes Objects when Deleted Locally
