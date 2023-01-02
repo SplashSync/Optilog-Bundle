@@ -95,17 +95,17 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
     {
         //====================================================================//
         // Server General Description
-        $informations->shortdesc = "Optilog API";
-        $informations->longdesc = "Splash Integration for Optilog Api V2";
+        $informations->shortdesc = "LogsyTech API";
+        $informations->longdesc = "Splash Integration for LogsyTech API V2";
         //====================================================================//
         // Company Informations
-        $informations->company = "Optilog";
+        $informations->company = "LogsyTech";
         $informations->address = "Rond point Robert Schuman,";
         $informations->zip = "77127";
         $informations->town = "Lieusaint";
         $informations->country = "France";
-        $informations->www = "http://www.optilog-fr.com";
-        $informations->email = "commercial@optilog-fr.com";
+        $informations->www = "https://www.logsytech.fr";
+        $informations->email = "contact@logsytech.fr";
         $informations->phone = "01.64.13.46.50";
         //====================================================================//
         // Server Logo & Ico
@@ -114,12 +114,12 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
         );
         $informations->logourl = null;
         $informations->logoraw = Splash::file()->readFileContents(
-            dirname(dirname(__FILE__))."/Resources/public/img/Optilog-Logo.png"
+            dirname(dirname(__FILE__))."/Resources/public/img/Logsys-Logo.png"
         );
         //====================================================================//
         // Server Informations
-        $informations->servertype = "Optilog Api V2";
-        $informations->serverurl = "www.optilog.fr";
+        $informations->servertype = "LogsyTech Api V2";
+        $informations->serverurl = "www.logsytech.fr";
         //====================================================================//
         // Module Informations
         $informations->moduleauthor = "Splash Official <www.splashsync.com>";
@@ -220,7 +220,7 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
             'label' => 'profile.card.label',                        // Public long name
             'domain' => 'OptilogBundle',                            // Translation domain for names
             'ico' => '/bundles/optilog/img/Optilog-Logo-Mini.png',  // Public Icon path
-            'www' => 'http://www.optilog-fr.com',                   // Website Url
+            'www' => 'http://www.logsytech.fr',                    // Website Url
         );
     }
 

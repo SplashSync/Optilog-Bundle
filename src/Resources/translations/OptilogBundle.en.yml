@@ -55,17 +55,17 @@ var:
 ## Node Profile
 profile:
     connection:
-        title: API Connection
+        title:  API Connection
     card:   
-        title:  Optilog REST API V2
-        label:  Connect your Shops with Optilog to Manage your Customers Deliveries
+        title:  LogsyTech Group API V2
+        label:  Connect your Shops with LogsyTech Group APIs to Manage your Logistics
 
 ## Node Api Actions
 admin:
-    selftest:   Optilog Connector Configuration
-    connect:    Connect to Optilog API   
+    selftest:   LogsyTech Connector Configuration
+    connect:    Connect to LogsyTech API
     webhooks:
         label:  Update of WebHooks
         desc:   Detect & Update Splash Sync WebHooks Configuration
         msg:    WebHook Configuration Updated
-        err:    Update of WebHooks Configuration Failled
+        err:    Update of WebHooks Configuration Failed
