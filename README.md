@@ -1,14 +1,19 @@
 [![N|Solid](https://github.com/SplashSync/Php-Core/raw/master/img/github.jpg)](https://www.splashsync.com)
 
-# Splash Sync Optilog Connector
+# Splash Sync LogsyTech Connector
 
-This connector implements Optilog API for connecting business applications (E-Commerce, ERPs) to Optilog Webservice API.
+This connector implements LogsyTech Webservices API for connecting business applications (E-Commerce, ERPs) to LogsyTech Group Logistics Partners.
+
+## Features
+- Implement Geolie API V1 & V2
+- Real time Catalog & Stock synchronization
+- Real time Order synchronization
 
 ## Requirements
 
-* PHP CLI 7.1+
+* PHP CLI 8.0+
 * API Credential (Provided on demand by Optilog)
-* An active Splash Sync Premium Account 
+* An active Splash Sync Account 
 
 ## Disclaimer
 
