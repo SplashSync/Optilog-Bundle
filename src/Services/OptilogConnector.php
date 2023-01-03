@@ -114,7 +114,7 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
         );
         $informations->logourl = null;
         $informations->logoraw = Splash::file()->readFileContents(
-            dirname(dirname(__FILE__))."/Resources/public/img/Logsys-Logo.png"
+            dirname(dirname(__FILE__))."/Resources/public/img/LogsyTech-Group-Logo.png"
         );
         //====================================================================//
         // Server Informations
