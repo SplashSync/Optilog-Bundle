@@ -4,6 +4,9 @@
 
 This connector implements LogsyTech Webservices API for connecting business applications (E-Commerce, ERPs) to LogsyTech Group Logistics Partners.
 
+[![N|Solid](https://github.com/SplashSync/Optilog-Bundle/raw/master/src/Resources/public/img/LogsyTech-Group-Logo.png)](https://www.logsytech.fr)
+[www.logsytech.fr](https://www.logsytech.fr)
+
 ## Features
 - Implement Geolie API V1 & V2
 - Real time Catalog & Stock synchronization
