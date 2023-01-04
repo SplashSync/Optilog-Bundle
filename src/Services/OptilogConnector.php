@@ -95,7 +95,7 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
     {
         //====================================================================//
         // Server General Description
-        $informations->shortdesc = "LogsyTech API";
+        $informations->shortdesc = "LogsyTech";
         $informations->longdesc = "Splash Integration for LogsyTech API V2";
         //====================================================================//
         // Company Informations
