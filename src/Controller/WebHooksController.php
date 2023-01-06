@@ -17,7 +17,7 @@ namespace Splash\Connectors\Optilog\Controller;
 
 use Splash\Bundle\Models\AbstractConnector;
 use Splash\Client\Splash;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -27,7 +27,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
-class WebHooksController extends Controller
+class WebHooksController extends AbstractController
 {
     /**
      * List of Available Action Types.
