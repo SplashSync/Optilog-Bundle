@@ -264,7 +264,9 @@ trait DeliveryTrait
                 }
                 //====================================================================//
                 // Others Carriers => Push to label1
-                $this->setSimple("Libelle1", $fieldData);
+                if ($fieldData) {
+                    $this->setSimple("Libelle1", $fieldData);
+                }
 
                 break;
             default:

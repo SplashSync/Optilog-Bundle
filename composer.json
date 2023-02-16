@@ -48,7 +48,7 @@
         "badpixxel/php-sdk":                            "~2.0",
         "splash/console":                               "dev-master",
 
-        "symfony/symfony":                              "^3.4|^4.4",
+        "symfony/symfony":                              "^4.4|^5.4",
         "symfony/monolog-bundle":                       "*",
         "symfony/phpunit-bridge":                       "*",
         "monolog/monolog":                              "^1.0",
