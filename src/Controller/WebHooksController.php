@@ -59,12 +59,12 @@ class WebHooksController extends AbstractController
     /**
      * @var null|array
      */
-    private $events;
+    private ?array $events = null;
 
     /**
      * @var int
      */
-    private $commited = 0;
+    private int $committed = 0;
 
     //====================================================================//
     //  Optilog WEBHOOKS MANAGEMENT
@@ -100,7 +100,7 @@ class WebHooksController extends AbstractController
         // Commit Changes
         $this->executeCommits($connector);
 
-        return self::buildResponse(true, 'Notified '.$this->commited.' Changes');
+        return self::buildResponse(true, 'Notified '.$this->committed.' Changes');
     }
 
     /**
@@ -112,12 +112,12 @@ class WebHooksController extends AbstractController
     {
         //==============================================================================
         // Check Infos are Available
-        if (empty($this->events) || !is_array($this->events)) {
+        if (empty($this->events)) {
             return;
         }
         //==============================================================================
         // Loop On Events
-        $this->commited = 0;
+        $this->committed = 0;
         foreach ($this->events as $event) {
             //==============================================================================
             // Validate & Decode Event
@@ -139,7 +139,7 @@ class WebHooksController extends AbstractController
                 $decoded["user"],
                 $decoded["comment"]
             );
-            ++$this->commited;
+            ++$this->committed;
             //==============================================================================
             // Set Script Execution Time
             set_time_limit(30);
@@ -157,7 +157,7 @@ class WebHooksController extends AbstractController
     {
         //==============================================================================
         // Check Infos are Available
-        if (empty($this->events) || !is_array($this->events)) {
+        if (empty($this->events)) {
             return null;
         }
         //==============================================================================
@@ -225,13 +225,13 @@ class WebHooksController extends AbstractController
         }
         //==============================================================================
         // Safety Check => Event Data is An Array
-        $unserilizedData = json_decode((string) $eventData, true);
-        if (!is_array($unserilizedData)) {
+        $unsterilizedData = json_decode((string) $eventData, true);
+        if (!is_array($unsterilizedData)) {
             return self::buildResponse(false, 'Unable to Deserialize Data');
         }
         //==============================================================================
         // Request is Valid => Store Received Data
-        $this->events = $unserilizedData;
+        $this->events = $unsterilizedData;
         Splash::log()->cleanLog();
 
         return null;
@@ -285,7 +285,7 @@ class WebHooksController extends AbstractController
             //==============================================================================
             // User & Comment
             "user" => self::getEventUser($event),
-            "comment" => "[".$this->commited."] ".self::getEventComment($event),
+            "comment" => "[".$this->committed."] ".self::getEventComment($event),
         );
         //==============================================================================
         // Validate Contents

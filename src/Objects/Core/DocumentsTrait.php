@@ -25,17 +25,17 @@ trait DocumentsTrait
     /**
      * @var string
      */
-    protected static $docTypeInvoice = "FACTURE";
+    protected static string $docTypeInvoice = "FACTURE";
 
     /**
      * @var string
      */
-    protected static $docTypeDelivery = "BL";
+    protected static string $docTypeDelivery = "BL";
 
     /**
      * @var string
      */
-    protected static $docTypeImage = "IMAGE";
+    protected static string $docTypeImage = "IMAGE";
 
     /**
      * Add a Document to Output Buffer
@@ -48,9 +48,6 @@ trait DocumentsTrait
         //====================================================================//
         // Ensure Documents Exists
         if (!isset($this->object->Documents) || !is_array($this->object->Documents)) {
-            $this->object->Documents = array();
-        }
-        if (!is_array($this->object->Documents) && !is_a($this->object->Documents, "ArrayObject")) {
             $this->object->Documents = array();
         }
         //====================================================================//
