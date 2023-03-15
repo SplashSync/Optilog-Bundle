@@ -34,7 +34,7 @@ trait DatesFilterTrait
             ->identifier("createdAt")
             ->name("Date Created")
             ->description("Order Creation Date: Only used to Filter Orders for Optilog")
-            ->microData("http://schema.org/Order", "orderDate")
+            ->microData("http://schema.org/DataFeedItem", "dateCreated")
             ->isRequired()
             ->isWriteOnly()
         ;
