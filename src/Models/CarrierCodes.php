@@ -49,6 +49,7 @@ class CarrierCodes
         "CHR_B2B_EI" => "CHRONOPOST CHRO EXPRESS I",
         "CHR_FRESH" => "CHRONOPOST CHRONO FOOD",
         "CHR_BB_REL" => "CHRONOPOST CHRONO RELAIS",
+        "CHR_B2C_SECU" => "CHRONOPOST B2C SECURE",
 
         //====================================================================//
         // COLIS PRIVE
