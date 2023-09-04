@@ -68,6 +68,14 @@ class CarrierCodes
         "COL_9W" => "COLISSIMO EXPERT OUTRE-MER",
 
         //====================================================================//
+        // COLISSIMO ESENDEO
+        "ESE_COL_9L" => "[ESENDEO] COLISSIMO ACCESS FRANCE",
+        "ESE_COL_9V" => "[ESENDEO] COLISSIMO EXPERT FRANCE",
+        "ESE_COL_CB" => "[ESENDEO] COLISSIMO EXPERT EUROPE",
+        "ESE_COL_CM" => "[ESENDEO] COLISSIMO EUROPE MON COMMERCANT",
+        "ESE_COL_6H" => "[ESENDEO] SO COLISSIMO SOCOLISSIMOBPR",
+
+        //====================================================================//
         // DHL
         "DHL_DOM" => "DHL DHL DOMESTIC EXPRESS",
         "DHL_TDE" => "DHL DHL DOMESTIC EXPRESS 09 H - NON DOC ",
