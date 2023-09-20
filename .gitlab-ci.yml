@@ -80,8 +80,6 @@ quality:php-8.0:
 .functional:    &functional
     <<: *base
     stage:      functional
-    when:       manual
-    retry:      2
     ################################################################################
     # Run Test Script
     script:
