@@ -125,11 +125,11 @@ class WebHooksController extends AbstractController
             if (null == $decoded) {
                 continue;
             }
-//            //==============================================================================
-//            // Limit Number of Commits to 100 Items
-//            if ($this->commited > 100) {
-//                break;
-//            }
+            //==============================================================================
+            // Limit Number of Commits to 100 Items
+            //            if ($this->commited > 100) {
+            //                break;
+            //            }
             //==============================================================================
             // Commit Changes to Splash
             $connector->commit(
@@ -177,6 +177,7 @@ class WebHooksController extends AbstractController
             //==============================================================================
             // Try Reading of File on Local System
             $rawFile = $connector->file($fileEvent["path"], $fileEvent["md5"]);
+
             //==============================================================================
             // Return File Response
             return self::buildFileResponse($rawFile);
