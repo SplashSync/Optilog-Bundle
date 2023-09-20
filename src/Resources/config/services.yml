@@ -1,5 +1,8 @@
 services:
-    
+    _defaults:
+        autowire:       true
+        autoconfigure:  true
+
     ################################################################################
     # SPLASH Optilog Connector Service
     splash.connectors.optilog:

@@ -217,6 +217,7 @@ trait TrackingTrait
 
             return null;
         }
+
         //====================================================================//
         // Return Carrier Code
         return $carrierCode;
@@ -237,6 +238,7 @@ trait TrackingTrait
         if (!is_array($carriers)) {
             return CarrierCodes::CODES;
         }
+
         //====================================================================//
         // Return Carrier Names
         return array_flip($carriers);
@@ -279,8 +281,8 @@ trait TrackingTrait
             // VET - Colissimo, Signed above 100 €
             case "VET_COL":
                 return ($this->totalPrice < 100) ? "COL_9L" : "COL_9V";
-            //====================================================================//
-            // VET - Colis Privé, Signed above 85 €
+                //====================================================================//
+                // VET - Colis Privé, Signed above 85 €
             case "VET_PRIV":
                 return ($this->totalPrice < 85) ? "COLPRIV" : "COLPRIVAS";
         }

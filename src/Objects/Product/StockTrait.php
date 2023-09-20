@@ -100,8 +100,8 @@ trait StockTrait
                 $this->getSimple($fieldName);
 
                 break;
-            //====================================================================//
-            // Out Of Stock
+                //====================================================================//
+                // Out Of Stock
             case 'outofstock':
                 $this->out[$fieldName] = ($this->object->Stk_Dispo > 0) ? false : true;
 

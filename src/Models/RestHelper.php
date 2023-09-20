@@ -159,6 +159,7 @@ class RestHelper
         if (!empty($body)) {
             $uri .= "?".http_build_query($body);
         }
+
         //====================================================================//
         // Perform Request
         try {
@@ -170,6 +171,7 @@ class RestHelper
 
             return null;
         }
+
         //====================================================================//
         // Catch Errors inResponse
         return self::catchErrors($response);
@@ -189,6 +191,7 @@ class RestHelper
         //====================================================================//
         // Detect Endpoint Overrides
         $endPoint = $endPoint ?? self::$endPoint;
+
         //====================================================================//
         // Perform Request
         try {
@@ -202,6 +205,7 @@ class RestHelper
 
             return null;
         }
+
         //====================================================================//
         // Catch Errors in Response
         return self::catchErrors($response);
@@ -220,6 +224,7 @@ class RestHelper
         //====================================================================//
         // Build EndPoint Url
         $endPoint = str_replace("wsgestinbox_V2.asmx", "wsgestinbox.asmx", self::$endPoint);
+
         //====================================================================//
         // Execute Post Request
         return self::post($path, $body, $endPoint);
@@ -238,6 +243,7 @@ class RestHelper
         //====================================================================//
         // Build EndPoint Url
         $endPoint = str_replace("wsgestinbox.asmx", "wsgestinbox_V2.asmx", self::$endPoint);
+
         //====================================================================//
         // Execute Post Request
         return self::post($path, $body, $endPoint);
@@ -361,6 +367,7 @@ class RestHelper
                 return false;
             }
         }
+
         //====================================================================//
         // Message is Not An Error
         return true;

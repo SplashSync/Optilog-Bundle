@@ -128,9 +128,9 @@ trait MainTrait
                 $this->setSimpleFloat($fieldName, UNITS::convertLength((float) $fieldData, UNITS::LENGTH_MM));
 
                 break;
-            //====================================================================//
-            // PRODUCT BARCODES
-            //====================================================================//
+                //====================================================================//
+                // PRODUCT BARCODES
+                //====================================================================//
             case 'EAN':
                 // On n'envoie pas de valeurs nulles
                 if (empty($fieldData)) {

@@ -64,6 +64,7 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
         if (!$this->selfTest()) {
             return false;
         }
+
         //====================================================================//
         // Perform Ping Test
         return API::ping();
@@ -169,6 +170,7 @@ class OptilogConnector extends AbstractConnector implements TrackingInterface
         //====================================================================//
         // Configure Order Status Helper
         StatusHelper::init($this->isExtendedStatusMode());
+
         //====================================================================//
         // Configure Rest API
         return API::configure(

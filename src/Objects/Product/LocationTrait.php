@@ -78,13 +78,13 @@ trait LocationTrait
             //====================================================================//
             // Nom du stock de l’article
             case 'Stock':
-                 $this->getSimple('Stock');
+                $this->getSimple('Stock');
 
                 break;
-            //====================================================================//
-            // Nom de la Gamme de l’article
+                //====================================================================//
+                // Nom de la Gamme de l’article
             case 'Gamme':
-                 $this->getSimple('Gamme');
+                $this->getSimple('Gamme');
 
                 break;
             default:

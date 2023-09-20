@@ -61,6 +61,7 @@ trait PaginationTrait
                 'total' => count($rawResponse->result),
             );
         }
+
         //====================================================================//
         // Pagination Infos are Defined
         return array(
