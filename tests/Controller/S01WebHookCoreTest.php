@@ -37,7 +37,7 @@ class S01WebHookCoreTest extends AbstractTestCase
     {
         //====================================================================//
         // Load Connector
-        $connector = $this->getConnector("optilog");
+        $connector = $this->getConnector(self::SERVER_ID);
         $this->assertInstanceOf(OptilogConnector::class, $connector);
 
         //====================================================================//
@@ -69,7 +69,7 @@ class S01WebHookCoreTest extends AbstractTestCase
     {
         //====================================================================//
         // Load Connector
-        $connector = $this->getConnector("optilog");
+        $connector = $this->getConnector(self::SERVER_ID);
         $this->assertInstanceOf(OptilogConnector::class, $connector);
 
         //====================================================================//
@@ -98,7 +98,7 @@ class S01WebHookCoreTest extends AbstractTestCase
     {
         //====================================================================//
         // Load Connector
-        $connector = $this->getConnector("optilog");
+        $connector = $this->getConnector(self::SERVER_ID);
         $this->assertInstanceOf(OptilogConnector::class, $connector);
         $this->setupHeaders($connector);
 

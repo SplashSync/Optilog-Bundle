@@ -10,7 +10,7 @@
     convertWarningsToExceptions = "true"
     processIsolation            = "false"
     stopOnFailure               = "true"
-    bootstrap                   = "vendor/autoload.php" 
+    bootstrap                   = "vendor/autoload_runtime.php"
     verbose                     = "true"
     timeoutForLargeTests        = "10"  
 >
@@ -18,7 +18,7 @@
     <testsuites>
         <testsuite name="All">
             <directory>vendor/splash/phpcore/Tests/*</directory>
-            <directory>vendor/splash/php-bundle/tests/*</directory>
+            <directory>vendor/splash/php-bundle/phpunit/*</directory>
             <directory>tests/Controller</directory>
         </testsuite>
         <testsuite name="Local">
@@ -26,24 +26,12 @@
         </testsuite>
     </testsuites>
 
-    <filter>
-        <whitelist>
-            <directory>tests/Controller</directory>
-            <directory>vendor/splash/phpcore</directory>
-            <directory>vendor/splash/php-bundle</directory>
-            <exclude>
-                <directory>vendor</directory>
-            </exclude>
-        </whitelist>
-    </filter>
-
     <php>
-        <server name="KERNEL_CLASS" value="Kernel" />
+        <server name="KERNEL_CLASS" value="Splash\Toolkit\Kernel" />
         <env    name="SYMFONY_DEPRECATION_HELPER" value="disabled" />
-        <server name="SERVER_NAME" value="http://localhost:8000"/>        
+        <server name="SERVER_NAME" value="http://localhost:8000"/>
         <const  name="SPLASH_DEBUG" value="true" />
         <server name="SPLASH_TRAVIS" value="true" />
-        <const  name="SPLASH_TYPES" value="Product" />
     </php>
     
 </phpunit>

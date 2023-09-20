@@ -41,7 +41,7 @@ class S02WebHookObjectsTest extends AbstractTestCase
     {
         //====================================================================//
         // Load Connector
-        $connector = $this->getConnector("optilog");
+        $connector = $this->getConnector(self::SERVER_ID);
         $this->assertInstanceOf(OptilogConnector::class, $connector);
         $this->setupHeaders($connector);
 

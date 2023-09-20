@@ -39,7 +39,7 @@ services:
         container_name: optilog-toolkit
         volumes:
             # Specify Local Configuration File
-            - './docker/toolkit/splash.yml:/app/config/packages/splash.yml:ro'
+            - './config/packages/splash.yaml:/app/config/packages/splash.yaml:ro'
             # Uncomment to use Local Sources instead of Release
             - './:/app/vendor/splash/optilog/:ro'
         hostname:           toolkit.optilog.local

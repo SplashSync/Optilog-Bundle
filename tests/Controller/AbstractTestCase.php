@@ -23,6 +23,8 @@ use Splash\Tests\Tools\TestCase;
  */
 abstract class AbstractTestCase extends TestCase
 {
+    const SERVER_ID = "ThisIsOptilogWsId";
+
     /**
      * Verify WebHook is Ok Response
      *
