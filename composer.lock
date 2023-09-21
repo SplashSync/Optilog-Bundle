@@ -9605,12 +9605,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SplashSync/SonataAdminSplashBundle.git",
-                "reference": "4a69062af8881625ec58d89365110fb395416d0c"
+                "reference": "534bb2e55007856fc1cb75136f7f2249e34c5314"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SplashSync/SonataAdminSplashBundle/zipball/4a69062af8881625ec58d89365110fb395416d0c",
-                "reference": "4a69062af8881625ec58d89365110fb395416d0c",
+                "url": "https://api.github.com/repos/SplashSync/SonataAdminSplashBundle/zipball/534bb2e55007856fc1cb75136f7f2249e34c5314",
+                "reference": "534bb2e55007856fc1cb75136f7f2249e34c5314",
                 "shasum": ""
             },
             "require": {
@@ -9673,7 +9673,7 @@
                 "issues": "https://github.com/SplashSync/SonataAdminSplashBundle/issues",
                 "source": "https://github.com/SplashSync/SonataAdminSplashBundle/tree/master"
             },
-            "time": "2023-09-12T14:21:15+00:00"
+            "time": "2023-09-20T23:24:58+00:00"
         },
         {
             "name": "splash/toolkit",

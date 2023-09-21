@@ -16,110 +16,127 @@
 ################################################################################
 
 ################################################################
-# Set any variables we need
-variables:
-  # Configure mysql environment variables (https://hub.docker.com/r/_/mysql/)
-  MYSQL_DATABASE:               symfony
-  MYSQL_ROOT_PASSWORD:          Optilog-Bundle
-  COMPOSER_MEMORY_LIMIT:        -1
-  SYMFONY_DEPRECATIONS_HELPER:  disabled
+# Include Pipeline Templates
+include:
+  - remote: 'https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/gitlab/php/connectors.yaml'
 
-################################################################
-# Defined Pipeline Stages
-stages:
-  - quality
-  - functional
-  - deploy
+#################################################################
+## Functional Tests
+#################################################################
 
-################################################################
-# Base Job
-################################################################
+functional:php-8.2:
+  extends: .functional-local
 
-.base:    &base
-  tags:
-    - Dedicated
-  before_script:
-    ################################################################################
-    # Install Symfony
-    - composer update
-  after_script:
-    ################################################################################
-    # Run After Script
-    - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/ci/after.sh | sh
-
-################################################################
-# Quality Tests
-################################################################
-
-.quality:    &quality
-    <<: *base
-    stage:      quality
-    ################################################################################
-    # Run Test Script
-    script:
-        # Execute Grumphp Testsuite
-        - wall-e grumphp:quality
-        - wall-e grumphp:stan
-
-quality:php-8.2:
-    image: registry.gitlab.com/badpixxel-projects/php-sdk:php-8.2
-    <<: *quality
-
-quality:php-8.1:
-    image: registry.gitlab.com/badpixxel-projects/php-sdk:php-8.0
-    <<: *quality
-
-quality:php-8.0:
-    image: registry.gitlab.com/badpixxel-projects/php-sdk:php-8.0
-    <<: *quality
+functional:php-8.1:
+  extends: .functional-local
+#
+#################################################################
+## Set any variables we need
+#variables:
+#  # Configure mysql environment variables (https://hub.docker.com/r/_/mysql/)
+#  MYSQL_DATABASE:               symfony
+#  MYSQL_ROOT_PASSWORD:          Optilog-Bundle
+#  COMPOSER_MEMORY_LIMIT:        -1
+#  SYMFONY_DEPRECATIONS_HELPER:  disabled
+#
+#################################################################
+## Defined Pipeline Stages
+#stages:
+#  - quality
+#  - functional
+#  - deploy
+#
+#################################################################
+## Base Job
+#################################################################
+#
+#.base:    &base
+#  tags:
+#    - Dedicated
+#  before_script:
+#    ################################################################################
+#    # Install Symfony
+#    - composer update
+#  after_script:
+#    ################################################################################
+#    # Run After Script
+#    - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/ci/after.sh | sh
+#
+#################################################################
+## Quality Tests
+#################################################################
+#
+#.quality:    &quality
+#    <<: *base
+#    stage:      quality
+#    ################################################################################
+#    # Run Test Script
+#    script:
+#        # Execute Grumphp Testsuite
+#        - wall-e grumphp:quality
+#        - wall-e grumphp:stan
+#
+#quality:php-8.2:
+#    image: registry.gitlab.com/badpixxel-projects/php-sdk:php-8.2
+#    <<: *quality
+#
+#quality:php-8.1:
+#    image: registry.gitlab.com/badpixxel-projects/php-sdk:php-8.0
+#    <<: *quality
+#
+#quality:php-8.0:
+#    image: registry.gitlab.com/badpixxel-projects/php-sdk:php-8.0
+#    <<: *quality
 
 ################################################################
 # Functional Tests
 ################################################################
 
-.functional:    &functional
-    <<: *base
-    stage:      functional
-    ################################################################################
-    # Run Test Script
-    script:
-        # Execute Phpunit Test Suite
-        - php vendor/bin/phpunit --testsuite Local --log-junit $CI_PROJECT_DIR/local-report.xml
-    ################################################################################
-    # Run After Script
-    after_script:
-        - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/toolkit/after.sh  | bash
-    ################################################################################
-    # Job Artefacts
-    artifacts:
-        when: always
-        reports:
-            junit: "$CI_PROJECT_DIR/*-report.xml"
-
-functional:php-8.2:
-    image: registry.gitlab.com/badpixxel-projects/php-sdk:php-8.0
-    <<: *functional
-
-functional:php-8.1:
-    image: registry.gitlab.com/badpixxel-projects/php-sdk:php-8.0
-    <<: *functional
-
-functional:php-8.0:
-    image: registry.gitlab.com/badpixxel-projects/php-sdk:php-8.0
-    <<: *functional
 
 
-################################################################
-# Build Documentation
-################################################################
-pages:
-    image:      jekyll/minimal:latest
-    stage:      deploy
-    tags:       [ Dedicated ]
-    ################################################################################
-    # Run Test Script
-    script:
-        - wget -qO - https://gitlab.com/badpixxel-robo/jekyll/-/raw/main/scripts/gitlab-pages.sh | sh
-    artifacts:
-        paths:
-          - public
+#.functional:    &functional
+#    <<: *base
+#    stage:      functional
+#    ################################################################################
+#    # Run Test Script
+#    script:
+#        # Execute Phpunit Test Suite
+#        - php vendor/bin/phpunit --testsuite Local --log-junit $CI_PROJECT_DIR/local-report.xml
+#    ################################################################################
+#    # Run After Script
+#    after_script:
+#        - curl -s https://raw.githubusercontent.com/BadPixxel/Php-Sdk/main/toolkit/after.sh  | bash
+#    ################################################################################
+#    # Job Artefacts
+#    artifacts:
+#        when: always
+#        reports:
+#            junit: "$CI_PROJECT_DIR/*-report.xml"
+#
+#functional:php-8.2:
+#    image: registry.gitlab.com/badpixxel-projects/php-sdk:php-8.0
+#    <<: *functional
+#
+#functional:php-8.1:
+#    image: registry.gitlab.com/badpixxel-projects/php-sdk:php-8.0
+#    <<: *functional
+#
+#functional:php-8.0:
+#    image: registry.gitlab.com/badpixxel-projects/php-sdk:php-8.0
+#    <<: *functional
+#
+#
+#################################################################
+## Build Documentation
+#################################################################
+#pages:
+#    image:      jekyll/minimal:latest
+#    stage:      deploy
+#    tags:       [ Dedicated ]
+#    ################################################################################
+#    # Run Test Script
+#    script:
+#        - wget -qO - https://gitlab.com/badpixxel-robo/jekyll/-/raw/main/scripts/gitlab-pages.sh | sh
+#    artifacts:
+#        paths:
+#          - public

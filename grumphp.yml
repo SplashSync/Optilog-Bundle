@@ -28,7 +28,7 @@ parameters:
     doc-contents:   ["php-composer", "php-docker", "splash-faq"]
     
     # For Building Splash Manifest
-    yml-enable:     false
+    yml-enable:     true
 
     # For Building Splash Module
     mod-enable:     false
