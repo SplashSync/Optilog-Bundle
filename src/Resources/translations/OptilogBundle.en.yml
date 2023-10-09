@@ -56,3 +56,21 @@ var:
         desc:   "Fill this list to make stock details available on Splash."
         name:   "Location Name"
         code:   "Location API Code"
+
+## Node Profile
+profile:
+    connection:
+        title:  API Connection
+    card:
+        title:  LogsyTech Group API V2
+        label:  Connect your Shops with LogsyTech Group APIs to Manage your Logistics
+
+## Node Api Actions
+admin:
+    selftest:   LogsyTech Connector Configuration
+    connect:    Connect to LogsyTech API
+    webhooks:
+        label:  Update of WebHooks
+        desc:   Detect & Update Splash Sync WebHooks Configuration
+        msg:    WebHook Configuration Updated
+        err:    Update of WebHooks Configuration Failed

@@ -1,28 +1,55 @@
-#
-### Node Variables 
-#var:
-#    apikey:
-#        label:  Clé API V3
-#        desc:   "Votre clé d'API principale vous offre un accès complet à votre compte."
-#        
-#    list:
-#        label:  Liste
-#        desc:   "La liste SendInBlue que vous voulez synchroniser avec Splash."
-#
-### Node Profile
-#profile:
-#    connection:
-#        title:  Connexion API
-#    card:   
-#        title:  SendInBlue API V3
-#        label:  Connectez votre compte SendInBlue pour synchroniser vos clients avec vos listes d'abonnés
-#
-### Node Api Actions
-#admin:
-#    selftest:   Configuration du Connecteur SendInBlue
-#    connect:    Connexion a l'API SendInBlue V3  
-#    webhooks:
-#        label:  Configuration des WebHooks
-#        desc:   Détecte et Configure les WebHooks pour Splash Sync
-#        msg:    Configuration des WebHooks Réussie
-#        err:    La Configuration des WebHooks a échouée
+## Node Variables
+var:
+    apiurl:
+        label:  "Url du Webservice"
+        desc:   "Url du Webservice Géolie à utiliser."
+
+    apiuser:
+        desc:   "Utilisateur pour l'API Géolie."
+
+    apipwd:
+        desc:   "Mot de passe pour l'API Géolie."
+
+    apikey:
+        desc:   "Clef d'API pour accéder à votre compte. Gardez-la secrète!"
+
+    apiop:
+        label:  "Identifiant de l’opération"
+        desc:   "Demandez à votre contact technique de vous fournir cet identifiant."
+
+    minOrderDate:
+        label:  "Date minimum de commande"
+        desc:   "Date minimum pour l'envoi de commande. Toute commande crée avant cette date sera filtrée"
+
+    origin:
+        label:      "Filtrer les commandes par origines"
+        desc:       "Remplissez cette liste pour filtrer les commandes par site d'origine."
+        default:    "Default - Envoyer ces commandes."
+        rejected:   "REJECTED - Ces commandes ne doivent pas être envoyées."
+
+    dfStock:
+        label:  "Stock par Défaut"
+        desc:   "Demandez à votre contact technique de vous fournir cet identifiant."
+
+    useProductsRawSku:
+        label:  "Mode SKU bruts"
+        desc:   "Dans ce mode, les commandes utilisent le SKU produit brut au lieu des identifiants d'objets de produit Splash."
+
+    useExtendedStatus:
+        label:  "Status de commandes étendu"
+        desc:   "Dans ce mode, les statuts des commandes incluent plus de détails."
+
+    dfGamme:
+        label:  "Gamme par Défaut"
+        desc:   "Demandez à votre contact technique de vous fournir cet identifiant."
+
+    carriers:
+        label:  "Listes Transporteurs"
+        desc:   "Remplissez cette liste pour mapper vos noms de transporteurs avec les codes LogsyTech."
+
+    stocks:
+        label:  "Liste des Entrepôts/Stocks"
+        desc:   "Remplissez cette liste pour rendre le détail des stocks disponibles sur Splash."
+        name:   "Nom du Stock"
+        code:   "Code sur l'API"
+
