@@ -43,6 +43,9 @@ trait CRUDTrait
             return Splash::log()->errNull("Unable to load Product (".$objectId.").");
         }
         //====================================================================//
+        // Extract Stocks details from Results
+        $this->extractStockDetailsFromResults($response->result);
+        //====================================================================//
         // Extract Product Infos from Results
         $product = array_shift($response->result);
         if (!($product instanceof stdClass)) {

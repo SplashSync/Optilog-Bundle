@@ -269,6 +269,37 @@ abstract class AbstractOptilogType extends AbstractType
     }
 
     /**
+     * Add User Stocks Names Field to FormBuilder
+     *
+     * @param FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addStocksListField(FormBuilderInterface $builder): self
+    {
+        $builder
+            //==============================================================================
+            // Optilog Carriers Names => Codes For Authentification
+            ->add('Stocks', KeyValueType::class, array(
+                'label' => "var.stocks.label",
+                'help' => "var.stocks.desc",
+                'required' => false,
+                'key_type' => TextType::class,
+                'key_options' => array(
+                    'label' => "var.stocks.name",
+                ),
+                'value_type' => TextType::class,
+                'value_options' => array(
+                    'label' => "var.stocks.code",
+                ),
+                'translation_domain' => "OptilogBundle",
+            ))
+        ;
+
+        return $this;
+    }
+
+    /**
      * Add Origin Filters Field to FormBuilder
      *
      * @param FormBuilderInterface $builder

@@ -43,6 +43,7 @@ class Product extends AbstractStandaloneObject
     use Product\MainTrait;
     use Product\PricesTrait;
     use Product\StockTrait;
+    use Product\StockDetailsTrait;
     use Product\LocationTrait;
     use Product\TrackerTrait;
     use Product\ImagesTrait;
