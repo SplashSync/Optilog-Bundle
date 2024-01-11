@@ -163,6 +163,11 @@ class CarrierCodes
         "UPS_WWSVR" => "Express Saver / WorldWide Saver",
 
         //====================================================================//
+        // PAACK
+        "PCK_NT2" => "PAACK Livraison créneau 2h",
+        "PCK_NT4" => "PAACK Livraison créneau 4h",
+
+        //====================================================================//
         // Dropshiping
         "DROP" => "Dropshipping",
 
