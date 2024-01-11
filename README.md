@@ -26,6 +26,8 @@ This connector implements LogsyTech Webservices API for connecting business appl
 
 For the configuration guide and reference, see: [Optilog Connector Documentation](https://splashsync.gitlab.io/Optilog-Bundle/)
 
+For Logsytech API Reference, see: [API Refrence](https://documenter.getpostman.com/view/9022498/2s9YXfc4Br)
+
 ## Contributing
 
 Any Pull requests are welcome! 
