@@ -50,6 +50,8 @@ class CarrierCodes
         "CHR_FRESH" => "CHRONOPOST CHRONO FOOD",
         "CHR_BB_REL" => "CHRONOPOST CHRONO RELAIS",
         "CHR_B2C_SECU" => "CHRONOPOST B2C SECURE",
+        "CHR_REL_48" => "CHRONOPOST RELAIS 48H",
+        "CHR_REL_EU" => "CHRONOPOST RELAIS EUROPE",
 
         //====================================================================//
         // COLIS PRIVE
