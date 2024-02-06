@@ -16,7 +16,7 @@
 namespace   Splash\Connectors\Optilog\Models;
 
 /**
- * Opilog Carriers Types Codes
+ * Logsystech Carriers Types Codes
  */
 class CarrierCodes
 {
@@ -76,6 +76,7 @@ class CarrierCodes
         "ESE_COL_CB" => "[ESENDEO] COLISSIMO EXPERT EUROPE",
         "ESE_COL_CM" => "[ESENDEO] COLISSIMO EUROPE MON COMMERCANT",
         "ESE_COL_6H" => "[ESENDEO] SO COLISSIMO SOCOLISSIMOBPR",
+        "ESE_MR_24R" => "[ESENDEO] MONDIAL RELAY MR",
 
         //====================================================================//
         // DHL
@@ -194,6 +195,7 @@ class CarrierCodes
         "SOCOL_6H",
         "COL_CM",
         "MR_24R",
+        "ESE_MR_24R",
         "TNT_JD",
         "UPS_ACCPT",
     );
