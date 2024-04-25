@@ -198,6 +198,8 @@ class CarrierCodes
         "ESE_MR_24R",
         "TNT_JD",
         "UPS_ACCPT",
+        "CHR_REL_48",
+        "CHR_REL_EU"
     );
 
     /**
