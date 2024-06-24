@@ -91,6 +91,7 @@ class CarrierCodes
         "DHL_ECX" => "DHL DHL EXPRESS WORLDWIDE UE HORS FRANCE",
         "DHL_ESI" => "DHL DHL IMPORTANT ECONOMY SELECT ",
         "DHL_PKT" => "DHL DHL PACKET",
+        "DHP_V01PAK" => "DHL DHP PAKET",
 
         //====================================================================//
         // DPD
