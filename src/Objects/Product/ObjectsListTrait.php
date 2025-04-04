@@ -13,7 +13,7 @@
  *  file that was distributed with this source code.
  */
 
-namespace   Splash\Connectors\Optilog\Objects\Product;
+namespace Splash\Connectors\Optilog\Objects\Product;
 
 use Splash\Client\Splash;
 use Splash\Connectors\Optilog\Models\RestHelper as API;

@@ -16,7 +16,7 @@
 namespace Splash\Connectors\Optilog\Objects\Order;
 
 use DateTime;
-use Splash\Core\SplashCore      as Splash;
+use Splash\Core\SplashCore as Splash;
 
 /**
  * Filter Order Creation by Created Dates

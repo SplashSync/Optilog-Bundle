@@ -17,7 +17,7 @@ namespace Splash\Connectors\Optilog\Widgets;
 
 use Splash\Bundle\Models\AbstractStandaloneWidget;
 use Splash\Connectors\Optilog\Services\OptilogConnector;
-use Splash\Core\SplashCore      as Splash;
+use Splash\Core\SplashCore as Splash;
 
 /**
  * Optilog Config SelfTest

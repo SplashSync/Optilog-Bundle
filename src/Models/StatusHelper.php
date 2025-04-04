@@ -13,7 +13,7 @@
  *  file that was distributed with this source code.
  */
 
-namespace   Splash\Connectors\Optilog\Models;
+namespace Splash\Connectors\Optilog\Models;
 
 use Splash\Models\Objects\Order\Status;
 

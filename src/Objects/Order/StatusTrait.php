@@ -17,7 +17,7 @@ namespace Splash\Connectors\Optilog\Objects\Order;
 
 use Splash\Connectors\Optilog\Models\RestHelper;
 use Splash\Connectors\Optilog\Models\StatusHelper;
-use Splash\Core\SplashCore      as Splash;
+use Splash\Core\SplashCore as Splash;
 
 /**
  * Access to Orders Status Fields

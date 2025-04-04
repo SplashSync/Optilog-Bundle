@@ -13,11 +13,11 @@
  *  file that was distributed with this source code.
  */
 
-namespace   Splash\Connectors\Optilog\Objects\Order;
+namespace Splash\Connectors\Optilog\Objects\Order;
 
 use Splash\Connectors\Optilog\Models\CarrierCodes;
 use Splash\Connectors\Optilog\Models\RestHelper as API;
-use Splash\Core\SplashCore      as Splash;
+use Splash\Core\SplashCore as Splash;
 
 /**
  * Optilog Orders Tracking Fields Access

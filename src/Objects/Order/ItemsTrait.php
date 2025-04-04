@@ -17,7 +17,7 @@ namespace Splash\Connectors\Optilog\Objects\Order;
 
 use Splash\Connectors\Optilog\Models\ArticlesHelper;
 use Splash\Connectors\Optilog\Models\RestHelper as API;
-use Splash\Core\SplashCore      as Splash;
+use Splash\Core\SplashCore as Splash;
 use Splash\Models\Objects\ListsTrait;
 use stdClass;
 

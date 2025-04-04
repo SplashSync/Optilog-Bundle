@@ -13,7 +13,7 @@
  *  file that was distributed with this source code.
  */
 
-namespace   Splash\Connectors\Optilog\Objects\Order;
+namespace Splash\Connectors\Optilog\Objects\Order;
 
 use Splash\Bundle\Helpers\Objects\CachedListHelper;
 use Splash\Connectors\Optilog\Models\RestHelper as API;
