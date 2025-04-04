@@ -41,7 +41,7 @@
     
     "require-dev": {
         "badpixxel/php-sdk":                            "~2.0",
-        "splash/toolkit":                               "dev-master",
+        "splash/toolkit":                               "2.0.x-dev",
         "splash/console":                               "dev-master",
         "symfony/browser-kit":                          "*"
     },
