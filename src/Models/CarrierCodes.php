@@ -120,6 +120,7 @@ class CarrierCodes
         "GLS_BP" => "GLS GLS BUSINESS",
         "GLS_EP" => "GLS GLS EXPRESS",
         "GLS_EBP" => "GLS GLS INTERNATIONAL",
+        "GLS_FDF1" => "GLS GLS - Flex Delivery avec Signature",
 
         //====================================================================//
         // LA POSTE
