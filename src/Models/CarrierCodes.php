@@ -173,6 +173,12 @@ class CarrierCodes
         "PCK_NT4" => "PAACK Livraison créneau 4h",
 
         //====================================================================//
+        // WING
+        "WNG_C9L" => "WING - COLISSIMO SANS SIGNATURE",
+        "WNG_MR" => "WING - RELAIS MONDIAL",
+        "WNG_C9V" => "WING - COLISSIMO AVEC SIGNATURE",
+
+        //====================================================================//
         // Dropshiping
         "DROP" => "Dropshipping",
 
