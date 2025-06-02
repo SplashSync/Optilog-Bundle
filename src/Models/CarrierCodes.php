@@ -207,7 +207,8 @@ class CarrierCodes
         "TNT_JD",
         "UPS_ACCPT",
         "CHR_REL_48",
-        "CHR_REL_EU"
+        "CHR_REL_EU",
+        "WNG_MR",
     );
 
     /**
